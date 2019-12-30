@@ -5,8 +5,4 @@ empresa_homepage:
 empresa_admin:
     path:     /adminEmpresas
     defaults: { _controller: EmpresaBundle:Default:AdminEmpresas }
-
-usuarios_admin:
-    path:     /adminUsuarios
-    defaults: { _controller: EmpresaBundle:Default:AdminUsuarios }
     

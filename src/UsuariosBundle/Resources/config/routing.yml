@@ -1,0 +1,7 @@
+usuarios_homepage:
+    path:     /
+    defaults: { _controller: UsuariosBundle:Default:index }
+
+usuarios_admin:
+    path:     /adminUsuarios
+    defaults: { _controller: UsuariosBundle:Default:AdminUsuarios }
