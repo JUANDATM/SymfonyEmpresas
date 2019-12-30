@@ -13,11 +13,6 @@ class DefaultController extends Controller
     public function __construct() {
         $this->EmpresaModel = new EmpresaModel();
     }
-    public function indexAction()
-    {
-        return $this->render('EmpresaBundle:Default:index.html.twig');
-    }
-
     public function adminEmpresasAction(){   
         $result = $this->EmpresaModel->getEmpresas();
         $empresas = $result['data'];
@@ -27,10 +22,5 @@ class DefaultController extends Controller
 
         return $this->render('EmpresaBundle:Empresas:adminEmpresas.html.twig', array('content' => $content));
 
-    }
-
-    public function adminUsuariosAction()
-    {
-        return $this->render('EmpresaBundle:Empresas:adminUsuarios.html.twig');
     }
 }
