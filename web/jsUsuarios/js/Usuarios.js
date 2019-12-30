@@ -8,42 +8,40 @@ function init() {
 
 
     //Iniciliza la ventana Modal y la Validación
-    $("#empresamodal").modal();
+    $("#usuario-modal").modal();
     // Clic del boton circular para validar correo y contraseña
 
     // Clic del boton circular Agregar Registro Nuevo formulario modal
-    $("#empresa-nuevo").on("click", function() {
+    $("#usuario-nuevo").on("click", function() {
         $("#nombre").val('');
         $("#direccion").val('');
         $("#telefono").val('');
         $("#descripcion").val('');
-        $("#empresamodal").modal('open');
+        $("#usuario-modal").modal('open');
         $("#nombre").focus();
-        route = "/empresas/new";
-        E
+
     });
     // clic del boton de guardar
     $('#guardar').on("click", function() {
-        document.getElementById('empresa-form').reset();
-        $('#empresa-form').submit();
-        route = "/producto/new";
+        document.getElementById('usuario-form').reset();
+        $('#usuario-form').submit();
     });
 }
 
 function validateForm() {
-    $('#empresa-form').validate({
+    $('#usuario-form').validate({
         rules: {
             nombre: { required: true, minlength: 4, maxlength: 220 },
-            direccion: { required: true, minlength: 4, maxlength: 220 },
-            telefono: { required: true, number: true, minlength: 7, maxlength: 13 },
-            descripcion: { required: true, minlength: 4, maxlength: 250 },
+            correo: { required: true, minlength: 4, maxlength: 220 },
+            contraseña: { required: true, number: true, minlength: 7, maxlength: 13 },
+            rol: { required: true, minlength: 4, maxlength: 250 },
 
         },
         messages: {
-            nombre: { required: "No puedes dejar este campo vacío", email: "Se requiere correo valido", minlength: "Debes ingresar al menos 4 caracteres", maxlength: "No puedes ingresar más de 220 caracteres" },
-            direccion: { required: "No se puede dejar el campo vacio", minlength: "Debes ingresar al menos 4 caracteres", maxlength: "No puedes ingresar más de 220 caracteres" },
-            telefono: { required: "No puedes dejar este campo vacío", minlength: "Debes ingresar al menos 4 caracteres", maxlength: "No puedes ingresar más de 13 caracteres" },
-            descripcion: { required: "No puedes dejar este campo vacío", minlength: "Debes ingresar al menos 4 caracteres", maxlength: "No puedes ingresar más de 250 caracteres" },
+            nombre: { required: "Este campo es OBLIGATORIO", minlength: "El minimo de caracteres son 4", maxlength: "Maximo de caracteres sobrepasado" },
+            correo: { required: "No puedes dejar este campo vacío", email: "Se requiere correo valido", minlength: "Debes ingresar al menos 4 caracteres", maxlength: "No puedes ingresar más de 220 caracteres" },
+            contraseña: { required: "No se puede dejar el campo vacio", minlength: "Debes ingresar al menos 4 caracteres", maxlength: "No puedes ingresar más de 220 caracteres" },
+            rol: { required: "No puedes dejar este campo vacío", minlength: "Debes ingresar al menos 4 caracteres", maxlength: "No puedes ingresar más de 250 caracteres" },
 
         },
         errorElement: "div",

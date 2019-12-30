@@ -13,6 +13,11 @@ class DefaultController extends Controller
 
     public function adminEmpresasAction()
     {
-        return $this->render('EmpresaBundle:Default:adminEmpresas.html.twig');
+        return $this->render('EmpresaBundle:Empresas:adminEmpresas.html.twig');
+    }
+
+    public function adminUsuariosAction()
+    {
+        return $this->render('EmpresaBundle:Empresas:adminUsuarios.html.twig');
     }
 }

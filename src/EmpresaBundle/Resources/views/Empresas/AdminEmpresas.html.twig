@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ADMIN EMPRESAS{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Empresas</h1>
+    <button id="empresa-nuevo" class="btn btn-success"><i class="material-icons">add_circle_outline</i></button>
+    <br></br>
+    <table id="empresas-table" class="table table-striped table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>#</th>
+                <th style="width:30%">Nombre</th>
+                <th style="width:30%">Direccion</th>
+                <th style="width:20%">Telefono</th>
+                <th style="width:20%">Descripcion</th>
+                <th style="width:20%">Imagen</th>
+                <th style="width:10%">Visitas</th>
+                <th style="width:20%">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+           {#} {% for empresa in empresa %}
+            <tr>
+                <td>{{ empresa.id }}</td>
+                <td>{{ empresa.nombreEmpresa }}</td>
+                <td>{{ empresa.direccion }}</td>
+                <td>{{ empresa.telefono }}</td>
+                <td>{{ empresa.descripcion }}</td>
+                <td><img src="{{ empresa.imagen }}" /></td>
+                <td>{{ empresa.visitas }}</td>
+                <td>
+                    <a class="edit btn btn-warning" href="#"><i class="material-icons">create</i></a>
+                    <a class="delete btn btn-danger" href="#"><i class="material-icons">delete_sweep</i></a>
+                </td>
+            </tr>
+            {% endfor %}#}
+        </tbody>
+    </table> {# <a href="{{ path('empresa_new') }}">Create new</a>   #}
+</div>
+<!--          MODAL              -->
+
+<div class="modal fade" id="empresamodal" name="empresamodal" tabindex="-1" role="dialog"
+    aria-labelledby="empresa-modal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ver/Editar</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="empresa-form">
+                    <br></br>
+                    <div class="row">
+                        <div class="col s12">
+                            <input id="nombre" type="text" class="form-control" placeholder="Nombre Empresa:" required>
+                        </div>
+                    </div>
+                    <br></br>
+                    <div class="row">
+                        <div class="col s12">
+                            <input id="direccion" type="text" class="form-control" placeholder="Direccion Empresa:">
+                        </div>
+                    </div>
+                    <br></br>
+                    <div class="row">
+                        <div class="col s5">
+                            <input id="telefono" type="text" class="form-control" placeholder="Telefono:">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12">
+                            <input id="descripcion" type="text" class="form-control" placeholder="Descripcion:">
+                        </div>
+                    </div>
+                    <br></br>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button id="productos-guardar" type="submit" class="btn btn-primary"><a>Crear Nuevo Registro</a></button>
+            </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript" src="{{ asset('js/jquery-3.0.0.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/materialize.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/dataTables.materialize.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.validate.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('jsEmpresa/js/Empresas.js') }}"></script>
+{% endblock %}

@@ -2,12 +2,57 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}Empresas{% endblock %}</title>
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }} media="screen,projection"" />
+        <link rel="stylesheet" href="{{ asset("css/materialize.css") }}">
+        <link rel="stylesheet" href="{{ asset("css/materialize.min.css.0.100.2") }}">
+        <link rel="stylesheet" href="{{ asset("css/default.css") }}">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
         {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
+
     <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+    <nav>
+        <div class="nav-wrapper grey darken-4">
+            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="{{ asset('catalogoEmpresas')}}">Inicio</a></li>
+                <li><a href="{{ asset('adminUsuarios')}}">Admin Usuarios</a></li>
+                <li><a href="{{ asset('adminEmpresas')}}">Admin Empresas</a></li>
+                <li><a href="{{ asset('Empresas/login')}}">Sesion</a></li>
+            </ul>
+        </div>
+    </nav>
+    {% block body %}{% endblock %}
+
     </body>
+    <footer class="page-footer grey darken-4">
+        <div class="container">
+            <div class="row">
+                <div class="footer-copyright">
+                    <div class="container center">
+                        <span class="copyright">
+                            Residentes Copyright &copy;
+                                <script>document.write(new Date().getFullYear());</script> <i class="far fa-heart" aria-hidden="true"></i><a
+                                href="https://colorlib.com" target="_blank"></a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    {% block javascripts %}{% endblock %}
+        <link rel="stylesheet" href="{{ asset('js/jquery-3.1.1.js') }}">
+         <link rel="stylesheet" href="{{ asset('js/materialize.js') }}">
+         <link rel="stylesheet" href="{{ asset('js/jquery.validate.min.js') }}">
+ 
+        <script type="text/javascript" src="{{ asset('js/jquery-3.0.0.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/materialize.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/dataTables.materialize.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/jquery.validate.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('jsEmpresa/js/Empresas.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('jsLogin/login.js') }}"></script>
+        <script type="text/javascript">
 </html>
