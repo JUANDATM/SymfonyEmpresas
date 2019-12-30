@@ -1,0 +1,8 @@
+empresa_homepage:
+    path:     /
+    defaults: { _controller: EmpresaBundle:Default:index }
+    
+empresa_admin:
+    path:     /adminEmpresas
+    defaults: { _controller: EmpresaBundle:Default:AdminEmpresas }
+    
