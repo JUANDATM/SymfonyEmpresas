@@ -21,21 +21,21 @@
             </tr>
         </thead>
         <tbody>
-           {#} {% for empresa in empresa %}
+           {% for empresa in content['empresas'] %}
             <tr>
-                <td>{{ empresa.id }}</td>
-                <td>{{ empresa.nombreEmpresa }}</td>
-                <td>{{ empresa.direccion }}</td>
-                <td>{{ empresa.telefono }}</td>
-                <td>{{ empresa.descripcion }}</td>
-                <td><img src="{{ empresa.imagen }}" /></td>
-                <td>{{ empresa.visitas }}</td>
+                <td>{{ empresa.IdEmpresa }}</td>
+                <td>{{ empresa.NombreEmpresa }}</td>
+                <td>{{ empresa.DireccionEmpresa }}</td>
+                <td>{{ empresa.CorreoEmpresa }}</td>
+                <td>{{ empresa.DescripcionEmpresa }}</td>
+                <td><img src="{{ empresa.ImagenEmpresa }}" /></td>
+                {#<td>{{ empresa.visitas }}</td>#}
                 <td>
                     <a class="edit btn btn-warning" href="#"><i class="material-icons">create</i></a>
                     <a class="delete btn btn-danger" href="#"><i class="material-icons">delete_sweep</i></a>
                 </td>
             </tr>
-            {% endfor %}#}
+            {% endfor %}
         </tbody>
     </table> {# <a href="{{ path('empresa_new') }}">Create new</a>   #}
 </div>

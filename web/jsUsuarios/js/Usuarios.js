@@ -14,9 +14,8 @@ function init() {
     // Clic del boton circular Agregar Registro Nuevo formulario modal
     $("#usuario-nuevo").on("click", function() {
         $("#nombre").val('');
-        $("#direccion").val('');
-        $("#telefono").val('');
-        $("#descripcion").val('');
+        $("#correo").val('');
+        $("#contraseña").val('');
         $("#usuario-modal").modal('open');
         $("#nombre").focus();
 
@@ -58,10 +57,10 @@ function validateForm() {
 // Envia los datos del formulario de registro a la base de datos
 function saveData() {
     var sURL = "actRegistroGuarda.php";
-    var parametros = 'corr=' + $("#corr").val() +
-        '&nom=' + $("#nom").val() +
-        '&tip=' + $("#tip").val() +
-        '&pwd=' + $("#pwd").val();
+    var parametros = 'correo=' + $("#correo").val() +
+        '&nombre=' + $("#nombre").val() +
+        '&rol=' + $("#rol").val() +
+        '&contraseña=' + $("#contraseña").val();
     $.ajax({
         type: "post",
         url: sURL,
@@ -69,10 +68,10 @@ function saveData() {
         data: parametros,
         success: function(respuesta) {
             if (respuesta['status']) {
-                $("#correo").val($("#corr").val());
+                $("#correo").val($("#correo").val());
                 M.toast({ html: 'Registro exitoso', classes: 'rounded', displayLength: 4000 });
-                $("#modalRegistro").modal('close');
-                $("#contra").focus();
+                $("#usuario-modal").modal('close');
+                $("#contraseña").focus();
             } else {
                 M.toast({ html: 'Error al Registrar Usuario', classes: 'rounded', displayLength: 4000 });
             }
