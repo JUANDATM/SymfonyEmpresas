@@ -20,7 +20,6 @@ function init() {
         $("#empresamodal").modal('open');
         $("#nombre").focus();
         route = "/empresas/new";
-        E
     });
     // clic del boton de guardar
     $('#guardar').on("click", function() {

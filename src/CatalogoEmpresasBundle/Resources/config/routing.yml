@@ -2,7 +2,7 @@ catalogo_empresas_homepage:
     path:     /
     defaults: { _controller: CatalogoEmpresasBundle:Default:index }
 
-catalogo_empresas:
+catalogo_empresas_catalogo:
     path:     /CatalogoEmpresas
-    defaults: { _controller: CatalogoEmpresasBundle:Default:CatalogoEmpresas.html.twig }
+    defaults: { _controller: CatalogoEmpresasBundle:Default:CatalogoEmpresas}
     

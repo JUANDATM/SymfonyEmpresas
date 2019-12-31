@@ -12,7 +12,7 @@ class CatalogoEmpresasModel {
         $this->SQLModel = new SQLModel();
     }
     public function getCatalogoEmpresas(){
-        $result = $this->SQLModel->selectFromTable('Empresas');
+        $result = $this->SQLModel->selectFromTable('Empresa');
         
         return $result;
     }
