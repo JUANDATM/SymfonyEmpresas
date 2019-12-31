@@ -24,9 +24,8 @@ function init() {
     // clic del boton de guardar
     $('#guardar').on("click", function() {
         document.getElementById('empresa-form').reset();
-        validateForm();
         $('#empresa-form').submit();
-        route = "/producto/new";
+        saveData();
     });
 
     $('#editar').on("click", function() {
@@ -73,14 +72,13 @@ function validateForm() {
 }
 // Envia los datos del formulario de registro a la base de datos
 function saveData() {
-    var sURL = "actRegistroGuarda.php";
-    var parametros = 'corr=' + $("#corr").val() +
+    var parametros = 'NombreEmpresa=' + $("#nombre").val() +
         '&nom=' + $("#nom").val() +
         '&tip=' + $("#tip").val() +
         '&pwd=' + $("#pwd").val();
     $.ajax({
         type: "post",
-        url: sURL,
+        url: urlInsertar,
         dataType: 'json',
         data: parametros,
         success: function(respuesta) {

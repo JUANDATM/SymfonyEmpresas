@@ -5,4 +5,8 @@ empresa_homepage:
 empresa_admin:
     path:     /adminEmpresas
     defaults: { _controller: EmpresaBundle:Default:AdminEmpresas }
+
+empresa_admin_insertar:
+    path:     /insertarEmpresa
+    defaults: { _controller: EmpresaBundle:Default:insertarEmpresa }
     
