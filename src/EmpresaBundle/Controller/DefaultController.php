@@ -23,4 +23,5 @@ class DefaultController extends Controller
         return $this->render('EmpresaBundle:Empresas:adminEmpresas.html.twig', array('content' => $content));
 
     }
+    
 }

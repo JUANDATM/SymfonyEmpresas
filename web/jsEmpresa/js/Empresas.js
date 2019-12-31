@@ -24,9 +24,24 @@ function init() {
     // clic del boton de guardar
     $('#guardar').on("click", function() {
         document.getElementById('empresa-form').reset();
+        validateForm();
         $('#empresa-form').submit();
         route = "/producto/new";
     });
+
+    $('#editar').on("click", function() {
+        document.getElementById('empresa-form').reset();
+        $('#empresa-form').submit();
+        route = "/producto/new";
+    });
+
+
+    $(document).on("click", '.eliminar', function() {
+        var id = $(this).attr("id-record");
+        deleteData(id);
+    });
+
+
 }
 
 function validateForm() {
