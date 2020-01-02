@@ -9,4 +9,8 @@ empresa_admin:
 empresa_admin_insertar:
     path:     /insertarEmpresa
     defaults: { _controller: EmpresaBundle:Default:insertarEmpresa }
+
+empresa_admin_eliminar:
+    path:     /eliminarEmpresa
+    defaults: { _controller: EmpresaBundle:Default:eliminarEmpresa }
     
