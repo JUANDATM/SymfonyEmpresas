@@ -6,6 +6,7 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }} media="screen,projection"" />
         <link rel="stylesheet" href="{{ asset("css/materialize.css") }}">
         <link rel="stylesheet" href="{{ asset("css/materialize.min.css.0.100.2") }}">
+         <link rel="stylesheet" href="{{ asset("css/dropzone_up.css") }}">
         <link rel="stylesheet" href="{{ asset("css/default.css") }}">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
@@ -42,9 +43,10 @@
             </div>
         </div>
     </footer>
-    {% block javascripts %}{% endblock %}
-        <link rel="application/javascript" href="{{ asset('js/jquery-3.1.1.js') }}">
-         <link rel="application/javascript" href="{{ asset('js/materialize.js') }}">
-         <link rel="application/javascript" href="{{ asset('js/jquery.validate.min.js') }}">
-        <script type="text/javascript"></script>
+    {% block javascripts %}
+        <script type="text/javascript" src="{{ asset('js/jquery-3.1.1.js') }}"></script>
+         <script type="text/javascript" src="{{ asset('js/materialize.js') }}"></script>
+         <script type="text/javascript" src="{{ asset('js/jquery.validate.min.js') }}"></script>
+          <script type="text/javascript" src="{{ asset('js/dropzone_up.js') }}"></script>
+         {% endblock %}
 </html>

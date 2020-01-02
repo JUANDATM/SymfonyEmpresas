@@ -35,7 +35,6 @@ class SQLModel {
         $qry = ' INSERT INTO "' . $this->schema . '"."' . $table . '"';
         $qry .= ' (' . $cols['columns'] . ') ';
         $qry .= ' VALUES(' . $cols['values'] . ')';
-        
         if ($primaryKey != "") {
             if (substr($primaryKey, 0, 1) == "'" && substr($primaryKey, -1) == "'") {
                 $primaryKey = "'" . substr($primaryKey, 1, -1) . "'";

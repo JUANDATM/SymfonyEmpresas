@@ -1,63 +1,41 @@
-$(init);
-
-function init() {
-    // Inicializa el NavBar
-    $(document).ready(function() {
-        $('.sidenav').sidenav();
-    });
-
-
-    //Iniciliza la ventana Modal y la Validación
+// Inicializa el NavBar
+$(document).ready(function() {
+    validateForm();
+    $('.sidenav').sidenav();
     $("#empresamodal").modal();
-    // Clic del boton circular para validar correo y contraseña
-
-    // Clic del boton circular Agregar Registro Nuevo formulario modal
-    $("#empresa-nuevo").on("click", function() {
-        $("#nombre").val('');
-        $("#direccion").val('');
-        $("#telefono").val('');
-        $("#descripcion").val('');
-        $("#empresamodal").modal('open');
-        $("#nombre").focus();
-        route = "/empresas/new";
-    });
-    // clic del boton de guardar
-    $('#guardar').on("click", function() {
-        document.getElementById('empresa-form').reset();
+    $('#empresas-guardar').on("click", function() {
+        //document.getElementById('empresa-form').reset();
         $('#empresa-form').submit();
-        saveData();
     });
+});
+$('#empresa-nuevo').on("click", function() {
+    $("#empresamodal").modal({ dismissible: false }).modal('open');
+});
+$('#editar').on("click", function() {
+    document.getElementById('empresa-form').reset();
+    $('#empresa-form').submit();
+});
 
-    $('#editar').on("click", function() {
-        document.getElementById('empresa-form').reset();
-        $('#empresa-form').submit();
-        route = "/producto/new";
-    });
-
-
-    $(document).on("click", '.eliminar', function() {
-        var id = $(this).attr("id-record");
-        deleteData(id);
-    });
-
-
-}
+$(document).on("click", '.eliminar', function() {
+    var id = $(this).attr("id-record");
+    deleteData(id);
+});
 
 function validateForm() {
     $('#empresa-form').validate({
         rules: {
             nombre: { required: true, minlength: 4, maxlength: 220 },
             direccion: { required: true, minlength: 4, maxlength: 220 },
-            telefono: { required: true, number: true, minlength: 7, maxlength: 13 },
+            telefono: { required: true, number: true, minlength: 7, maxlength: 10 },
+            correo: { required: true, email: true },
             descripcion: { required: true, minlength: 4, maxlength: 250 },
-
         },
         messages: {
             nombre: { required: "No puedes dejar este campo vacío", email: "Se requiere correo valido", minlength: "Debes ingresar al menos 4 caracteres", maxlength: "No puedes ingresar más de 220 caracteres" },
             direccion: { required: "No se puede dejar el campo vacio", minlength: "Debes ingresar al menos 4 caracteres", maxlength: "No puedes ingresar más de 220 caracteres" },
-            telefono: { required: "No puedes dejar este campo vacío", minlength: "Debes ingresar al menos 4 caracteres", maxlength: "No puedes ingresar más de 13 caracteres" },
+            telefono: { required: "No puedes dejar este campo vacío", minlength: "Debes ingresar al menos 4 caracteres", maxlength: "No puedes ingresar más de 10 caracteres" },
             descripcion: { required: "No puedes dejar este campo vacío", minlength: "Debes ingresar al menos 4 caracteres", maxlength: "No puedes ingresar más de 250 caracteres" },
-
+            correo: { required: "No puedes dejar este campo vacion", email: "Este campo debe de ser un correo electronico" },
         },
         errorElement: "div",
         errorClass: "invalid",
@@ -65,31 +43,38 @@ function validateForm() {
             error.insertAfter(element)
         },
         submitHandler: function(form) {
-            saveData();
+            var post = $("#" + form.id).serialize();
+            insertarEmpresa(post);
         }
     });
 
 }
 // Envia los datos del formulario de registro a la base de datos
-function saveData() {
-    var parametros = 'NombreEmpresa=' + $("#nombre").val() +
-        '&nom=' + $("#nom").val() +
-        '&tip=' + $("#tip").val() +
-        '&pwd=' + $("#pwd").val();
+function insertarEmpresa(post) {
     $.ajax({
         type: "post",
         url: urlInsertar,
         dataType: 'json',
-        data: parametros,
+        data: post,
         success: function(respuesta) {
             if (respuesta['status']) {
-                $("#correo").val($("#corr").val());
+                $("#nombre").val($("#nombre").val());
                 M.toast({ html: 'Registro exitoso', classes: 'rounded', displayLength: 4000 });
-                $("#modalRegistro").modal('close');
-                $("#contra").focus();
+                reset();
+                $("#empresamodal").modal('close');
+                $("#nombre").focus();
             } else {
-                M.toast({ html: 'Error al Registrar Usuario', classes: 'rounded', displayLength: 4000 });
+                M.toast({ html: 'Error al Registrar ', classes: 'rounded', displayLength: 4000 });
             }
         }
     });
 }
+// Clic del boton circular Agregar Registro Nuevo formulario modal
+function reset() {
+    $("#nombre").val('');
+    $("#direccion").val('');
+    $("#telefono").val('');
+    $("#descripcion").val('');
+    $("#correo").val('');
+    $("#nombre").focus();
+};

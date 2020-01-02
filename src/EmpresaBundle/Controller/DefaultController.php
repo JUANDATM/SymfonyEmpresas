@@ -27,13 +27,31 @@ class DefaultController extends Controller
     public function InsertarEmpresaAction(Request $request){   
         
         $post =$request->request->all();
-        print_r($post);
-        die('x_x');
-        $result = $this->EmpresaModel->getEmpresas();
-        $empresas = $result['data'];
-        $content['empresas'] = $empresas;
-        return $this->render('EmpresaBundle:Empresas:adminEmpresas.html.twig', array('content' => $content));
+        $data = array(
+            "NombreEmpresa" => "'" . $post["nombre"] . "'",
+            "DireccionEmpresa" =>"'". $post["direccion"]."'",
+            "DescripcionEmpresa" =>"'". $post["descripcion"]."'",
+            "TelefonoEmpresa" => "'".$post["telefono"]."'",
+            "CorreoEmpresa" => "'".$post["correo"]."'"
 
+
+        );
+        $result = $this->EmpresaModel->insertEmpresas($data);
+        if ($result['status']) {
+            $result['data'] = $post;
+            $result['status'] = TRUE;
+            $result['message'] = "Guardado con exito";
+        } else {
+            $result['status'] = FALSE;
+            $result['error'] = "Error";
+        }
+        return $this->jsonResponse($result);
+
+    }
+    protected function jsonResponse($data) {
+        $response = new Response(json_encode($data));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
     
 }

@@ -16,4 +16,9 @@ class EmpresaModel {
         
         return $result;
     }
+    public function insertEmpresas($data){
+        $result = $this->SQLModel->insertIntoTable('Empresa',$data,'IdEmpresa');
+
+        return $result;
+    }
 }
