@@ -1,13 +1,16 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}ADMIN USUARIOS{% endblock %}
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset("css/jquery.dataTables.min.css") }}">
+{% endblock %}
 
 {% block body %}
 <div class="container">
     <h1>Usuarios</h1>
     <button id="usuario-nuevo" class="btn btn-success"><i class="material-icons">add_circle_outline</i></button>
     <br></br>
-    <table id="usuario-table" class="table table-striped table-bordered">
+    <table id="usuarios-table" class="table table-striped table-bordered">
         <thead class="thead-dark">
             <tr>
                 <th>#</th>
@@ -27,10 +30,10 @@
                 <td>{{ usuario.CorreoUsuario }}</td>
                 <td>{{ usuario.PasswordUsuario }}</td>
                 <td>{{ usuario.DomicilioUsuario }}</td>
-                <td>{{ usuario.IdTipoUsuario }}</td>
+                <td>{{ usuario.TipoUsuario }}</td>
                 <td>
-                    <a class="edit btn btn-warning" href="#"><i class="material-icons">create</i></a>
-                    <a class="delete btn btn-danger" href="#"><i class="material-icons">delete_sweep</i></a>
+                    <a id="editar" name="editar" class="edit btn btn-warning" href="#"><i class="material-icons">create</i></a>
+                    <a id="eliminar" name="eliminar" id-record="{{usuario.IdUsuario}}" class="delete btn btn-danger" href="#"><i class="material-icons">delete_sweep</i></a>
                 </td>
             </tr>
             {% endfor %}
@@ -40,42 +43,44 @@
 </div>
 <!--          MODAL              -->
 
-<div class="modal fade" id="usuario-modal" name="usuario-modal" tabindex="-1" role="dialog" aria-labelledby="usuario-modal"
+<div class="modal fade" id="usuariomodal" name="usuariomodal" tabindex="-1" role="dialog" aria-labelledby="usuario-modal"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Ver/Editar</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
             </div>
             <div class="modal-body">
-                <form id="usuario-form">
-                    <div class="row">
-                        <div class="col">
-                            <input id="nombre" type="text" class="form-control" placeholder="Nombre Usuario:" required>
-                        </div>
-                        </div>
+                <form id="usuarioform">
                         <div class="row">
                             <div class="col">
-                                <input id="correo" type="email" class="form-control" placeholder="Correo Usuario:">
+                                <input id="nombre" name="nombre" type="text" class="form-control" placeholder="Nombre Usuario:">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
-                                <input id="contraseña" type="password" class="form-control" placeholder="Contraseña:">
+                                <input id="correo" name="correo" type="email" class="form-control" placeholder="Correo Usuario:">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
-                                <input id="rol" type="text" class="form-control" placeholder="Rol:">
+                                <input id="password" name="password" type="password" class="form-control" placeholder="Contraseña:">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input id="domicilio" name="domicilio" type="text" class="form-control" placeholder="Domicilio:">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input id="rol" name="rol" type="text" class="form-control" placeholder="Rol:">
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button id="productos-guardar" type="submit" class="btn btn-primary">Guardar</button>
+                        <button id="cancelar" type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button id="usuarios-guardar" type="submit" class="btn btn-primary">Guardar</button>
                     </div>
                 </form>
 
@@ -85,10 +90,18 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script type="text/javascript" src="{{ asset('js/jquery-3.0.0.min.js') }}"></script>
+    {{parent()}}
+    <script type="text/javascript"> 
+        var urlInsertar = "{{path('usuario_admin_insertar')}}";
+    </script>
+
+    <script type="text/javascript"> 
+        var urlEliminar = "{{path('usuario_admin_eliminar')}}";
+        var Empresas = {{content['usuario']|json_encode()|raw}};
+    </script>
+
     <script type="text/javascript" src="{{ asset('js/materialize.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery.dataTables_.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/dataTables.materialize.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/jquery.validate.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('jsUsuarios/js/Usuarios.js') }}"></script>
 {% endblock %}
