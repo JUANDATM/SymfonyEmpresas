@@ -76,6 +76,24 @@ function reset() {
     $("#nombre").focus();
 };
 
+function eliminarEmpresa(IdEmpresa) {
+    $.ajax({
+        type: "delete",
+        url: urlEliminar,
+        dataType: 'json',
+        data: { IdEmpresa },
+        success: function(respuesta) {
+            if (respuesta['status']) {
+                M.toast({ html: 'Registro Eliminado con Exito', classes: 'rounded', displayLength: 4000 });
+                reset();
+                $("#empresamodal").modal('close');
+            } else {
+                M.toast({ html: 'Error al Eliminar ', classes: 'rounded', displayLength: 4000 });
+            }
+        }
+    });
+}
+
 function setRow(data, base64) {
     var img = document.createElement("img");
     img.setAttribute('src', base64);

@@ -42,6 +42,7 @@ class EmpresaModel {
         return $result;
     }
     public function eliminarEmpresas($post){
+        $result = $this->SQLModel->deleteFromTable('Imagenes',$post);
         $result = $this->SQLModel->deleteFromTable('Empresa',$post);
 
         return $result;
