@@ -5,3 +5,11 @@ usuarios_homepage:
 usuarios_admin:
     path:     /adminUsuarios
     defaults: { _controller: UsuariosBundle:Default:AdminUsuarios }
+
+usuario_admin_insertar:
+    path:     /insertarUsuario
+    defaults: { _controller: UsuariosBundle:Default:insertarUsuario }
+    
+usuario_admin_eliminar:
+    path:     /eliminarUsuario
+    defaults: { _controller: UsuariosBundle:Default:eliminarUsuario }

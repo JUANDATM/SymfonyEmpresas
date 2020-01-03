@@ -1,11 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}ADMIN EMPRESAS{% endblock %}
- {% block stylesheets %}
+{% block stylesheets %}
 <link rel="stylesheet" href="{{ asset("css/dropzone_up.css") }}">
 <link rel="stylesheet" href="{{ asset("css/jquery.dataTables.min.css") }}">
-
- {% endblock %}
+{% endblock %}
 
 {% block body %}
 <div class="container">
@@ -41,7 +40,7 @@
             </tr>
             {% endfor %}
         </tbody>
-    </table> {# <a href="{{ path('empresa_new') }}">Create new</a>   #}
+    </table> 
 </div>
 
 <!--          MODAL              -->
@@ -92,7 +91,7 @@
             </div>
             <div class="modal-footer">
                 <button id="cancelar" type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button"  id="empresas-guardar" class="btn btn-primary"><a>Crear Nuevo Registro</a></button>
+                <button type="button"  id="empresas-guardar" class="btn btn-primary">Crear Nuevo Registro</button>
             </div>
             </form>
 
