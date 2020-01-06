@@ -24,6 +24,43 @@ class DefaultController extends Controller
         return $this->render('EmpresaBundle:Empresas:adminEmpresas.html.twig', array('content' => $content));
 
     }
+    //prueba de actualizar 
+    public function ActualizarEmpresaAction(Request $request){
+        $post =$request->request->all();
+       
+        $tmp = $_FILES['archivo']["tmp_name"];
+        $tmp = file_get_contents($tmp);
+        $base64 = base64_encode($tmp);
+        $data_Empresas = array(
+            "NombreEmpresa" => "'" . $post["nombre"] . "'",
+            "DireccionEmpresa" =>"'". $post["direccion"]."'",
+            "DescripcionEmpresa" =>"'". $post["descripcion"]."'",
+            "TelefonoEmpresa" => "'".$post["telefono"]."'",
+            "CorreoEmpresa" => "'".$post["correo"]."'",
+         
+        );
+        $where=array("IdEmpresa" => "'".$post["IdEmpresa"]."'",);
+
+        $result_Empresas = $this->EmpresaModel->actualizarEmpresas($data_Empresas,$where);
+        if ($result_Empresas['status']) {
+            $data_img = array(
+               
+                "FormatoImagen" =>"'".  $_FILES['archivo']["type"]."'",
+                "RutaImagen" =>"'".$base64."'",
+            );
+            $result = $this->EmpresaModel->actualizarImagenes($data_img,$where);
+            $result['status']=true;
+            $result['data']=$post;
+
+        } else {
+            $result_Empresas['status'] = FALSE;
+            $result_Empresas['error'] = "Error";
+        }
+        return $this->jsonResponse($result);
+
+
+    }
+    //prueba de actualizar 
     public function InsertarEmpresaAction(Request $request){   
         $post =$request->request->all();
         $tmp = $_FILES['archivo']["tmp_name"];
@@ -35,8 +72,13 @@ class DefaultController extends Controller
             "DescripcionEmpresa" =>"'". $post["descripcion"]."'",
             "TelefonoEmpresa" => "'".$post["telefono"]."'",
             "CorreoEmpresa" => "'".$post["correo"]."'",
+
         );
+        
+
         $result_Empresas = $this->EmpresaModel->insertarEmpresas($data_Empresas);
+        $post['IdEmpresa']=$result_Empresas["data"][0]['IdEmpresa'];
+        
         if ($result_Empresas['status']) {
             $data_img = array(
                 "IdEmpresa" => $result_Empresas["data"][0]["IdEmpresa"] ,
@@ -46,6 +88,7 @@ class DefaultController extends Controller
             $result = $this->EmpresaModel->insertImagen($data_img);
             $result['status']=true;
             $result['data']=$post;
+            
 
         } else {
             $result_Empresas['status'] = FALSE;
