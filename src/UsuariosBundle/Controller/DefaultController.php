@@ -38,6 +38,7 @@ class DefaultController extends Controller
         return $this->jsonResponse($result_Usuario);
     }
 
+    
     public function EliminarUsuarioAction(Request $request){   
         
         $post =$request->request->all();
