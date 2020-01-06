@@ -16,6 +16,7 @@ $(document).ready(function () {
 $('#usuario-nuevo').on("click", function() {
     $("#usuariomodal").modal({ dismissible: false }).modal('open');
 });
+
 $('.delete').on("click", function() {
     var IdUsuario = $(this).attr("id-record");
     eliminarUsuario(IdUsuario);
@@ -51,20 +52,16 @@ function validateForm() {
             error.insertAfter(element)
         },
         submitHandler: function (form) {
-            insertarUsuario();
+            var post = $('#usuarioform').serialize();
+            insertarUsuario(post);
         }
     });
 
 }
 
-function reset() {
-    $("#nombre").val('');
-    $("#correo").val('');
-    $("#password").val('');
-    $("#domicilio").val('');
-    $("#rol").val('');
-    $("#nombre").focus();
-};
+/*$tr = $(this).closet('tr');
+tr = $tr;
+var idusuario = $(this).attr("data-id");*/
 
 function eliminarUsuario(IdUsuario) {
     $.ajax({
@@ -74,9 +71,8 @@ function eliminarUsuario(IdUsuario) {
         data: { IdUsuario },
         success: function(respuesta) {
             if (respuesta['status']) {
+                //table.row($tr).remove().draw();
                 M.toast({ html: 'Registro Eliminado con Exito', classes: 'rounded', displayLength: 4000 });
-                reset();
-                $("#usuariomodal").modal('close');
             } else {
                 M.toast({ html: 'Error al Eliminar ', classes: 'rounded', displayLength: 4000 });
             }
@@ -102,3 +98,20 @@ function insertarUsuario(post) {
         }
     });
 }
+
+function reset() {
+    $("#nombre").val('');
+    $("#correo").val('');
+    $("#password").val('');
+    $("#domicilio").val('');
+    $("#rol").val('');
+    $("#nombre").focus();
+};
+
+/*function setRow(data, action){
+    console.log(action);
+    if(action == 'delete'){
+        console.log('delete');
+        table.row('#' + data.pk).remove.draw();
+    }
+}*/

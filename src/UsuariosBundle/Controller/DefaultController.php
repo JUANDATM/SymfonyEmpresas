@@ -14,10 +14,6 @@ class DefaultController extends Controller
     public function __construct() {
         $this->UsuariosModel = new UsuariosModel();
     }
-    public function indexAction()
-    {
-        return $this->render('UsuariosBundle:Default:index.html.twig');
-    }
 
     public function adminUsuariosAction(){   
         $result = $this->UsuariosModel->getUsuarios();
@@ -54,7 +50,12 @@ class DefaultController extends Controller
             $result['status'] = FALSE;
             $result['error'] = "Error";
         }
-        return $result;
+        return $this->jsonResponse($result);
+    }
+    protected function jsonResponse($data) {
+        $response = new Response(json_encode($data));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
 
 }
