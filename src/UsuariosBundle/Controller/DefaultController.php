@@ -34,8 +34,8 @@ class DefaultController extends Controller
             "TipoUsuario" => "'".$post["rol"]."'",
         );
         
-         $this->UsuariosModel->insertarUsuarios($data_Usuarios);
-         return true;
+         $result_Usuarios = $this->UsuariosModel->insertarUsuarios($data_Usuarios);
+         return $this->jsonResponse($result_Usuarios);
 
     }
 

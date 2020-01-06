@@ -4,8 +4,13 @@ $(document).ready(function() {
     table = $('#usuarios-table').DataTable();
     validateForm();
     $('.sidenav').sidenav();
-    $("#usuariomodal").modal();
-
+    ("#usuariomodal").modal();
+    $('#usuarios-guardar').on("click", function() {
+        $('#usuarioform').submit();
+        insertarUsuario();
+    
+    });
+    
 });
 
 $('#usuario-nuevo').on("click", function() {
@@ -23,11 +28,6 @@ $('#cancelar').on("click", function() {
 });
 
 
-$('#usuarios-guardar').on("click", function() {
-    $('#usuarioform').submit();
-    insertarUsuario();
-
-});
 
 
 function validateForm() {
@@ -62,9 +62,9 @@ function validateForm() {
 
 }
 
-/*$tr = $(this).closet('tr');
+$tr = $(this).closet('tr');
 tr = $tr;
-var idusuario = $(this).attr("data-id");*/
+var idusuario = $(this).attr("data-id");
 
 function eliminarUsuario(IdUsuario) {
     $.ajax({
@@ -74,7 +74,7 @@ function eliminarUsuario(IdUsuario) {
         data: { IdUsuario },
         success: function(respuesta) {
             if (respuesta['status']) {
-                //table.row($tr).remove().draw();
+                table.row($tr).remove().draw();
                 M.toast({ html: 'Registro Eliminado con Exito', classes: 'rounded', displayLength: 4000 });
             } else {
                 M.toast({ html: 'Error al Eliminar ', classes: 'rounded', displayLength: 4000 });
@@ -108,4 +108,12 @@ function reset() {
     $("#domicilio").val('');
     $("#rol").val('');
     $("#nombre").focus();
-};
+}
+
+function setRow(data, action){
+    console.log(action);
+    if(action == 'delete'){
+        console.log('delete');
+        table.row('#' + data.pk).remove.draw();
+    }
+}
