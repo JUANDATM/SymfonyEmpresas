@@ -3,10 +3,10 @@
 {% block title %}CATALOGO EMPRESAS{% endblock %}
 
 {% block body %}
-   <div class="container services">
+   <div class="container">
            {% for empresa in content['empresas'] %}
           <div class="row">
-            <div class="col s4">
+            <div class="col s6">
                 <div class="card">
                   <div class="card-image waves-effect waves-block waves-light">
                     <img class="activator" src="data:{{empresa.FormatoImagen}};base64,{{ empresa.RutaImagen }}" >

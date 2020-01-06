@@ -1,12 +1,17 @@
 <?php
+
 namespace EmpresaBundle\Controller;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use EmpresaBundle\Model\EmpresaModel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+
 class DefaultController extends Controller
 {
+    
     protected $EmpresasModel;
+
     public function __construct() {
         $this->EmpresaModel = new EmpresaModel();
     }
@@ -38,15 +43,20 @@ class DefaultController extends Controller
             $result = $this->EmpresaModel->insertImagen($data_img);
             $result['status']=true;
             $result['data']=$post;
+
         } else {
             $result_Empresas['status'] = FALSE;
             $result_Empresas['error'] = "Error";
         }
         return $this->jsonResponse($result);
+
     }
+
     public function EliminarEmpresaAction(Request $request){   
+        
         $post =$request->request->all();
         $result = $this->EmpresaModel->eliminarEmpresas($post);
+
         if ($result['status']) {
             $result['data'] = $post;
             $result['status'] = TRUE;
@@ -62,4 +72,5 @@ class DefaultController extends Controller
         $response->headers->set('Content-Type', 'application/json');
         return $response;
     }
+    
 }

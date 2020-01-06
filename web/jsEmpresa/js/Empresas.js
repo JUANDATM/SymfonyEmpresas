@@ -108,7 +108,25 @@ function setRow(data, base64) {
     ]).draw().node();
 }
 
-
+function insertarEmpresa(post) {
+    $.ajax({
+        type: "post",
+        url: urlInsertar,
+        dataType: 'json',
+        data: post,
+        success: function(respuesta) {
+            if (respuesta['status']) {
+                $("#nombre").val($("#nombre").val());
+                M.toast({ html: 'Registro exitoso', classes: 'rounded', displayLength: 4000 });
+                reset();
+                $("#empresamodal").modal('close');
+                $("#nombre").focus();
+            } else {
+                M.toast({ html: 'Error al Registrar ', classes: 'rounded', displayLength: 4000 });
+            }
+        }
+    });
+}
 
 function insertarEmpresa() {
 
