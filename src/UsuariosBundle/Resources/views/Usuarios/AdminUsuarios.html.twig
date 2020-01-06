@@ -18,7 +18,6 @@
                 <th style="width:30%">Correo</th>
                 <th style="width:20%">Contraseña</th>
                 <th style="width:20%">Domicilio</th>
-                <th style="width:20%">Rol</th>
                 <th style="width:20%">Acciones</th>
             </tr>
         </thead>
@@ -30,7 +29,6 @@
                 <td>{{ usuario.CorreoUsuario }}</td>
                 <td>{{ usuario.PasswordUsuario }}</td>
                 <td>{{ usuario.DomicilioUsuario }}</td>
-                <td>{{ usuario.TipoUsuario }}</td>
                 <td>
                     <a id="editar" name="editar" class="edit btn btn-warning" href="#"><i class="material-icons">create</i></a>
                     <a id="eliminar" name="eliminar" id-record="{{usuario.IdUsuario}}" class="delete btn btn-danger" href="#"><i class="material-icons">delete_sweep</i></a>
@@ -80,7 +78,7 @@
                     </div>
                     <div class="modal-footer">
                         <button id="cancelar" type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button id="usuarios-guardar" type="submit" class="btn btn-primary">Guardar</button>
+                        <button id="usuarios-guardar" class="btn btn-primary">Guardar</button>
                     </div>
                 </form>
 
@@ -92,7 +90,7 @@
 {% block javascripts %}
     {{parent()}}
     <script type="text/javascript"> 
-        var urlInsertar = "{{path('usuario_admin_insertar')}}";
+        var urlInsertarUsuario = "{{path('usuario_admin_insertar')}}";
     </script>
 
     <script type="text/javascript"> 

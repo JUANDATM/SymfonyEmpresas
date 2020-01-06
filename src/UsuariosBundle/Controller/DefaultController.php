@@ -28,7 +28,7 @@ class DefaultController extends Controller
 
     }
     public function InsertarUsuarioAction(Request $request){   
-        $post =$request->request->all();
+        $post = $request->request->all();
 
         $data_Usuarios = array(
             "NombreUsuario" => "'" . $post["nombre"] . "'",
@@ -37,24 +37,17 @@ class DefaultController extends Controller
             "DomicilioUsuario" => "'".$post["domicilio"]."'",
             "TipoUsuario" => "'".$post["rol"]."'",
         );
-        $result_Usuario = $this->UsuariosModel->insertarUsuarios($data_Usuarios);
-        return $result_Usuario;
+        
+         $this->UsuariosModel->insertarUsuarios($data_Usuarios);
+         return true;
+
     }
 
     public function EliminarUsuarioAction(Request $request){   
         
         $post =$request->request->all();
-        $result = $this->UsuariosModel->eliminarUsuarios($post);
-
-        if ($result['status']) {
-            $result['data'] = $post;
-            $result['status'] = TRUE;
-            $result['message'] = "Elimidado con exito";
-        } else {
-            $result['status'] = FALSE;
-            $result['error'] = "Error";
-        }
-        return $result;
+        $this->UsuariosModel->eliminarUsuarios($post);
+        return true;
     }
 
 }
