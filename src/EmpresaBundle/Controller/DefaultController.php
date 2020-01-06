@@ -2,8 +2,6 @@
 namespace EmpresaBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use EmpresaBundle\Model\EmpresaModel;
-
-
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 class DefaultController extends Controller

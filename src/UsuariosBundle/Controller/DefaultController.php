@@ -14,10 +14,6 @@ class DefaultController extends Controller
     public function __construct() {
         $this->UsuariosModel = new UsuariosModel();
     }
-    public function indexAction()
-    {
-        return $this->render('UsuariosBundle:Default:index.html.twig');
-    }
 
     public function adminUsuariosAction(){   
         $result = $this->UsuariosModel->getUsuarios();
@@ -46,8 +42,22 @@ class DefaultController extends Controller
     public function EliminarUsuarioAction(Request $request){   
         
         $post =$request->request->all();
-        $this->UsuariosModel->eliminarUsuarios($post);
-        return true;
+        $result = $this->UsuariosModel->eliminarUsuarios($post);
+
+        if ($result['status']) {
+            $result['data'] = $post;
+            $result['status'] = TRUE;
+            $result['message'] = "Elimidado con exito";
+        } else {
+            $result['status'] = FALSE;
+            $result['error'] = "Error";
+        }
+        return $this->jsonResponse($result);
+    }
+    protected function jsonResponse($data) {
+        $response = new Response(json_encode($data));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
 
 }
