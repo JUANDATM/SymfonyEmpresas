@@ -71,7 +71,7 @@ function eliminarUsuario(IdUsuario) {
         data: { IdUsuario },
         success: function(respuesta) {
             if (respuesta['status']) {
-                //table.row($tr).remove().draw();
+                //table.remove().draw();
                 M.toast({ html: 'Registro Eliminado con Exito', classes: 'rounded', displayLength: 4000 });
             } else {
                 M.toast({ html: 'Error al Eliminar ', classes: 'rounded', displayLength: 4000 });
