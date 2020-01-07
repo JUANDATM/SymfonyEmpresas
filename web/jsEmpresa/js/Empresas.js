@@ -27,12 +27,7 @@ $('.edit').on("click", function () {
     actualizarEmpresa(IdEmpresa);
 });
 
-
-
-//sirve para editar los servicios
-$(document).on('click', '#editar', function () {
-    $("#empresamodal").modal({ dismissible: false }).modal('open');
-});
+//sirve para editar los servicio
 
 $('.delete').on("click", function () {
     $tr = $(this).closest('tr');
@@ -45,7 +40,6 @@ $('.delete').on("click", function () {
 $('#cancelar').on("click", function () {
     $("#empresamodal").modal('close');
     reset();
-
 });
 
 function pintarDatos(IdEmpresa) {
@@ -55,7 +49,6 @@ function pintarDatos(IdEmpresa) {
     $("#correo").val(Empresas[IdEmpresa]["CorreoEmpresa"]).next().addClass("active");
     $("#descripcion").val(Empresas[IdEmpresa]["DescripcionEmpresa"]).next().addClass("active");
     $("#IdEmpresa").val(IdEmpresa);
-
 }
 
 function validateForm() {
@@ -67,7 +60,6 @@ function validateForm() {
             correo: { required: true, email: true },
             descripcion: { required: true, minlength: 4, maxlength: 250 },
             addfile: { required: true },
-
         },
         messages: {
             nombre: { required: "No puedes dejar este campo vacío", email: "Se requiere correo valido", minlength: "Debes ingresar al menos 4 caracteres", maxlength: "No puedes ingresar más de 220 caracteres" },
@@ -76,7 +68,6 @@ function validateForm() {
             descripcion: { required: "No puedes dejar este campo vacío", minlength: "Debes ingresar al menos 4 caracteres", maxlength: "No puedes ingresar más de 250 caracteres" },
             correo: { required: "No puedes dejar este campo vacion", email: "Este campo debe de ser un correo electronico" },
             addfile: { required: "Favor de agregar una imagen" },
-
         },
         errorElement: "div",
         errorClass: "invalid",
@@ -89,8 +80,6 @@ function validateForm() {
     });
 
 }
-// Envia los datos del formulario de registro a la base de datos
-
 
 // Limpia los campos al cerrar la modal
 function reset() {
@@ -154,13 +143,43 @@ function eliminarEmpresa(IdEmpresa) {
     });
 }
 
+
+function setRow(data, base64, action) {
+    if (action === 'insert') {
+        var row = table.row.add([
+            data.IdEmpresa,
+            data.nombre,
+            data.direccion,
+            data.descripcion,
+            data.telefono,
+            data.correo,
+            "<img src='" + base64 + "' width='200px' height='100px' ></img>",
+            "<a id='editar' name='editar'  id-edit='" + data.IdEmpresa + "' class='edit btn btn-warning'><i class='material-icons'>create</i></a>" +
+            "<a id='eliminar' name='eliminar' id-record='" + data.IdEmpresa + "' class='delete btn btn-danger' ><i class='material-icons'>delete_sweep</i></a>"
+
+        ]).draw().node();
+
+    }
+    if (action === 'update') {
+
+        Empresas[data.IdEmpresa] = data;
+        var row = table.row('#' + data.IdEmpresa).node();
+        $(row).find('td:nth-child(1)').text(data.NombreEmpresa);
+        $(row).find('td:nth-child(2)').text(data.DireccionEmpresa);
+        $(row).find('td:nth-child(3)').text(data.DescripcionEmpresa);
+        $(row).find('td:nth-child(4)').text(data.TelefonoEmpresa);
+        $(row).find('td:nth-child(5)').text(data.CorreoEmpresa);
+        $(row).find('td:nth-child(6)').text(data.RutaImagen);
+    }
+}
+
 function actualizarEmpresa(IdEmpresa) {
     //Dropzone class
     pdf = $(".add-file").dropzone({
         url: urlActualizar,
         paramName: "archivo",
         maxFilesize: 15, //MB
-        maxFiles: 1,
+        maxFiles: 10,
         method: "post",
         uploadMultiple: false,
         previewsContainer: false,
@@ -169,24 +188,23 @@ function actualizarEmpresa(IdEmpresa) {
         acceptedFiles: ".jpeg, .png , .jpg",
         autoProcessQueue: false,
         data: { IdEmpresa },
-        error: function (file, errorMessage) {
+        error: function(file, errorMessage) {
             M.toast({ html: errorMessage, classes: 'rounded', displayLength: 4000 });
-
         },
-        init: function () {
+        init: function() {
             myDropzone = this;
-            $("#empresas-guardar").click(function (e) {
+            $("#empresas-guardar").click(function(e) {
                 $('#empresa-form').submit();
 
             });
-            this.on("sending", function (file, xhr, formData) {
+            this.on("sending", function(file, xhr, formData) {
                 var data = $('#empresa-form').serializeArray();
                 // post = post + "&IdEmpresa=" + ;
-                $.each(data, function (key, el) {
+                $.each(data, function(key, el) {
                     formData.append(el.name, el.value);
                 });
             });
-            this.on("success", function (file) {
+            this.on("success", function(file) {
                 var res = JSON.parse(file.xhr.response);
                 var base64 = file.dataURL;
                 var data = res.data;
