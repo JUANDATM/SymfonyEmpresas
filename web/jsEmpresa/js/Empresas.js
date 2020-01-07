@@ -16,7 +16,6 @@ $(document).ready(function() {
 });
 $('#empresa-nuevo').on("click", function() {
     $("#empresamodal").modal({ dismissible: false }).modal('open');
-    alert("Insertando");
     insertarEmpresa();
 });
 $('.edit').on("click", function() {
@@ -27,25 +26,20 @@ $('.edit').on("click", function() {
     actualizarEmpresa(IdEmpresa);
 });
 
-
-
 //sirve para editar los servicios
 $(document).on('click', '#editar', function() {
     $("#empresamodal").modal({ dismissible: false }).modal('open');
-
 
 });
 
 $('.delete').on("click", function() {
     var IdEmpresa = $(this).attr("id-record");
-    alert("eliminando esta madre");
     eliminarEmpresa(IdEmpresa);
 });
 
 $('#cancelar').on("click", function() {
     $("#empresamodal").modal('close');
     reset();
-
 });
 
 function pintarDatos(IdEmpresa) {
@@ -55,7 +49,6 @@ function pintarDatos(IdEmpresa) {
     $("#correo").val(Empresas[IdEmpresa]["CorreoEmpresa"]).next().addClass("active");
     $("#descripcion").val(Empresas[IdEmpresa]["DescripcionEmpresa"]).next().addClass("active");
     $("#IdEmpresa").val(IdEmpresa);
-
 }
 
 function validateForm() {
@@ -67,7 +60,6 @@ function validateForm() {
             correo: { required: true, email: true },
             descripcion: { required: true, minlength: 4, maxlength: 250 },
             addfile: { required: true },
-
         },
         messages: {
             nombre: { required: "No puedes dejar este campo vacío", email: "Se requiere correo valido", minlength: "Debes ingresar al menos 4 caracteres", maxlength: "No puedes ingresar más de 220 caracteres" },
@@ -76,7 +68,6 @@ function validateForm() {
             descripcion: { required: "No puedes dejar este campo vacío", minlength: "Debes ingresar al menos 4 caracteres", maxlength: "No puedes ingresar más de 250 caracteres" },
             correo: { required: "No puedes dejar este campo vacion", email: "Este campo debe de ser un correo electronico" },
             addfile: { required: "Favor de agregar una imagen" },
-
         },
         errorElement: "div",
         errorClass: "invalid",
@@ -89,8 +80,6 @@ function validateForm() {
     });
 
 }
-// Envia los datos del formulario de registro a la base de datos
-
 
 // Limpia los campos al cerrar la modal
 function reset() {
@@ -127,7 +116,7 @@ function setRow(data, base64, action) {
             data.descripcion,
             data.telefono,
             data.correo,
-            "<img src='" + base64 + "' width='200' height='100' ></img>",
+            "<img src='" + base64 + "' width='200px' height='100px' ></img>",
             "<a id='editar' name='editar'  id-edit='" + data.IdEmpresa + "' class='edit btn btn-warning'><i class='material-icons'>create</i></a>" +
             "<a id='eliminar' name='eliminar' id-record='" + data.IdEmpresa + "' class='delete btn btn-danger' ><i class='material-icons'>delete_sweep</i></a>"
 
@@ -144,11 +133,8 @@ function setRow(data, base64, action) {
         $(row).find('td:nth-child(4)').text(data.TelefonoEmpresa);
         $(row).find('td:nth-child(5)').text(data.CorreoEmpresa);
         $(row).find('td:nth-child(6)').text(data.RutaImagen);
-
-
     }
 }
-
 
 function actualizarEmpresa(IdEmpresa) {
     //Dropzone class
@@ -167,7 +153,6 @@ function actualizarEmpresa(IdEmpresa) {
         data: { IdEmpresa },
         error: function(file, errorMessage) {
             M.toast({ html: errorMessage, classes: 'rounded', displayLength: 4000 });
-
         },
         init: function() {
             myDropzone = this;

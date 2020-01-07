@@ -36,7 +36,7 @@ class DefaultController extends Controller
             "CorreoEmpresa" => "'".$post["correo"]."'",
          
         );
-        $where=array("IdEmpresa" => "'".$post["IdEmpresa"]."'",);
+        $where=array("IdEmpresa" => "'".$post["IdEmpresa"]."'");
 
         $result_Empresas = $this->EmpresaModel->actualizarEmpresas($data_Empresas,$where);
         if ($result_Empresas['status']) {
