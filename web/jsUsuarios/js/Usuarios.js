@@ -1,80 +1,117 @@
-$(init);
 
-function init() {
-    // Inicializa el NavBar
-    $(document).ready(function() {
-        $('.sidenav').sidenav();
+// Inicializa el NavBar
+var table = "null";
+$(document).ready(function () {
+    table = $('#usuarios-table').DataTable();
+    validateForm();
+    $('.sidenav').sidenav();
+    ("#usuariomodal").modal();
+    $('#usuarios-guardar').on("click", function() {
+        //document.getElementById('empresa-form').reset();
+        $('#usuarioform').submit();
     });
+    insertarUsuario();
+});
 
+$('#usuario-nuevo').on("click", function() {
+    $("#usuariomodal").modal({ dismissible: false }).modal('open');
+});
 
-    //Iniciliza la ventana Modal y la Validación
-    $("#usuario-modal").modal();
-    // Clic del boton circular para validar correo y contraseña
+$('.delete').on("click", function() {
+    var IdUsuario = $(this).attr("id-record");
+    eliminarUsuario(IdUsuario);
+});
 
-    // Clic del boton circular Agregar Registro Nuevo formulario modal
-    $("#usuario-nuevo").on("click", function() {
-        $("#nombre").val('');
-        $("#correo").val('');
-        $("#contraseña").val('');
-        $("#usuario-modal").modal('open');
-        $("#nombre").focus();
+$('#cancelar').on("click", function() {
+    $("#usuariomodal").modal('close');
+    reset();
+});
 
-    });
-    // clic del boton de guardar
-    $('#guardar').on("click", function() {
-        document.getElementById('usuario-form').reset();
-        $('#usuario-form').submit();
-    });
-}
 
 function validateForm() {
-    $('#usuario-form').validate({
+    $('#usuarioform').validate({
         rules: {
             nombre: { required: true, minlength: 4, maxlength: 220 },
-            correo: { required: true, minlength: 4, maxlength: 220 },
-            contraseña: { required: true, number: true, minlength: 7, maxlength: 13 },
-            rol: { required: true, minlength: 4, maxlength: 250 },
+            correo: { required: true, email: true },
+            password: { required: true, minlength: 7, maxlength: 50 },
+            domicilio: { required: true,  minlength: 7, maxlength: 250 },
+            rol: { required: true, minlength: 1, maxlength: 10 },
 
         },
         messages: {
             nombre: { required: "Este campo es OBLIGATORIO", minlength: "El minimo de caracteres son 4", maxlength: "Maximo de caracteres sobrepasado" },
             correo: { required: "No puedes dejar este campo vacío", email: "Se requiere correo valido", minlength: "Debes ingresar al menos 4 caracteres", maxlength: "No puedes ingresar más de 220 caracteres" },
-            contraseña: { required: "No se puede dejar el campo vacio", minlength: "Debes ingresar al menos 4 caracteres", maxlength: "No puedes ingresar más de 220 caracteres" },
-            rol: { required: "No puedes dejar este campo vacío", minlength: "Debes ingresar al menos 4 caracteres", maxlength: "No puedes ingresar más de 250 caracteres" },
+            password: { required: "No puedes dejar este campo vacío", minlength: "Debes ingresar al menos 7 caracteres", maxlength: "No puedes ingresar más de 50 caracteres" },
+            domicilio: { required: "No puedes dejar este campo vacío",  minlength: "Debes ingresar al menos 7 caracteres", maxlength: "No puedes ingresar más de 250 caracteres" },
+            rol: { required: "No puedes dejar este campo vacío", minlength: "Debes ingresar al menos 1 caracteres", maxlength: "No puedes ingresar más de 10 caracteres" },
 
         },
         errorElement: "div",
         errorClass: "invalid",
-        errorPlacement: function(error, element) {
+        errorPlacement: function (error, element) {
             error.insertAfter(element)
         },
-        submitHandler: function(form) {
-            saveData();
+        submitHandler: function (form) {
+            var post = $('#usuarioform').serialize();
+            insertarUsuario(post);
         }
     });
 
 }
-// Envia los datos del formulario de registro a la base de datos
-function saveData() {
-    var sURL = "actRegistroGuarda.php";
-    var parametros = 'correo=' + $("#correo").val() +
-        '&nombre=' + $("#nombre").val() +
-        '&rol=' + $("#rol").val() +
-        '&contraseña=' + $("#contraseña").val();
+
+/*$tr = $(this).closet('tr');
+tr = $tr;
+var idusuario = $(this).attr("data-id");*/
+
+function eliminarUsuario(IdUsuario) {
     $.ajax({
-        type: "post",
-        url: sURL,
+        type: "delete",
+        url: urlEliminar,
         dataType: 'json',
-        data: parametros,
+        data: { IdUsuario },
         success: function(respuesta) {
             if (respuesta['status']) {
-                $("#correo").val($("#correo").val());
-                M.toast({ html: 'Registro exitoso', classes: 'rounded', displayLength: 4000 });
-                $("#usuario-modal").modal('close');
-                $("#contraseña").focus();
+                //table.row($tr).remove().draw();
+                M.toast({ html: 'Registro Eliminado con Exito', classes: 'rounded', displayLength: 4000 });
             } else {
-                M.toast({ html: 'Error al Registrar Usuario', classes: 'rounded', displayLength: 4000 });
+                M.toast({ html: 'Error al Eliminar ', classes: 'rounded', displayLength: 4000 });
             }
         }
     });
 }
+function insertarUsuario(post) {
+    $.ajax({
+        type: "post",
+        url: urlInsertar,
+        dataType: 'json',
+        data: post,
+        success: function(respuesta) {
+            if (respuesta['status']) {
+                $("#nombre").val($("#nombre").val());
+                M.toast({ html: 'Registro exitoso', classes: 'rounded', displayLength: 4000 });
+                reset();
+                $("#usuariomodal").modal('close');
+                $("#nombre").focus();
+            } else {
+                M.toast({ html: 'Error al Registrar ', classes: 'rounded', displayLength: 4000 });
+            }
+        }
+    });
+}
+
+function reset() {
+    $("#nombre").val('');
+    $("#correo").val('');
+    $("#password").val('');
+    $("#domicilio").val('');
+    $("#rol").val('');
+    $("#nombre").focus();
+};
+
+/*function setRow(data, action){
+    console.log(action);
+    if(action == 'delete'){
+        console.log('delete');
+        table.row('#' + data.pk).remove.draw();
+    }
+}*/
