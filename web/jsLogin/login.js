@@ -1,5 +1,4 @@
 $(init);
-//document.write("funciona chingadera!!!");
 
 function init() {
     // Inicializa el NavBar
