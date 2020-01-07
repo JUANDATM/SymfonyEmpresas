@@ -14,4 +14,8 @@ empresa_admin_eliminar:
     path:     /eliminarEmpresa
     defaults: { _controller: EmpresaBundle:Default:eliminarEmpresa }
     
+empresa_admin_actualizar:
+    path:     /actualizarEmpresa
+    defaults: { _controller: EmpresaBundle:Default:actualizarEmpresa }
+    
     

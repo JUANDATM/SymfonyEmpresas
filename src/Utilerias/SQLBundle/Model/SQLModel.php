@@ -56,6 +56,9 @@ class SQLModel {
                 $primaryKey = "'" . substr($primaryKey, 1, -1) . "'";
             }
             $qry .= ' RETURNING "' . $primaryKey . '"';
+            
+
+
         }
         
         return $this->PGModel->execQueryString($qry);

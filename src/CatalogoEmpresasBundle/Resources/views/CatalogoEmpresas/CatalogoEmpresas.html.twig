@@ -3,9 +3,9 @@
 {% block title %}CATALOGO EMPRESAS{% endblock %}
 
 {% block body %}
-   <div class="container services">
+   <div class="container">
+             <div class="row">
            {% for empresa in content['empresas'] %}
-          <div class="row">
             <div class="col s4">
                 <div class="card">
                   <div class="card-image waves-effect waves-block waves-light">
@@ -22,11 +22,14 @@
                     <p>Correo Electronico : {{empresa.CorreoEmpresa}}</p>
                     <p>Descipcion : {{empresa.DescripcionEmpresa}}</p>
                     <p>Telefono : {{empresa.TelefonoEmpresa}}</p>
+
+                    
                   </div>
                 </div>
             </div>
-          </div>
             {% endfor %}
+                      </div>
+
     </div>
 
 {% endblock %}

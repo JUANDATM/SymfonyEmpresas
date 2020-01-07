@@ -54,6 +54,7 @@ class DefaultController extends Controller
         }
         return $this->jsonResponse($result);
     }
+    
     protected function jsonResponse($data) {
         $response = new Response(json_encode($data));
         $response->headers->set('Content-Type', 'application/json');
