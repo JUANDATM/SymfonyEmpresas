@@ -53,6 +53,18 @@ class EmpresaModel {
 
         return $result;
     }
+
+    public function actualizarImagenes($post,$where){
+
+        $result = $this->SQLModel->updateFromTable('Imagenes',$post,$where);
+        return $result;
+    }
+
+    public function actualizarEmpresas($data,$where){
+       // $where=array('IdEmpresa'='IdEmpresa');
+        $result = $this->SQLModel->updateFromTable('Empresa',$data,$where);
+        return $result;
+    }
 }
 
 

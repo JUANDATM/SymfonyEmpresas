@@ -11,18 +11,34 @@ $(document).ready(function() {
         //document.getElementById('empresa-form').reset();
         $('#empresa-form').submit();
     });
-    insertarEmpresa();
+    //insertarEmpresa();
+    //actualizarEmpresa();
 });
 $('#empresa-nuevo').on("click", function() {
     $("#empresamodal").modal({ dismissible: false }).modal('open');
+    alert("Insertando");
+    insertarEmpresa();
 });
-$('#editar').on("click", function() {
-    document.getElementById('empresa-form').reset();
-    $('#empresa-form').submit();
+$('.edit').on("click", function() {
+    var IdEmpresa = $(this).attr("id-edit");
+    pintarDatos(IdEmpresa);
+    $("#empresas-guardar").attr("IdEmpresa", IdEmpresa);
+    $("#empresamodal").modal({ dismissible: false }).modal('open');
+    actualizarEmpresa(IdEmpresa);
+});
+
+
+
+//sirve para editar los servicios
+$(document).on('click', '#editar', function() {
+    $("#empresamodal").modal({ dismissible: false }).modal('open');
+
+
 });
 
 $('.delete').on("click", function() {
     var IdEmpresa = $(this).attr("id-record");
+    alert("eliminando esta madre");
     eliminarEmpresa(IdEmpresa);
 });
 
@@ -31,6 +47,16 @@ $('#cancelar').on("click", function() {
     reset();
 
 });
+
+function pintarDatos(IdEmpresa) {
+    $("#nombre").val(Empresas[IdEmpresa]["NombreEmpresa"]).next().addClass("active");
+    $("#direccion").val(Empresas[IdEmpresa]["DireccionEmpresa"]).next().addClass("active");
+    $("#telefono").val(Empresas[IdEmpresa]["TelefonoEmpresa"]).next().addClass("active");
+    $("#correo").val(Empresas[IdEmpresa]["CorreoEmpresa"]).next().addClass("active");
+    $("#descripcion").val(Empresas[IdEmpresa]["DescripcionEmpresa"]).next().addClass("active");
+    $("#IdEmpresa").val(IdEmpresa);
+
+}
 
 function validateForm() {
     $('#empresa-form').validate({
@@ -92,39 +118,87 @@ function eliminarEmpresa(IdEmpresa) {
     });
 }
 
-function setRow(data, base64) {
-    var img = document.createElement("img");
-    img.setAttribute('src', base64);
-    img.setAttribute('width', "200px");
-    img.setAttribute('height', "200px");
-    var row = table.row.add([
-        //data.IdEmpresa,
-        data.nombre,
-        data.direccion,
-        data.descripcion,
-        data.telefono,
-        data.correo,
-        img
-    ]).draw().node();
+function setRow(data, base64, action) {
+    if (action === 'insert') {
+        var row = table.row.add([
+            data.IdEmpresa,
+            data.nombre,
+            data.direccion,
+            data.descripcion,
+            data.telefono,
+            data.correo,
+            "<img src='" + base64 + "' width='200' height='100' ></img>",
+            "<a id='editar' name='editar'  id-edit='" + data.IdEmpresa + "' class='edit btn btn-warning'><i class='material-icons'>create</i></a>" +
+            "<a id='eliminar' name='eliminar' id-record='" + data.IdEmpresa + "' class='delete btn btn-danger' ><i class='material-icons'>delete_sweep</i></a>"
+
+        ]).draw().node();
+
+    }
+    if (action === 'update') {
+
+        Empresas[data.IdEmpresa] = data;
+        var row = table.row('#' + data.IdEmpresa).node();
+        $(row).find('td:nth-child(1)').text(data.NombreEmpresa);
+        $(row).find('td:nth-child(2)').text(data.DireccionEmpresa);
+        $(row).find('td:nth-child(3)').text(data.DescripcionEmpresa);
+        $(row).find('td:nth-child(4)').text(data.TelefonoEmpresa);
+        $(row).find('td:nth-child(5)').text(data.CorreoEmpresa);
+        $(row).find('td:nth-child(6)').text(data.RutaImagen);
+
+
+    }
 }
 
-function insertarEmpresa(post) {
-    $.ajax({
-        type: "post",
-        url: urlInsertar,
-        dataType: 'json',
-        data: post,
-        success: function(respuesta) {
-            if (respuesta['status']) {
-                $("#nombre").val($("#nombre").val());
-                M.toast({ html: 'Registro exitoso', classes: 'rounded', displayLength: 4000 });
-                reset();
-                $("#empresamodal").modal('close');
-                $("#nombre").focus();
-            } else {
-                M.toast({ html: 'Error al Registrar ', classes: 'rounded', displayLength: 4000 });
-            }
+
+function actualizarEmpresa(IdEmpresa) {
+    //Dropzone class
+    pdf = $(".add-file").dropzone({
+        url: urlActualizar,
+        paramName: "archivo",
+        maxFilesize: 15, //MB
+        maxFiles: 10,
+        method: "post",
+        uploadMultiple: false,
+        previewsContainer: false,
+        dictFileTooBig: "Error, el archivo no debe superar los 10MB",
+        dictInvalidFileType: "Error, tipo de formato no aceptado",
+        acceptedFiles: ".jpeg, .png , .jpg",
+        autoProcessQueue: false,
+        data: { IdEmpresa },
+        error: function(file, errorMessage) {
+            M.toast({ html: errorMessage, classes: 'rounded', displayLength: 4000 });
+
+        },
+        init: function() {
+            myDropzone = this;
+            $("#empresas-guardar").click(function(e) {
+                $('#empresa-form').submit();
+
+            });
+            this.on("sending", function(file, xhr, formData) {
+                var data = $('#empresa-form').serializeArray();
+                // post = post + "&IdEmpresa=" + ;
+                $.each(data, function(key, el) {
+                    formData.append(el.name, el.value);
+                });
+            });
+            this.on("success", function(file) {
+                var res = JSON.parse(file.xhr.response);
+                var base64 = file.dataURL;
+                var data = res.data;
+                if (res.status) {
+                    M.toast({ html: 'Se actualizo con exitoso', classes: 'rounded', displayLength: 4000 });
+                    var action = "update";
+                    setRow(data, base64, action);
+                    reset();
+                    $("#empresamodal").modal('close');
+                } else {
+                    show_alert("warning", res.data);
+                }
+
+            });
         }
+
     });
 }
 
@@ -165,7 +239,8 @@ function insertarEmpresa() {
                 var data = res.data;
                 if (res.status) {
                     M.toast({ html: 'Registro exitoso', classes: 'rounded', displayLength: 4000 });
-                    setRow(data, base64);
+                    var action = "insert";
+                    setRow(data, base64, action);
                     reset();
                     $("#empresamodal").modal('close');
                 } else {
