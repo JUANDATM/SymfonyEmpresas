@@ -27,9 +27,6 @@ $('.edit').on("click", function () {
     actualizarEmpresa(IdEmpresa);
 });
 
-
-
-//sirve para editar los servicios
 $(document).on('click', '#editar', function () {
     $("#empresamodal").modal({ dismissible: false }).modal('open');
 });
