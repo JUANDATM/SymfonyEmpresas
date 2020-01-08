@@ -32,12 +32,11 @@ $('.edit').on("click", function () {
 //sirve para editar los servicios
 $(document).on('click', '#editar', function () {
     $("#empresamodal").modal({ dismissible: false }).modal('open');
-
-
 });
 
+
+
 $('.delete').on("click", function () {
-    
     $tr = $(this).closest('tr');
     tr = $tr;
     var IdEmpresa = $(this).attr("id-record");
@@ -58,7 +57,6 @@ function pintarDatos(IdEmpresa) {
     $("#correo").val(Empresas[IdEmpresa]["CorreoEmpresa"]).next().addClass("active");
     $("#descripcion").val(Empresas[IdEmpresa]["DescripcionEmpresa"]).next().addClass("active");
     $("#IdEmpresa").val(IdEmpresa);
-
 }
 
 function validateForm() {
@@ -111,9 +109,9 @@ function setRow(data, base64, action) {
             data.IdEmpresa,
             data.nombre,
             data.direccion,
-            data.descripcion,
             data.telefono,
             data.correo,
+            data.descripcion,
             "<img src='" + base64 + "' width='200' height='100' ></img>",
             "<a id='editar' name='editar'  id-edit='" + data.IdEmpresa + "' class='edit btn btn-warning'><i class='material-icons'>create</i></a>" +
             "<a id='eliminar' name='eliminar' id-record='" + data.IdEmpresa + "' class='delete btn btn-danger' ><i class='material-icons'>delete_sweep</i></a>"
@@ -127,9 +125,9 @@ function setRow(data, base64, action) {
         var row = table.row('#' + data.IdEmpresa).node();
         $(row).find('td:nth-child(1)').text(data.NombreEmpresa);
         $(row).find('td:nth-child(2)').text(data.DireccionEmpresa);
-        $(row).find('td:nth-child(3)').text(data.DescripcionEmpresa);
+        $(row).find('td:nth-child(5)').text(data.DescripcionEmpresa);
         $(row).find('td:nth-child(4)').text(data.CorreoEmpresa);
-        $(row).find('td:nth-child(5)').text(data.TelefonoEmpresa);
+        $(row).find('td:nth-child(3)').text(data.TelefonoEmpresa);
         $(row).find('td:nth-child(6)').text(data.RutaImagen);
     }
     if (action === 'delete') {
@@ -163,7 +161,7 @@ function actualizarEmpresa(IdEmpresa) {
         url: urlActualizar,
         paramName: "archivo",
         maxFilesize: 15, //MB
-        maxFiles: 1,
+        maxFiles: 2,
         method: "post",
         uploadMultiple: false,
         previewsContainer: false,
@@ -216,7 +214,7 @@ function insertarEmpresa() {
         url: urlInsertar,
         paramName: "archivo",
         maxFilesize: 15, //MB
-        maxFiles: 1,
+        maxFiles: 2,
         method: "post",
         uploadMultiple: false,
         previewsContainer: false,
