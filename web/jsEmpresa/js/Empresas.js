@@ -27,15 +27,6 @@ $('.edit').on("click", function () {
     actualizarEmpresa(IdEmpresa);
 });
 
-
-
-//sirve para editar los servicios
-$(document).on('click', '#editar', function () {
-    $("#empresamodal").modal({ dismissible: false }).modal('open');
-});
-
-
-
 $('.delete').on("click", function () {
     $tr = $(this).closest('tr');
     tr = $tr;
@@ -47,7 +38,6 @@ $('.delete').on("click", function () {
 $('#cancelar').on("click", function () {
     $("#empresamodal").modal('close');
     reset();
-
 });
 
 function pintarDatos(IdEmpresa) {
@@ -68,7 +58,6 @@ function validateForm() {
             correo: { required: true, email: true },
             descripcion: { required: true, minlength: 4, maxlength: 250 },
             addfile: { required: true },
-
         },
         messages: {
             nombre: { required: "No puedes dejar este campo vacío", email: "Se requiere correo valido", minlength: "Debes ingresar al menos 4 caracteres", maxlength: "No puedes ingresar más de 220 caracteres" },
@@ -77,7 +66,6 @@ function validateForm() {
             descripcion: { required: "No puedes dejar este campo vacío", minlength: "Debes ingresar al menos 4 caracteres", maxlength: "No puedes ingresar más de 250 caracteres" },
             correo: { required: "No puedes dejar este campo vacion", email: "Este campo debe de ser un correo electronico" },
             addfile: { required: "Favor de agregar una imagen" },
-
         },
         errorElement: "div",
         errorClass: "invalid",
@@ -90,8 +78,6 @@ function validateForm() {
     });
 
 }
-// Envia los datos del formulario de registro a la base de datos
-
 
 // Limpia los campos al cerrar la modal
 function reset() {
@@ -172,7 +158,6 @@ function actualizarEmpresa(IdEmpresa) {
         data: { IdEmpresa },
         error: function (file, errorMessage) {
             M.toast({ html: errorMessage, classes: 'rounded', displayLength: 4000 });
-
         },
         init: function () {
             myDropzone = this;
