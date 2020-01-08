@@ -1,0 +1,3 @@
+control_acceso_homepage:
+    path:     /
+    defaults: { _controller: ControlAccesoBundle:Default:index }

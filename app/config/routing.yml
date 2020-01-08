@@ -1,3 +1,7 @@
+control_acceso:
+    resource: "@ControlAccesoBundle/Resources/config/routing.yml"
+    prefix:   /
+
 catalogo_empresas:
     resource: "@CatalogoEmpresasBundle/Resources/config/routing.yml"
     prefix:   /
