@@ -26,7 +26,7 @@
         </thead>
         <tbody>
            {% for empresa in content['empresas'] %}
-            <tr id="'".{{ empresa.IdEmpresa }}."'">
+            <tr>
                 <td>{{ empresa.IdEmpresa }}</td>
                 <td>{{ empresa.NombreEmpresa }}</td>
                 <td>{{ empresa.DireccionEmpresa }}</td>
@@ -36,8 +36,8 @@
                 <td><img src="data:{{empresa.FormatoImagen}};base64,{{ empresa.RutaImagen }}" width="200px" height="100px"/></td>
                 {#<td>{{ empresa.visitas }}</td>#}
                 <td>
-                    <a id="editar" name="editar"  id-edit="{{empresa.IdEmpresa}}" class="edit btn btn-warning"><i class="material-icons">create</i></a>
-                    <a id="eliminar" name="eliminar" id-record="{{empresa.IdEmpresa}}" class="delete btn btn-danger"><i class="material-icons">delete_sweep</i></a>
+                    <a id="editar" name="editar"  id-edit="{{empresa.IdEmpresa}}" class="edit btn btn-warning" href="#"><i class="material-icons">create</i></a>
+                    <a id="eliminar" name="eliminar" id-record="{{empresa.IdEmpresa}}" class="delete btn btn-danger" href="#"><i class="material-icons">delete_sweep</i></a>
                 </td>
             </tr>
             {% endfor %}
@@ -62,23 +62,26 @@
                             <input id="nombre" name="nombre" type="text" class="form-control" placeholder="Nombre Empresa:" >
                         </div>
                     </div>
+                    <br></br>
                     <div class="row">
                         <div class="col s12">
                             <input id="direccion" name="direccion"  type="text" class="form-control" placeholder="Direccion Empresa:">
                         </div>
                     </div>
+                    <br></br>
                     <div class="row">
-                        <div class="col s5">
+                        <div class="col s12">
                             <input id="telefono" name="telefono" type="text" class="form-control" placeholder="Telefono:">
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col s7">
+                        <div class="col s12">
                             <input id="correo" name="correo" type="email" class="form-control" placeholder="Correo:">
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col s12">
+                        <div class="col s11">
+                        <i class="material-icons left">description</i>
                             <input id="descripcion"  name="descripcion"  type="text" class="form-control" placeholder="Descripcion:">
                         </div>
                     </div>
@@ -87,11 +90,19 @@
                         <a class="waves-effect waves-light btn add-file" name="addfile"><i class="material-icons left">unarchive</i>Subir imagen</a>
                         </div>
                     </div>
+                   <div class="row">
+                        <div class="col s11">
+                        <i class="material-icons left">description</i> 
+                            <input id="mostarIMG"  name="mostrarIMG"  type="image" src="">
+                        </div>
+                    </div>
+                    
+                    <br></br>
                     <input type="hidden" id="IdEmpresa" name="IdEmpresa" value=""></input>
             </div>
             <div class="modal-footer">
                 <button id="cancelar" type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button"  id="empresas-guardar" class="btn btn-primary">Guardar</button>
+                <button type="button"  id="empresas-guardar" class="btn btn-primary">Crear Nuevo Registro</button>
             </div>
             </form>
 

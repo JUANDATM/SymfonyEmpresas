@@ -1,0 +1,121 @@
+{# Plantilla de nuestra aplicacion#}
+{% extends 'base.html.twig' %}
+
+{% block title %}INICIAR SESION{% endblock %}
+{% block stylesheets %}
+{% endblock %}
+{% block body %}
+<main>
+  <center>
+
+    <div class="section"></div>
+
+    <h5 class="indigo-text">Iniciar sesión</h5>
+    <div class="section"></div>
+
+    <div class="container">
+      <div class="z-depth-1 grey lighten-4 row"
+        style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
+
+        <form class="col s12" id="frm-acceso" method="post">
+          <div class='row'>
+            <div class='col s12'>
+            </div>
+          </div>
+
+          <div class='row'>
+            <div class='input-field col s12'>
+              <i class="material-icons iconis prefix">account_box</i>
+              <input type="email" id="correo" name="correo" class="validate" />
+              <label for='correo'>Email</label>
+            </div>
+          </div>
+
+          <div class='row'>
+            <div class='input-field col s12'>
+              <i class="material-icons iconis prefix">enhanced_encryption</i>
+              <input type="password" id="contra" name="contra" class="validate" />
+              <label for='contra'>Contraseña</label>
+            </div>
+            <label style='float: right;'>
+              <a class='pink-text' href='#!'><b>¿Haz olvidado tu contraseña?</b></a>
+            </label>
+          </div>
+
+          <br />
+          <center>
+            <div class='row'>
+              <button type='submit' id="un_lock" name='btn_login'
+                class='col s12 btn btn-large waves-effect indigo'>Login</button>
+            </div>
+          </center>
+        </form>
+      </div>
+    </div>
+    <h5>¿Crear una cuenta?</h5><button id="usuario-nuevo" class="btn btn-success waves-effect indigo">Click aquí</button>
+  </center>
+
+  <div class="section"></div>
+  <div class="section"></div>
+</main>
+
+
+<!-- Ventana Modal -->
+<div class="modal fade" id="usuariomodal" name="usuariomodal" tabindex="-1" role="dialog" aria-labelledby="usuario-modal"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Nuevo Usuario</h5>
+            </div>
+            <div class="modal-body">
+                <form id="usuarioform">
+                        <div class="row">
+                            <div class="col">
+                                <input id="nombre" name="nombre" type="text" class="form-control" placeholder="Nombre Usuario:">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input id="correo" name="correo" type="email" class="form-control" placeholder="Correo Usuario:">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input id="password" name="password" type="password" class="form-control" placeholder="Contraseña:">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input id="domicilio" name="domicilio" type="text" class="form-control" placeholder="Domicilio:">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input id="rol" name="rol" type="hidden" class="form-control" value="usuario">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="cancelar" type="button" class="btn btn-secondary waves-effect indigo" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" id="usuarios-guardar" class="btn btn-primary waves-effect indigo">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block javascripts %}
+{{parent()}}
+<script type="text/javascript"> 
+    var urlInsertar = "{{path('control_acceso_insertar')}}";
+</script>
+<script type="text/javascript" src="{{ asset('js/jquery-3.0.0.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/materialize.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/dataTables.materialize.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.validate.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('jsLogin/login.js') }}"></script>
+{% endblock %}

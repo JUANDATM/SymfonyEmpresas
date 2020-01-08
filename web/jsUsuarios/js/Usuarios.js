@@ -26,6 +26,7 @@ $('#cancelar').on("click", function() {
     reset();
 });
 
+
 function validateForm() {
     $('#usuarioform').validate({
         rules: {
@@ -69,7 +70,7 @@ function eliminarUsuario(IdUsuario) {
         data: { IdUsuario },
         success: function(respuesta) {
             if (respuesta['status']) {
-                //table.row($tr).remove().draw();
+                //table.remove().draw();
                 M.toast({ html: 'Registro Eliminado con Exito', classes: 'rounded', displayLength: 4000 });
             } else {
                 M.toast({ html: 'Error al Eliminar ', classes: 'rounded', displayLength: 4000 });
@@ -105,4 +106,12 @@ function reset() {
     $("#domicilio").val('');
     $("#rol").val('');
     $("#nombre").focus();
-}
+};
+
+/*function setRow(data, action){
+    console.log(action);
+    if(action == 'delete'){
+        console.log('delete');
+        table.row('#' + data.pk).remove.draw();
+    }
+}*/

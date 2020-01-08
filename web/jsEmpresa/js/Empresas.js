@@ -3,23 +3,23 @@ Dropzone.autoDiscover = false;
 var myDropzone;
 var table = "null";
 var tr = null;
-$(document).ready(function () {
+$(document).ready(function() {
     table = $('#empresas-table').DataTable();
     validateForm();
     $('.sidenav').sidenav();
     $("#empresamodal").modal();
-    $('#empresas-guardar').on("click", function () {
+    $('#empresas-guardar').on("click", function() {
         //document.getElementById('empresa-form').reset();
         $('#empresa-form').submit();
     });
     //insertarEmpresa();
     //actualizarEmpresa();
 });
-$('#empresa-nuevo').on("click", function () {
+$('#empresa-nuevo').on("click", function() {
     $("#empresamodal").modal({ dismissible: false }).modal('open');
     insertarEmpresa();
 });
-$('.edit').on("click", function () {
+$('.edit').on("click", function() {
     var IdEmpresa = $(this).attr("id-edit");
     pintarDatos(IdEmpresa);
     $("#empresas-guardar").attr("IdEmpresa", IdEmpresa);
@@ -27,7 +27,9 @@ $('.edit').on("click", function () {
     actualizarEmpresa(IdEmpresa);
 });
 
-$('.delete').on("click", function () {
+//sirve para editar los servicio
+
+$('.delete').on("click", function() {
     $tr = $(this).closest('tr');
     tr = $tr;
     var IdEmpresa = $(this).attr("id-record");
@@ -35,7 +37,7 @@ $('.delete').on("click", function () {
     eliminarEmpresa(IdEmpresa);
 });
 
-$('#cancelar').on("click", function () {
+$('#cancelar').on("click", function() {
     $("#empresamodal").modal('close');
     reset();
 });
@@ -46,6 +48,7 @@ function pintarDatos(IdEmpresa) {
     $("#telefono").val(Empresas[IdEmpresa]["TelefonoEmpresa"]).next().addClass("active");
     $("#correo").val(Empresas[IdEmpresa]["CorreoEmpresa"]).next().addClass("active");
     $("#descripcion").val(Empresas[IdEmpresa]["DescripcionEmpresa"]).next().addClass("active");
+    $("#")
     $("#IdEmpresa").val(IdEmpresa);
 }
 
@@ -69,10 +72,10 @@ function validateForm() {
         },
         errorElement: "div",
         errorClass: "invalid",
-        errorPlacement: function (error, element) {
+        errorPlacement: function(error, element) {
             error.insertAfter(element)
         },
-        submitHandler: function (form) {
+        submitHandler: function(form) {
             myDropzone.processQueue();
         }
     });
@@ -95,9 +98,9 @@ function setRow(data, base64, action) {
             data.IdEmpresa,
             data.nombre,
             data.direccion,
+            data.descripcion,
             data.telefono,
             data.correo,
-            data.descripcion,
             "<img src='" + base64 + "' width='200' height='100' ></img>",
             "<a id='editar' name='editar'  id-edit='" + data.IdEmpresa + "' class='edit btn btn-warning'><i class='material-icons'>create</i></a>" +
             "<a id='eliminar' name='eliminar' id-record='" + data.IdEmpresa + "' class='delete btn btn-danger' ><i class='material-icons'>delete_sweep</i></a>"
@@ -111,9 +114,9 @@ function setRow(data, base64, action) {
         var row = table.row('#' + data.IdEmpresa).node();
         $(row).find('td:nth-child(1)').text(data.NombreEmpresa);
         $(row).find('td:nth-child(2)').text(data.DireccionEmpresa);
-        $(row).find('td:nth-child(5)').text(data.DescripcionEmpresa);
+        $(row).find('td:nth-child(3)').text(data.DescripcionEmpresa);
         $(row).find('td:nth-child(4)').text(data.CorreoEmpresa);
-        $(row).find('td:nth-child(3)').text(data.TelefonoEmpresa);
+        $(row).find('td:nth-child(5)').text(data.TelefonoEmpresa);
         $(row).find('td:nth-child(6)').text(data.RutaImagen);
     }
     if (action === 'delete') {
@@ -129,7 +132,7 @@ function eliminarEmpresa(IdEmpresa) {
         url: urlEliminar,
         dataType: 'json',
         data: { IdEmpresa },
-        success: function (respuesta) {
+        success: function(respuesta) {
             if (respuesta['status']) {
                 M.toast({ html: 'Registro Eliminado con Exito', classes: 'rounded', displayLength: 4000 });
                 var action = "delete";
@@ -141,13 +144,43 @@ function eliminarEmpresa(IdEmpresa) {
     });
 }
 
+
+function setRow(data, base64, action) {
+    if (action === 'insert') {
+        var row = table.row.add([
+            data.IdEmpresa,
+            data.nombre,
+            data.direccion,
+            data.descripcion,
+            data.telefono,
+            data.correo,
+            "<img src='" + base64 + "' width='200px' height='100px' ></img>",
+            "<a id='editar' name='editar'  id-edit='" + data.IdEmpresa + "' class='edit btn btn-warning'><i class='material-icons'>create</i></a>" +
+            "<a id='eliminar' name='eliminar' id-record='" + data.IdEmpresa + "' class='delete btn btn-danger' ><i class='material-icons'>delete_sweep</i></a>"
+
+        ]).draw().node();
+
+    }
+    if (action === 'update') {
+
+        Empresas[data.IdEmpresa] = data;
+        var row = table.row('#' + data.IdEmpresa).node();
+        $(row).find('td:nth-child(1)').text(data.NombreEmpresa);
+        $(row).find('td:nth-child(2)').text(data.DireccionEmpresa);
+        $(row).find('td:nth-child(3)').text(data.DescripcionEmpresa);
+        $(row).find('td:nth-child(4)').text(data.TelefonoEmpresa);
+        $(row).find('td:nth-child(5)').text(data.CorreoEmpresa);
+        $(row).find('td:nth-child(6)').text(data.RutaImagen);
+    }
+}
+
 function actualizarEmpresa(IdEmpresa) {
     //Dropzone class
     pdf = $(".add-file").dropzone({
         url: urlActualizar,
         paramName: "archivo",
         maxFilesize: 15, //MB
-        maxFiles: 2,
+        maxFiles: 10,
         method: "post",
         uploadMultiple: false,
         previewsContainer: false,
@@ -156,23 +189,23 @@ function actualizarEmpresa(IdEmpresa) {
         acceptedFiles: ".jpeg, .png , .jpg",
         autoProcessQueue: false,
         data: { IdEmpresa },
-        error: function (file, errorMessage) {
+        error: function(file, errorMessage) {
             M.toast({ html: errorMessage, classes: 'rounded', displayLength: 4000 });
         },
-        init: function () {
+        init: function() {
             myDropzone = this;
-            $("#empresas-guardar").click(function (e) {
+            $("#empresas-guardar").click(function(e) {
                 $('#empresa-form').submit();
 
             });
-            this.on("sending", function (file, xhr, formData) {
+            this.on("sending", function(file, xhr, formData) {
                 var data = $('#empresa-form').serializeArray();
                 // post = post + "&IdEmpresa=" + ;
-                $.each(data, function (key, el) {
+                $.each(data, function(key, el) {
                     formData.append(el.name, el.value);
                 });
             });
-            this.on("success", function (file) {
+            this.on("success", function(file) {
                 var res = JSON.parse(file.xhr.response);
                 var base64 = file.dataURL;
                 var data = res.data;
@@ -199,7 +232,7 @@ function insertarEmpresa() {
         url: urlInsertar,
         paramName: "archivo",
         maxFilesize: 15, //MB
-        maxFiles: 2,
+        maxFiles: 1,
         method: "post",
         uploadMultiple: false,
         previewsContainer: false,
@@ -207,23 +240,23 @@ function insertarEmpresa() {
         dictInvalidFileType: "Error, tipo de formato no aceptado",
         acceptedFiles: ".jpeg, .png , .jpg",
         autoProcessQueue: false,
-        error: function (file, errorMessage) {
+        error: function(file, errorMessage) {
             M.toast({ html: errorMessage, classes: 'rounded', displayLength: 4000 });
 
         },
-        init: function () {
+        init: function() {
             myDropzone = this;
-            $("#empresas-guardar").click(function (e) {
+            $("#empresas-guardar").click(function(e) {
                 $('#empresa-form').submit();
 
             });
-            this.on("sending", function (file, xhr, formData) {
+            this.on("sending", function(file, xhr, formData) {
                 var data = $('#empresa-form').serializeArray();
-                $.each(data, function (key, el) {
+                $.each(data, function(key, el) {
                     formData.append(el.name, el.value);
                 });
             });
-            this.on("success", function (file) {
+            this.on("success", function(file) {
                 var res = JSON.parse(file.xhr.response);
                 var base64 = file.dataURL;
                 var data = res.data;

@@ -1,0 +1,86 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Inicio Sesion{% endblock %}
+
+{% block body %}
+<br>
+<br>
+<div class="row">
+  <div class="col s12 m8 offset-m2">
+    <div class="card">
+      <div class="card-content">
+        <div class="row"><br>
+          <div class="col m4 s12 offset-m4 offset-s2 center">
+            <h4 class="truncate bg-card-user">
+              <img src="https://cdn3.iconfinder.com/data/icons/happily-colored-snlogo/128/medium.png" alt=""
+                class="circle responsive-img">
+              <div class="row login">
+                <h4>Inicia sesión</h4>
+                <form class="col s12" id="frm-acceso" method="post">
+                  <div class="row">
+                    <div class="input-field col m12 s12">
+                      <i class="material-icons iconis prefix">account_box</i>
+                      <input id="icon_prefix" type="email" id="correo" name="correo" class="validate">
+                      <label for="icon_prefix">Email</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="input-field col m12 s12">
+                      <i class="material-icons iconis prefix">enhanced_encryption</i>
+                      <input type="password" id="contra" name="contra" class="validate">
+                      <label for="contra">Contraseña</label>
+                    </div>
+                  </div>
+                  <div class="input-field col s12 offset-m2">
+                    <a id="un_lock" class="btn-floating btn-large waves-effect waves-light">
+                      <i class="material-icons">lock_open</i>
+                    </a>
+                    <a id="add_record" class="btn-floating btn-large waves-effect waves-light">
+                      <i class="material-icons">person_add</i>
+                    </a>
+                  </div>
+                </form>
+              </div>
+            </h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Ventana Modal -->
+<div class="modal" id="modalRegistro">
+  <div class="modal-content">
+    <h4>Registro de Usuarios</h4>
+    <br>
+    <form id="frm-registro" method="post">
+      <div class="row">
+        <div class="input-field col s12">
+          <input type="email" id="corr" name="corr" class="validate">
+          <label for="corr">Correo:</label>
+        </div>
+        <div class="input-field col s12">
+          <input type="text" id="nom" name="nom" class="validate">
+          <label for="nom">Nombre Completo:</label>
+        </div>
+        <div class="input-field col s12">
+          <input type="password" id="pwd" name="pwd" class="validate">
+          <label for="pwd">Contraseña:</label>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <a id="guardar" class="modal-action waves-effect waves-green btn-flat">Guardar Registro</a>
+  </div>
+</div>
+{% endblock %}
+{% block javascripts %}
+<script type="text/javascript" src="{{ asset('js/jquery-3.0.0.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/materialize.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/dataTables.materialize.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.validate.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('jsLogin/js/login.js') }}"></script>
+{% endblock %}
