@@ -207,7 +207,6 @@ function actualizarEmpresa(IdEmpresa) {
 }
 
 function insertarEmpresa() {
-
     //Dropzone class
     pdf = $(".add-file").dropzone({
         url: urlInsertar,
