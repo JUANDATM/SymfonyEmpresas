@@ -1,8 +1,8 @@
-$(document).ready(function() {
+$(document).ready(function () {
     validateForm();
     $('.sidenav').sidenav();
     ("#usuariomodal").modal();
-    $('#usuarios-guardar').on("click", function() {
+    $('#usuarios-guardar').on("click", function () {
         //document.getElementById('empresa-form').reset();
         $('#usuarioform').submit();
     });
@@ -13,11 +13,11 @@ $("#un_lock").on("click", function () {
     $('#frm-acceso').submit();
 });
 
-$('#usuario-nuevo').on("click", function() {
+$('#usuario-nuevo').on("click", function () {
     $("#usuariomodal").modal({ dismissible: false }).modal('open');
 });
 
-$('#cancelar').on("click", function() {
+$('#cancelar').on("click", function () {
     $("#usuariomodal").modal('close');
     reset();
 });
@@ -25,11 +25,11 @@ $('#cancelar').on("click", function() {
 function validateForm() {
     $('#frm-acceso').validate({
         rules: {
-            correo: { required: true, email: true, minlength: 4, maxlength: 120 },
+            usuario: { required: true, email: true, minlength: 4, maxlength: 120 },
             contra: { required: true, minlength: 4, maxlength: 32 },
         },
         messages: {
-            correo: { required: "No puedes dejar este campo vacío", email: "Se requiere correo valido", minlength: "Debes ingresar al menos 4 caracteres", maxlength: "No puedes ingresar más de 120 caracteres" },
+            usuario: { required: "No puedes dejar este campo vacío", email: "Se requiere correo valido", minlength: "Debes ingresar al menos 4 caracteres", maxlength: "No puedes ingresar más de 120 caracteres" },
             contra: { required: "No puedes dejar este campo vacío", minlength: "Debes ingresar al menos 4 caracteres", maxlength: "No puedes ingresar más de 32 caracteres" },
         },
         errorElement: "div",
@@ -38,7 +38,8 @@ function validateForm() {
             error.insertAfter(element)
         },
         submitHandler: function (form) {
-            validaData();
+            var postacceso = $('#frm-acceso').serialize();
+            validarAcceso(postacceso);
         }
     });
     $('#usuarioform').validate({
@@ -60,10 +61,10 @@ function validateForm() {
         },
         errorElement: "div",
         errorClass: "invalid",
-        errorPlacement: function(error, element) {
+        errorPlacement: function (error, element) {
             error.insertAfter(element)
         },
-        submitHandler: function(form) {
+        submitHandler: function (form) {
             var post = $('#usuarioform').serialize();
             insertarLoginUsuario(post);
         }
@@ -77,7 +78,7 @@ function insertarLoginUsuario(post) {
         url: urlInsertar,
         dataType: 'json',
         data: post,
-        success: function(respuesta) {
+        success: function (respuesta) {
             if (respuesta['status']) {
                 $("#nombre").val($("#nombre").val());
                 M.toast({ html: 'Registro exitoso', classes: 'rounded', displayLength: 4000 });
@@ -90,7 +91,23 @@ function insertarLoginUsuario(post) {
         }
     });
 }
-
+function validarAcceso(postacceso){
+    $.ajax({
+        type: "post",
+        url: urlValidacion,
+        dataType: 'json',
+        data: postacceso,
+        success: function(respuesta){
+            if (respuesta['status']==1){
+                M.toast({html: 'Acceso Permitido', classes: 'rounded blue lighten-2'});
+                window.location.href='http://localhost:8000/CatalogoEmpresas'
+            }
+            else{
+               M.toast({html: 'Acceso No Permitido', classes: 'rounded blue lighten-2'});
+            }
+        } 
+    });
+  }
 function reset() {
     $("#nombre").val('');
     $("#correo").val('');
