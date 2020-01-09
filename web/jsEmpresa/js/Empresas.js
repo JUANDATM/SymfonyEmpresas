@@ -39,7 +39,10 @@ $('.delete').on("click", function() {
 });
 
 $('#Aceptar').on("click", function() {
+    $tr = $(this).closest('tr');
+    tr = $tr;
     var IdEmpresa = $(this).attr("IdEmpresa");
+    table.row($tr).remove().draw();
     eliminarEmpresa(IdEmpresa);
 
 
@@ -73,7 +76,6 @@ function pintarDatos(IdEmpresa) {
         'width': '200',
         'height': '100'
     }).appendTo(divrow);
-
     $("#IdEmpresa").val(IdEmpresa);
 }
 
@@ -275,6 +277,7 @@ function setRow(data, base64, action) {
         $(row).find('td:nth-child(6)').text(data.RutaImagen);
     }
     if (action === 'delete') {
+        Empresas[data.IdEmpresa] = data;
         table.row('#' + data.IdEmpresa).remove().draw();
     }
 
