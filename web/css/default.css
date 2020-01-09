@@ -1,21 +1,17 @@
-
 @font-face {
     font-family: 'Material Icons';
     font-style: normal;
     font-weight: 400;
     src: url(../fonts/Material-Design-Icons.eot) format('embedded-opentype');
-    src: local('Material-Design-Icons'),
-        url(../fonts/Material-Design-Icons.woff2) format('woff2'),
-        url(../fonts/Material-Design-Icons.woff) format('woff'),
-        url(../fonts/Material-Design-Icons.ttf) format('truetype'),
-        url(../fonts/Material-Design-Icons.svg) format("svg");
+    src: local('Material-Design-Icons'), url(../fonts/Material-Design-Icons.woff2) format('woff2'), url(../fonts/Material-Design-Icons.woff) format('woff'), url(../fonts/Material-Design-Icons.ttf) format('truetype'), url(../fonts/Material-Design-Icons.svg) format("svg");
 }
 
 .material-icons {
     font-family: 'Material Icons';
     font-weight: normal;
     font-style: normal;
-    font-size: 24px;  /* Preferred icon size */
+    font-size: 24px;
+    /* Preferred icon size */
     display: inline-block;
     line-height: 1;
     text-transform: none;
@@ -23,10 +19,9 @@
     word-wrap: normal;
     white-space: nowrap;
     direction: ltr;
-
 }
 
-.container-fluid{
+.container-fluid {
     display: block;
     width: 100%;
     padding: 1% 2%;
@@ -34,30 +29,32 @@
     margin: 0 auto;
 }
 
-.justify-align{
+.justify-align {
     text-align: justify;
 }
 
-.edit:hover { 
-  color: #0091ea;
-  cursor: default;
+.edit:hover {
+    color: #0091ea;
+    cursor: default;
 }
 
-.delete:hover { 
-  color: red;
-  cursor: default;
+.delete:hover {
+    color: red;
+    cursor: default;
 }
 
-.invalid{
+.invalid {
     margin-top: -10px;
     color: red;
     font-size: 10px;
 }
+
 body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
 }
+
 main {
     flex: 1 0 auto;
 }
