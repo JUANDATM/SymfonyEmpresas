@@ -69,7 +69,6 @@ function validateForm() {
             insertarLoginUsuario(post);
         }
     });
-
 }
 
 function insertarLoginUsuario(post) {
