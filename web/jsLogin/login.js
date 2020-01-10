@@ -9,7 +9,7 @@ $(document).ready(function() {
     insertarLoginUsuario();
 });
 
-$("#un_lock").on("click", function () {
+$("#un_lock").on("click", function() {
     $('#frm-acceso').submit();
 });
 
@@ -34,10 +34,10 @@ function validateForm() {
         },
         errorElement: "div",
         errorClass: "invalid",
-        errorPlacement: function (error, element) {
+        errorPlacement: function(error, element) {
             error.insertAfter(element)
         },
-        submitHandler: function (form) {
+        submitHandler: function(form) {
             validaData();
         }
     });
