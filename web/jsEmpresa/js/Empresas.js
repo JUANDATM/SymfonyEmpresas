@@ -21,11 +21,16 @@ $('#empresa-nuevo').on("click", function() {
     insertarEmpresa();
 });
 $('.edit').on("click", function() {
+    $tr = $(this).closest('tr');
+    tr = $tr;
     var IdEmpresa = $(this).attr("id-edit");
     pintarDatos(IdEmpresa);
     $("#empresas-guardar").attr("IdEmpresa", IdEmpresa);
     $("#empresamodal").modal({ dismissible: false }).modal('open');
     actualizarEmpresa(IdEmpresa);
+    table.row($tr).node().draw();
+
+
 });
 
 //sirve para editar los servicio
@@ -35,7 +40,6 @@ $('.delete').on("click", function() {
     $("#EliminarSiNo").modal({ dismissible: false }).modal('open');
     $("#Aceptar").attr("IdEmpresa", IdEmpresa);
 
-
 });
 
 $('#Aceptar').on("click", function() {
@@ -44,10 +48,7 @@ $('#Aceptar').on("click", function() {
     var IdEmpresa = $(this).attr("IdEmpresa");
     table.row($tr).remove().draw();
     eliminarEmpresa(IdEmpresa);
-
-
 });
-
 
 $('#Cerrar').on("click", function() {
     $("#EliminarSiNo").modal('close');
@@ -59,11 +60,13 @@ $('#cancelar').on("click", function() {
 });
 
 function pintarDatos(IdEmpresa) {
+    $("#IdEmpresa").val(IdEmpresa);
     $("#nombre").val(Empresas[IdEmpresa]["NombreEmpresa"]).next().addClass("active");
     $("#direccion").val(Empresas[IdEmpresa]["DireccionEmpresa"]).next().addClass("active");
     $("#telefono").val(Empresas[IdEmpresa]["TelefonoEmpresa"]).next().addClass("active");
     $("#correo").val(Empresas[IdEmpresa]["CorreoEmpresa"]).next().addClass("active");
     $("#descripcion").val(Empresas[IdEmpresa]["DescripcionEmpresa"]).next().addClass("active");
+    $("#addfile").val('data:' + Empresas[IdEmpresa]["FormatoImagen"] + ';base64,' + Empresas[IdEmpresa]["RutaImagen"]).next().addClass("active");
     var divrow = $('<div/>', {
         'class': 'row img'
     }).appendTo('#empresa-form');
@@ -108,7 +111,6 @@ function validateForm() {
     });
 
 }
-
 // Limpia los campos al cerrar la modal
 function reset() {
     $("#nombre").val('');
@@ -120,8 +122,6 @@ function reset() {
     $('.img').hide();
 
 };
-
-
 
 function eliminarEmpresa(IdEmpresa) {
     $.ajax({
@@ -179,7 +179,7 @@ function actualizarEmpresa(IdEmpresa) {
                 var base64 = file.dataURL;
                 var data = res.data;
                 if (res.status) {
-                    M.toast({ html: 'Se actualizo con exitoso', classes: 'rounded', displayLength: 4000 });
+                    M.toast({ html: 'Se actualizo con exito', classes: 'rounded', displayLength: 4000 });
                     var action = "update";
                     setRow(data, base64, action);
                     reset();
@@ -255,24 +255,25 @@ function setRow(data, base64, action) {
             data.descripcion,
             data.telefono,
             data.correo,
-            "<img src='" + base64 + "' width='200' height='100' ></img>",
+            "<img src='" + base64 + "' width='200px' height='100px' ></img>",
             "<a id='editar' name='editar'  id-edit='" + data.IdEmpresa + "' class='edit btn btn-warning'><i class='material-icons'>create</i></a>" +
             "<a id='eliminar' name='eliminar' id-record='" + data.IdEmpresa + "' class='delete btn btn-danger' ><i class='material-icons'>delete_sweep</i></a>"
-
         ]).draw().node();
-
-
     }
     if (action === 'update') {
-
-        Empresas[data.IdEmpresa] = data;
-        var row = table.row('#' + data.IdEmpresa).node();
-        $(row).find('td:nth-child(1)').text(data.NombreEmpresa);
-        $(row).find('td:nth-child(2)').text(data.DireccionEmpresa);
-        $(row).find('td:nth-child(3)').text(data.DescripcionEmpresa);
-        $(row).find('td:nth-child(4)').text(data.CorreoEmpresa);
-        $(row).find('td:nth-child(5)').text(data.TelefonoEmpresa);
-        $(row).find('td:nth-child(6)').text(data.RutaImagen);
+        table.row('#' + data.IdEmpresa).remove().draw();
+        var row = table.row.add([
+            data.IdEmpresa,
+            data.nombre,
+            data.direccion,
+            data.descripcion,
+            data.telefono,
+            data.correo,
+            "<img src='" + base64 + "' width='200px' height='100px' ></img>",
+            "<a id='editar' name='editar'  id-edit='" + data.IdEmpresa + "' class='edit btn btn-warning'><i class='material-icons'>create</i></a>" +
+            "<a id='eliminar' name='eliminar' id-record='" + data.IdEmpresa + "' class='delete btn btn-danger' ><i class='material-icons'>delete_sweep</i></a>"
+        ]).draw().node();
+        $(row).attr('id', data.IdEmpresa);
     }
     if (action === 'delete') {
         Empresas[data.IdEmpresa] = data;
