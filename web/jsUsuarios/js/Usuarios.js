@@ -1,4 +1,5 @@
 var table = "null";
+var tr = null;
 $(document).ready(function() {
     table = $('#usuarios-table').DataTable();
     validateForm();
@@ -11,20 +12,27 @@ $(document).ready(function() {
 
 });
 
-$('#usuario-nuevo').on("click", function() {
-    $("#usuariomodal").modal({ dismissible: false }).modal('open');
-    action = "insert";
-});
 //actualizarrrrrrrrrrrrr 
-$('.edit').on("click", function() {
+
+$(document).on("click", ".edit", function() {
+
+    $tr = $(this).closest('tr');
+    tr = $tr;
     var IdUsuario = $(this).attr("id-edit");
     pintarDatos(IdUsuario);
     $("#usuarios-guardar").attr("IdUsuario", IdUsuario);
     $("#usuariomodal").modal({ dismissible: false }).modal('open');
     //actualizarUsuario(post);
     action = "update";
-
+    table.row($tr).node().draw();
 });
+
+$('#usuario-nuevo').on("click", function() {
+    $("#usuariomodal").modal({ dismissible: false }).modal('open');
+    action = "insert";
+});
+
+
 //proceso de eliminar registro
 $('.delete').on("click", function() {
     /*  asegurar() */
@@ -110,8 +118,11 @@ function eliminarUsuario(IdUsuario) {
         data: { IdUsuario },
         success: function(respuesta) {
             if (respuesta['status']) {
+
                 //table.remove().draw();
                 M.toast({ html: 'Registro Eliminado con Exito', classes: 'rounded', displayLength: 4000 });
+                var action = "delete";
+                setRow(respuesta.data, action);
             } else {
                 M.toast({ html: 'Error al Eliminar ', classes: 'rounded', displayLength: 4000 });
             }
@@ -125,9 +136,12 @@ function insertarUsuario(post) {
         url: urlInsertar,
         dataType: 'json',
         data: post,
+
         success: function(respuesta) {
             if (respuesta['status']) {
                 $("#nombre").val($("#nombre").val());
+
+
                 M.toast({ html: 'Registro exitoso', classes: 'rounded', displayLength: 4000 });
                 var data = respuesta.data;
                 var action = "insert";
@@ -159,7 +173,7 @@ function actualizarUsuario(post) {
                 M.toast({ html: 'Se actualizo con exito', classes: 'rounded', displayLength: 4000 });
                 var data = respuesta;
                 var action = "update";
-                setRow(data, action);
+                setRow(respuesta.data, action);
                 reset();
                 $("#usuariomodal").modal('close');
                 $("#nombre").focus();
@@ -188,11 +202,11 @@ function setRow(data, action) {
             data.password,
             data.domicilio,
             data.rol,
-            "<a id='editar' name='editar'  id-edit='" + data.IdUsuario + "' class='edit btn btn-warning'><i class='material-icons'>create</i></a>" +
-            "<a id='eliminar' name='eliminar' id-record='" + data.IdUsuario + "' class='delete btn btn-danger' ><i class='material-icons'>delete_sweep</i></a>"
+            '<a id="editar" name="editar" id-edit="' + data.IdUsuario + '" class="edit btn btn-warning"><i class="material-icons">create</i></a>' +
+            '<a id="eliminar" name="eliminar" id-record="' + data.IdUsuario + '" class="delete btn btn-danger" ><i class="material-icons">delete_sweep</i></a>'
 
         ]).draw().node();
-
+        $(row).attr('id', data.IdUsuario);
     }
     if (action === 'update') {
         /*  Usuario[data.IdUsuario] = data;
@@ -202,20 +216,23 @@ function setRow(data, action) {
          $(row).find('td:nth-child(3)').text(data.PasswordUsuario);
          $(row).find('td:nth-child(4)').text(data.DomicilioUsuario);
          $(row).find('td:nth-child(5)').text(data.TipoUsuario); */
-        table.row('#' + data.idServicio).remove().draw();
+        table.row('#' + data.IdUsuario).remove().draw();
         var row = table.row.add([
             data.IdUsuario,
-            data.NombreUsuario,
-            data.CorreoUsuario,
-            data.PasswordUsuario,
-            data.DomicilioUsuario,
-            data.TipoUsuario,
+            data.nombre,
+            data.correo,
+            data.password,
+            data.domicilio,
+            data.rol,
 
-
-            "<a id='editar' name='editar'  id-edit='" + data.IdUsuario + "' class='edit btn btn-warning'><i class='material-icons'>create</i></a>" +
-            "<a id='eliminar' name='eliminar' id-record='" + data.IdUsuario + "' class='delete btn btn-danger' ><i class='material-icons'>delete_sweep</i></a>"
+            '<a id="editar" name="editar" id-edit="' + data.IdUsuario + ' " class="edit btn btn-warning"><i class="material-icons">create</i></a>' +
+            '<a id="eliminar" name="eliminar" id-record="' + data.IdUsuario + '" class="delete btn btn-danger" ><i class="material-icons">delete_sweep</i></a>'
 
         ]).draw().node();
-        $(row).attr('IdUsuario', data.IdUsuario);
+        $(row).attr('id', data.IdUsuario);
+    }
+    if (action === 'delete') {
+        Usuario[data.IdUsuario] = data;
+        table.row('#' + data.IdUsuario).remove().draw();
     }
 }

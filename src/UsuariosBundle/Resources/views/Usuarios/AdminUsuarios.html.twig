@@ -24,7 +24,7 @@
         </thead>
         <tbody>
             {% for usuario in content['usuario'] %}
-            <tr>
+            <tr id="{{ usuario.IdUsuario }}">
                 <td>{{ usuario.IdUsuario }}</td>
                 <td>{{ usuario.NombreUsuario }}</td>
                 <td>{{ usuario.CorreoUsuario }}</td>
@@ -43,7 +43,7 @@
 </div>
 <!--          MODAL              -->
 
-<div class="modal fade" id="usuariomodal" name="usuariomodal" tabindex="-1" role="dialog" aria-labelledby="usuario-modal"
+<div class="modal fade closeModal" id="usuariomodal" name="usuariomodal" tabindex="-1" role="dialog" aria-labelledby="usuario-modal"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -90,7 +90,6 @@
                         <button id="usuarios-guardar" class="btn btn-primary">Guardar</button>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>

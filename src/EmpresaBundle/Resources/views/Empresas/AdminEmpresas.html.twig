@@ -26,7 +26,7 @@
         </thead>
         <tbody>
            {% for empresa in content['empresas'] %}
-            <tr>
+            <tr id="{{ empresa.IdEmpresa }}">
                 <td>{{ empresa.IdEmpresa }}</td>
                 <td>{{ empresa.NombreEmpresa }}</td>
                 <td>{{ empresa.DireccionEmpresa }}</td>
@@ -70,37 +70,53 @@
                     </div>
                     <br></br>
                     <div class="row">
-                        <div class="col s5">
+                        <div class="col s12">
                             <input id="telefono" name="telefono" type="text" class="form-control" placeholder="Telefono:">
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col s7">
+                        <div class="col s12">
                             <input id="correo" name="correo" type="email" class="form-control" placeholder="Correo:">
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col s12">
+                        <div class="col s11">
                             <input id="descripcion"  name="descripcion"  type="text" class="form-control" placeholder="Descripcion:">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col s12">
-                        <a class="waves-effect waves-light btn add-file" name="addfile"><i class="material-icons left">unarchive</i>Subir imagen</a>
+                        <a class="waves-effect waves-light btn add-file" name="addfile" id="addfile"><i class="material-icons left">unarchive</i>Subir imagen</a>
                         </div>
                     </div>
-                    <br></br>
+                    <br></br>  
                     <input type="hidden" id="IdEmpresa" name="IdEmpresa" value=""></input>
             </div>
             <div class="modal-footer">
                 <button id="cancelar" type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button"  id="empresas-guardar" class="btn btn-primary">Crear Nuevo Registro</button>
+                <button type="button"  id="empresas-guardar" class="btn btn-primary">Guardar</button>
             </div>
             </form>
 
         </div>
     </div>
 </div>
+
+
+<div id="EliminarSiNo" name="EliminarSiNo" class="modal">
+    <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="EliminarSiNo">¿¿¿¿¿Esta seguro de eliminar registro?????</h5>
+            </div>
+            </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat" id="Aceptar" name="Aceptar">Aceptar</a>
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat" id="Cerrar" name="Cerrar">Cerrar</a>
+
+    </div>
+  </div>
+
+
 <!--Imagen-->
 <form id="archivo" style="display:none">
 <input type="file" id="archivo" name ="archivo">

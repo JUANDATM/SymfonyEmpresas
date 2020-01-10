@@ -1,121 +1,117 @@
-$(init);
-
-function init() {
-    // Inicializa el NavBar
-    $(document).ready(function() {
-        $('.sidenav').sidenav();
-    });
-
-
-    //Iniciliza la ventana Modal y la Validación
-    $("#modalRegistro").modal();
+$(document).ready(function () {
     validateForm();
-
-    // Clic del boton circular para validar correo y contraseña
-    $("#un_lock").on("click", function() {
-        $('#frm-acceso').submit();
+    $('.sidenav').sidenav();
+    ("#usuariomodal").modal();
+    $('#usuarios-guardar').on("click", function () {
+        //document.getElementById('empresa-form').reset();
+        $('#usuarioform').submit();
     });
+    insertarLoginUsuario();
+});
 
-    // Clic del boton circular Agregar Registro Nuevo formulario modal
-    $("#add_record").on("click", function() {
-        $("#corr").val('');
-        $("#nom").val('');
-        $("#tip").val('');
-        $("#pwd").val('');
-        $("#modalRegistro").modal('open');
-        $("#corr").focus();
-    });
+$("#un_lock").on("click", function () {
+    $('#frm-acceso').submit();
+});
 
-    // clic del boton de guardar
-    $('#guardar').on("click", function() {
-        $('#frm-registro').submit();
-    });
+$('#usuario-nuevo').on("click", function () {
+    $("#usuariomodal").modal({ dismissible: false }).modal('open');
+});
 
-}
+$('#cancelar').on("click", function () {
+    $("#usuariomodal").modal('close');
+    reset();
+});
 
 function validateForm() {
     $('#frm-acceso').validate({
         rules: {
-            correo: { required: true, email: true, minlength: 4, maxlength: 120 },
+            usuario: { required: true, email: true, minlength: 4, maxlength: 120 },
             contra: { required: true, minlength: 4, maxlength: 32 },
         },
         messages: {
-            correo: { required: "No puedes dejar este campo vacío", email: "Se requiere correo valido", minlength: "Debes ingresar al menos 4 caracteres", maxlength: "No puedes ingresar más de 120 caracteres" },
+            usuario: { required: "No puedes dejar este campo vacío", email: "Se requiere correo valido", minlength: "Debes ingresar al menos 4 caracteres", maxlength: "No puedes ingresar más de 120 caracteres" },
             contra: { required: "No puedes dejar este campo vacío", minlength: "Debes ingresar al menos 4 caracteres", maxlength: "No puedes ingresar más de 32 caracteres" },
         },
         errorElement: "div",
         errorClass: "invalid",
-        errorPlacement: function(error, element) {
+        errorPlacement: function (error, element) {
             error.insertAfter(element)
         },
-        submitHandler: function(form) {
-            validaData();
+        submitHandler: function (form) {
+            var postacceso = $('#frm-acceso').serialize();
+            validarAcceso(postacceso);
         }
     });
-    $('#frm-registro').validate({
+    $('#usuarioform').validate({
         rules: {
-            corr: { required: true, email: true, minlength: 4, maxlength: 120 },
-            nom: { required: true, minlength: 4, maxlength: 100 },
-            pwd: { required: true, minlength: 4, maxlength: 32 },
+            nombre: { required: true, minlength: 4, maxlength: 220 },
+            correo: { required: true, email: true },
+            password: { required: true, minlength: 7, maxlength: 50 },
+            domicilio: { required: true, minlength: 7, maxlength: 250 },
+            //rol: { required: true, minlength: 1, maxlength: 10 },
+
         },
         messages: {
-            corr: { required: "No puedes dejar este campo vacío", email: "Se requiere correo valido", minlength: "Debes ingresar al menos 4 caracteres", maxlength: "No puedes ingresar más de 120 caracteres" },
-            nom: { required: "No se puede dejar el campo vacio", minlength: "Debes ingresar al menos 4 caracteres", maxlength: "No puedes ingresar más de 100 caracteres" },
-            pwd: { required: "No puedes dejar este campo vacío", minlength: "Debes ingresar al menos 4 caracteres", maxlength: "No puedes ingresar más de 32 caracteres" },
+            nombre: { required: "Este campo es OBLIGATORIO", minlength: "El minimo de caracteres son 4", maxlength: "Maximo de caracteres sobrepasado" },
+            correo: { required: "No puedes dejar este campo vacío", email: "Se requiere correo valido", minlength: "Debes ingresar al menos 4 caracteres", maxlength: "No puedes ingresar más de 220 caracteres" },
+            password: { required: "No puedes dejar este campo vacío", minlength: "Debes ingresar al menos 7 caracteres", maxlength: "No puedes ingresar más de 50 caracteres" },
+            domicilio: { required: "No puedes dejar este campo vacío", minlength: "Debes ingresar al menos 7 caracteres", maxlength: "No puedes ingresar más de 250 caracteres" },
+            //rol: { required: "No puedes dejar este campo vacío", minlength: "Debes ingresar al menos 1 caracteres", maxlength: "No puedes ingresar más de 10 caracteres" },
+
         },
         errorElement: "div",
         errorClass: "invalid",
-        errorPlacement: function(error, element) {
+        errorPlacement: function (error, element) {
             error.insertAfter(element)
         },
-        submitHandler: function(form) {
-            saveData();
-        }
-    });
-
-}
-// Envia los datos del formulario de registro a la base de datos
-function saveData() {
-    var sURL = "actRegistroGuarda.php";
-    var parametros = 'corr=' + $("#corr").val() +
-        '&nom=' + $("#nom").val() +
-        '&tip=' + $("#tip").val() +
-        '&pwd=' + $("#pwd").val();
-    $.ajax({
-        type: "post",
-        url: sURL,
-        dataType: 'json',
-        data: parametros,
-        success: function(respuesta) {
-            if (respuesta['status']) {
-                $("#correo").val($("#corr").val());
-                M.toast({ html: 'Registro exitoso', classes: 'rounded', displayLength: 4000 });
-                $("#modalRegistro").modal('close');
-                $("#contra").focus();
-            } else {
-                M.toast({ html: 'Error al Registrar Usuario', classes: 'rounded', displayLength: 4000 });
-            }
+        submitHandler: function (form) {
+            var post = $('#usuarioform').serialize();
+            insertarLoginUsuario(post);
         }
     });
 }
 
-function validaData() {
-    var sURL = "actValidaUsr.php";
-    var parametros = 'correo=' + $("#correo").val() +
-        '&contra=' + $("#contra").val();
+function insertarLoginUsuario(post) {
     $.ajax({
         type: "post",
-        url: sURL,
+        url: urlInsertar,
         dataType: 'json',
-        data: parametros,
-        success: function(respuesta) {
+        data: post,
+        success: function (respuesta) {
             if (respuesta['status']) {
-                $(location).attr('href', respuesta['data']);
+                $("#nombre").val($("#nombre").val());
                 M.toast({ html: 'Registro exitoso', classes: 'rounded', displayLength: 4000 });
-                $("#modalRegistro").modal('close');
+                reset();
+                $("#usuariomodal").modal('close');
+                $("#nombre").focus();
             } else {
-                M.toast({ html: 'Error al Registrar Usuario', classes: 'rounded', displayLength: 4000 });
+                M.toast({ html: 'Error al Registrar ', classes: 'rounded', displayLength: 4000 });
             }
         }
     });
 }
+function validarAcceso(postacceso){
+    $.ajax({
+        type: "post",
+        url: urlValidacion,
+        dataType: 'json',
+        data: postacceso,
+        success: function(respuesta){
+            if (respuesta['status']==1){
+                M.toast({html: 'Acceso Permitido', classes: 'rounded blue lighten-2'});
+                window.location.href='http://localhost:8000/CatalogoEmpresas'
+            }
+            else{
+               M.toast({html: 'Acceso No Permitido', classes: 'rounded blue lighten-2'});
+            }
+        } 
+    });
+  }
+function reset() {
+    $("#nombre").val('');
+    $("#correo").val('');
+    $("#password").val('');
+    $("#domicilio").val('');
+    //$("#rol").val('');
+    $("#nombre").focus();
+};
