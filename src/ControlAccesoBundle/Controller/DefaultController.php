@@ -15,8 +15,33 @@ class DefaultController extends Controller
         $this->LoginModel = new LoginModel();
     }
 
-    public function loginUsuarioAction()
+    public function loginUsuarioAction(Request $request)
     {
+        if ($request->getMethod() == 'POST') {
+            //extraccion de parametros
+            $post = $request->request->all();
+            
+            $data = array(
+                "CorreoUsuario"=> "'" . $post["usuario"] . "'",
+                "PasswordUsuario"=> "'" . $post["contra"] . "'"
+            );
+            $result = $this->LoginModel->getUsuarios($data);
+            $aux = $result["data"][0]['TipoUsuario'];
+            if ($result['data']==null) {
+                $result['status'] = FALSE;
+                $result['message']="ERROR";
+            }else{ 
+                if ($aux==1) {
+                    $result['status']= 1;
+                    $result['message']="ERROR";
+                }else{
+                    $result['status']= 2;
+                    $result['message']="administrador";
+                }
+            }
+            
+            return $this->jsonResponse($result);
+        }
         return $this->render('ControlAccesoBundle:Acceso:loginUsuario.html.twig');
     }
 

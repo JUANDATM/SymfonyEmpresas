@@ -7,10 +7,12 @@
 {% block body %}
 <main>
   <center>
+
     <div class="section"></div>
 
     <h5 class="indigo-text">Iniciar sesión</h5>
     <div class="section"></div>
+
     <div class="container">
       <div class="z-depth-1 grey lighten-4 row"
         style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
@@ -24,7 +26,7 @@
           <div class='row'>
             <div class='input-field col s12'>
               <i class="material-icons iconis prefix">account_box</i>
-              <input type="email" id="correo" name="correo" class="validate" />
+              <input type="email" id="usuario" name="usuario" class="validate" />
               <label for='correo'>Email</label>
             </div>
           </div>
@@ -39,11 +41,11 @@
               <a class='pink-text' href='#!'><b>¿Haz olvidado tu contraseña?</b></a>
             </label>
           </div>
+
           <br />
           <center>
             <div class='row'>
-              <button type='submit' id="un_lock" name='btn_login'
-                class='col s12 btn btn-large waves-effect indigo'>Login</button>
+              <button type='submit' id="un_lock" name='btn_login' class='col s12 btn btn-large waves-effect indigo'>Login</button>
             </div>
           </center>
         </form>
@@ -51,9 +53,11 @@
     </div>
     <h5>¿Crear una cuenta?</h5><button id="usuario-nuevo" class="btn btn-success waves-effect indigo">Click aquí</button>
   </center>
+
   <div class="section"></div>
   <div class="section"></div>
 </main>
+
 <!-- Ventana Modal -->
 <div class="modal fade" id="usuariomodal" name="usuariomodal" tabindex="-1" role="dialog" aria-labelledby="usuario-modal"
     aria-hidden="true">
@@ -63,36 +67,36 @@
                 <h5 class="modal-title" id="exampleModalLabel">Nuevo Usuario</h5>
             </div>
             <div class="modal-body">
-                <form id="usuarioform">
+                <form id="usuarioform" method="post">
                         <div class="row">
-                            <div class="col">
+                            <div class="col s12">
                                 <input id="nombre" name="nombre" type="text" class="form-control" placeholder="Nombre Usuario:">
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col">
+                            <div class="col s12">
                                 <input id="correo" name="correo" type="email" class="form-control" placeholder="Correo Usuario:">
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col">
+                            <div class="col s12">
                                 <input id="password" name="password" type="password" class="form-control" placeholder="Contraseña:">
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col">
+                            <div class="col s12">
                                 <input id="domicilio" name="domicilio" type="text" class="form-control" placeholder="Domicilio:">
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col">
+                            <div class="col s12">
                                 <input id="rol" name="rol" type="hidden" class="form-control" value="usuario">
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button id="cancelar" type="button" class="btn btn-secondary waves-effect indigo" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" id="usuarios-guardar" class="btn btn-primary waves-effect indigo">Guardar</button>
+<button type="submit" id="usuarios-guardar" class="btn btn-primary waves-effect indigo">Guardar</button>
                     </div>
                 </form>
             </div>
@@ -104,6 +108,7 @@
 {% block javascripts %}
 {{parent()}}
 <script type="text/javascript"> 
+    var urlValidacion = "{{path('control_acceso_homepage')}}";
     var urlInsertar = "{{path('control_acceso_insertar')}}";
 </script>
 <script type="text/javascript" src="{{ asset('js/jquery-3.0.0.min.js') }}"></script>

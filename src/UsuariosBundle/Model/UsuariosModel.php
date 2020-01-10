@@ -13,6 +13,13 @@ class UsuariosModel {
     }
     public function getUsuarios(){
         $result = $this->SQLModel->selectFromTable('Usuario');
+        if (!($result['status'] && count($result['data']) > 0)) {
+            return $result;
+        }
+        foreach ($result['data'] as $value) {
+            $data[$value['IdUsuario']] = $value;
+        }
+        $result["data"] = $data;
         return $result;
     }
     public function insertarUsuarios($data){
@@ -23,4 +30,10 @@ class UsuariosModel {
         $result = $this->SQLModel->deleteFromTable('Usuario',$post);
         return $result;
     }
+    public function actualizarUsuarios($data,$where){
+        // $where=array('IdEmpresa'='IdEmpresa');
+         $result = $this->SQLModel->updateFromTable('Usuario',$data,$where);
+       
+         return $result;
+     }
 }
