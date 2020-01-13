@@ -29,17 +29,13 @@ $('.edit').on("click", function() {
     $("#empresamodal").modal({ dismissible: false }).modal('open');
     actualizarEmpresa(IdEmpresa);
     table.row($tr).node().draw();
-
-
 });
-
 //sirve para editar los servicio
 
 $('.delete').on("click", function() {
     var IdEmpresa = $(this).attr("id-record");
     $("#EliminarSiNo").modal({ dismissible: false }).modal('open');
     $("#Aceptar").attr("IdEmpresa", IdEmpresa);
-
 });
 
 $('#Aceptar').on("click", function() {
