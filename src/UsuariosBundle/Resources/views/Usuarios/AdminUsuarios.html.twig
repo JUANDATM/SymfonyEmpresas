@@ -32,8 +32,9 @@
                 <td>{{ usuario.DomicilioUsuario }}</td>
                 <td>{{ usuario.TipoUsuario }}</td>
                 <td>
-                    <a id="editar"  id-edit="{{ usuario.IdUsuario}}" name="editar" class="edit btn btn-warning" href="#"><i class="material-icons">create</i></a>
-                    <a id="eliminar" name="eliminar" id-record="{{usuario.IdUsuario}}" class="delete btn btn-danger"><i class="material-icons">delete_sweep</i></a>
+                    <a id="editar" name="editar"  id-edit="{{usuario.IdUsuario}}" class="edit btn btn-warning" href="#"><i class="material-icons">create</i></a>
+                    <a id="eliminar" name="eliminar" id-record="{{usuario.IdUsuario}}" class="delete btn btn-danger" href="#"><i class="material-icons">delete_sweep</i></a>
+        
                 </td>
             </tr>
             {% endfor %}

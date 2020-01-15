@@ -34,10 +34,15 @@ $('#usuario-nuevo').on("click", function() {
 
 
 //proceso de eliminar registro
-$('.delete').on("click", function() {
-    /*  asegurar() */
+//$('.delete').on("click", function() {
+/*  asegurar() */
+//var IdUsuario = $(this).attr("id-record");
+/* eliminarUsuario(IdUsuario); */
+//$("#EliminarSiNo").modal({ dismissible: false }).modal('open');
+//  $("#Aceptar").attr("IdUsuario", IdUsuario);
+//});
+$(document).on("click", '.delete', function() {
     var IdUsuario = $(this).attr("id-record");
-    /* eliminarUsuario(IdUsuario); */
     $("#EliminarSiNo").modal({ dismissible: false }).modal('open');
     $("#Aceptar").attr("IdUsuario", IdUsuario);
 });
@@ -58,15 +63,28 @@ $('#cancelar').on("click", function() {
     $("#usuariomodal").modal('close');
     reset();
 });
-
+/* 
 function pintarDatos(IdUsuario) {
+    $("#IdUsuario").val(IdUsuario);
+    $("#IdUsuario").val(Usuario[IdUsuario]["IdUsuario"]).next().addClass("active");
     $("#nombre").val(Usuario[IdUsuario]["NombreUsuario"]).next().addClass("active");
     $("#correo").val(Usuario[IdUsuario]["CorreoUsuario"]).next().addClass("active");
     $("#password").val(Usuario[IdUsuario]["PasswordUsuario"]).next().addClass("active");
     $("#domicilio").val(Usuario[IdUsuario]["DomicilioUsuario"]).next().addClass("active");
     $("#rol").val(Usuario[IdUsuario]["TipoUsuario"]).next().addClass("active");
+
+} */
+
+function pintarDatos(IdUsuario) {
     $("#IdUsuario").val(IdUsuario);
+    $("#nombre").val(Usuario[IdUsuario]["NombreUsuario"]);
+    $("#correo").val(Usuario[IdUsuario]["CorreoUsuario"]);
+    $("#password").val(Usuario[IdUsuario]["PasswordUsuario"]);
+    $("#domicilio").val(Usuario[IdUsuario]["DomicilioUsuario"]);
+    $("#rol").val(Usuario[IdUsuario]["TipoUsuario"]);
+    $("#usuarioform input[type='text'], textarea").removeClass('valid').next().addClass('active');
 }
+
 
 function validateForm() {
     $('#usuarioform').validate({
@@ -138,11 +156,14 @@ function insertarUsuario(post) {
         data: post,
 
         success: function(respuesta) {
+            //    hide_loader_wrapper();
             if (respuesta['status']) {
-                $("#nombre").val($("#nombre").val());
+                //    $("#nombre").val($("#nombre").val());
+                //   var data = $('#empresa-form').serializeArray();
 
-
+                Usuario[respuesta.data.IdUsuario] = respuesta.data;
                 M.toast({ html: 'Registro exitoso', classes: 'rounded', displayLength: 4000 });
+                // Usuario[respuesta.data.IdUsuario] = respuesta.data;
                 var data = respuesta.data;
                 var action = "insert";
                 setRow(data, action);
@@ -155,6 +176,30 @@ function insertarUsuario(post) {
         }
     });
 }
+
+// function saveData() {
+//     $.ajax({
+//         type: "post", // podría ser get, post, put o delete.
+//         url: url_insert, // url del recurso
+//         dataType: 'json', // formato que regresa la respuesta
+//         data: $("#usuarioform").serialize(), // datos a pasar al servidor, en caso de necesitarlo
+//         success: function(result) {
+//             hide_loader_wrapper();
+//             $("#usuariomodal").modal("close");
+//             if (!result['status']) {
+//                 show_alert("danger", result['data']);
+//                 return;
+//             }
+//             Usuario[result.data.IdUsuario] = result.data;
+//             setRow(result.data, "insert");
+//             show_alert("success", general_text['guardoExito']);
+//         },
+//         error: function(request, status, error) {
+//             hide_loader_wrapper();
+//             show_modal_error(request.responseText);
+//         }
+//     });
+// }
 ///////////////////actualizarrrrrrrrrr
 function actualizarUsuario(post) {
     $.ajax({
@@ -202,8 +247,8 @@ function setRow(data, action) {
             data.password,
             data.domicilio,
             data.rol,
-            '<a id="editar" name="editar" id-edit="' + data.IdUsuario + '" class="edit btn btn-warning"><i class="material-icons">create</i></a>' +
-            '<a id="eliminar" name="eliminar" id-record="' + data.IdUsuario + '" class="delete btn btn-danger" ><i class="material-icons">delete_sweep</i></a>'
+            "<a id='editar' name='editar'  id-edit='" + data.IdUsuario + "'  class='edit btn btn-warning'  ><i class='material-icons'>create</i></a>" +
+            "<a id='eliminar' name='eliminar' id-record='" + data.IdUsuario + "'  class='delete btn btn-danger'  ><i class='material-icons'>delete_sweep</i></a>"
 
         ]).draw().node();
         $(row).attr('id', data.IdUsuario);
@@ -225,8 +270,9 @@ function setRow(data, action) {
             data.domicilio,
             data.rol,
 
-            '<a id="editar" name="editar" id-edit="' + data.IdUsuario + ' " class="edit btn btn-warning"><i class="material-icons">create</i></a>' +
-            '<a id="eliminar" name="eliminar" id-record="' + data.IdUsuario + '" class="delete btn btn-danger" ><i class="material-icons">delete_sweep</i></a>'
+            "<a id='editar' name='editar'  id-edit='" + data.IdUsuario + "'  class='edit btn btn-warning'  ><i class='material-icons'>create</i></a>" +
+            "<a id='eliminar' name='eliminar' id-record='" + data.IdUsuario + "'  class='delete btn btn-danger'  ><i class='material-icons'>delete_sweep</i></a>"
+
 
         ]).draw().node();
         $(row).attr('id', data.IdUsuario);
