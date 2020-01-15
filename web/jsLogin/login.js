@@ -92,7 +92,6 @@ function insertarLoginUsuario(post) {
     });
 }
 
-//login
 function validarAcceso(postacceso){
     $.ajax({
         type: "post",
