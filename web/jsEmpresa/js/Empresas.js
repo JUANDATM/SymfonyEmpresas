@@ -27,7 +27,6 @@ $('.edit').on("click", function () {
     actualizarEmpresa(IdEmpresa);
 });
 
-//sirve para editar los servicio
 
 $('.delete').on("click", function () {
     $tr = $(this).closest('tr');
@@ -225,7 +224,6 @@ function actualizarEmpresa(IdEmpresa) {
 }
 
 function insertarEmpresa() {
-
     //Dropzone class
     pdf = $(".add-file").dropzone({
         url: urlInsertar,
