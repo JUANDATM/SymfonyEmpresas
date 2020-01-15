@@ -13,3 +13,8 @@ usuario_admin_insertar:
 usuario_admin_eliminar:
     path:     /eliminarUsuario
     defaults: { _controller: UsuariosBundle:Default:eliminarUsuario }
+
+usuario_admin_actualizar:
+    path:     /actualizarUsuario
+    defaults: { _controller: UsuariosBundle:Default:actualizarUsuario }
+

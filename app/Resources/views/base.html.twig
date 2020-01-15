@@ -24,8 +24,9 @@
             </ul>
         </div>
     </nav>
-    {% block body %}{% endblock %}
-
+    {% block body %}
+     
+    {% endblock %}
     </body>
     <footer class="page-footer grey darken-4">
         <div class="container">
@@ -44,7 +45,7 @@
     </footer>
     {% block javascripts %}
         <script type="text/javascript" src="{{ asset('js/jquery-3.1.1.js') }}"></script>
-         <script type="text/javascript" src="{{ asset('js/materialize.js') }}"></script>
-         <script type="text/javascript" src="{{ asset('js/jquery.validate.min.js') }}"></script>
-         {% endblock %}
+        <script type="text/javascript" src="{{ asset('js/jquery.validate.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/materialize.js') }}"></script>
+    {% endblock %}
 </html>

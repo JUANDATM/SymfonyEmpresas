@@ -10,7 +10,7 @@
     <h1>Usuarios</h1>
     <button id="usuario-nuevo" class="btn btn-success"><i class="material-icons">add_circle_outline</i></button>
     <br></br>
-    <table id="usuarios-table" class="table table-striped table-bordered">
+    <table id="usuarios-table" name="table" id="table" class="table table-striped table-bordered">
         <thead class="thead-dark">
             <tr>
                 <th>#</th>
@@ -24,7 +24,7 @@
         </thead>
         <tbody>
             {% for usuario in content['usuario'] %}
-            <tr>
+            <tr id="{{ usuario.IdUsuario }}">
                 <td>{{ usuario.IdUsuario }}</td>
                 <td>{{ usuario.NombreUsuario }}</td>
                 <td>{{ usuario.CorreoUsuario }}</td>
@@ -32,8 +32,8 @@
                 <td>{{ usuario.DomicilioUsuario }}</td>
                 <td>{{ usuario.TipoUsuario }}</td>
                 <td>
-                    <a id="editar" name="editar" class="edit btn btn-warning" href="#"><i class="material-icons">create</i></a>
-                    <a id="eliminar" name="eliminar" id-record="{{usuario.IdUsuario}}" class="delete btn btn-danger" href="#"><i class="material-icons">delete_sweep</i></a>
+                    <a id="editar"  id-edit="{{ usuario.IdUsuario}}" name="editar" class="edit btn btn-warning" href="#"><i class="material-icons">create</i></a>
+                    <a id="eliminar" name="eliminar" id-record="{{usuario.IdUsuario}}" class="delete btn btn-danger"><i class="material-icons">delete_sweep</i></a>
                 </td>
             </tr>
             {% endfor %}
@@ -43,7 +43,7 @@
 </div>
 <!--          MODAL              -->
 
-<div class="modal fade" id="usuariomodal" name="usuariomodal" tabindex="-1" role="dialog" aria-labelledby="usuario-modal"
+<div class="modal fade closeModal" id="usuariomodal" name="usuariomodal" tabindex="-1" role="dialog" aria-labelledby="usuario-modal"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -51,53 +51,74 @@
                 <h5 class="modal-title" id="exampleModalLabel">Ver/Editar</h5>
             </div>
             <div class="modal-body">
-                <form id="usuarioform">
-                        <div class="row">
-                            <div class="col">
-                                <input id="nombre" name="nombre" type="text" class="form-control" placeholder="Nombre Usuario:">
-                            </div>
+               
+                 <form id="usuarioform">
+                    <div class="row">
+                        <div class="input-field col s8">
+                           <input id="nombre" name="nombre"  type="text" class="form-control">
+                           <label for="nombre">Nombre Completo:</label>
                         </div>
-                        <div class="row">
-                            <div class="col">
-                                <input id="correo" name="correo" type="email" class="form-control" placeholder="Correo Usuario:">
-                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s8">
+                            <input id="correo" name="correo"  type="email" class="form-control">
+                            <label for="correo">Correo:</label>
                         </div>
-                        <div class="row">
-                            <div class="col">
-                                <input id="password" name="password" type="password" class="form-control" placeholder="Contraseña:">
-                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s8">
+                            <input id="password" name="password"  type="password" class="form-control">
+                            <label for="password">Contraseña:</label>
                         </div>
-                        <div class="row">
-                            <div class="col">
-                                <input id="domicilio" name="domicilio" type="text" class="form-control" placeholder="Domicilio:">
-                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s8">
+                            <input id="domicilio" name="domicilio"  type="text" class="form-control">
+                            <label for="domicilio">Domicilio:</label>
                         </div>
-                        <div class="row">
-                            <div class="col">
-                                <input id="rol" name="rol" type="text" class="form-control" placeholder="Rol:">
-                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s8">
+                            <input id="rol" name="rol" type="text" class="form-control">
+                            <label for="rol">Rol:</label>
                         </div>
+                    </div>
+                    <input type="hidden" id="IdUsuario" name="IdUsuario" value=""></input>
                     </div>
                     <div class="modal-footer">
                         <button id="cancelar" type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" id="usuarios-guardar" class="btn btn-primary">Guardar</button>
+                        <button id="usuarios-guardar" class="btn btn-primary">Guardar</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-</div>
+
+    {# modal pára confirmar o cancelar eliminar #}
+    <div id="EliminarSiNo" name="EliminarSiNo" class="modal">
+    <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="EliminarSiNo">¿Esta seguro de eliminar este registro?</h5>
+            </div>
+            </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat" id="Aceptar" name="Aceptar">Si</a>
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat" id="Cerrar" name="Cerrar">No</a>
+
+    </div>
+  </div>
 {% endblock %}
 
 {% block javascripts %}
     {{parent()}}
     <script type="text/javascript"> 
         var urlInsertar = "{{path('usuario_admin_insertar')}}";
+        var urlActualizar = "{{path('usuario_admin_actualizar')}}";
     </script>
 
     <script type="text/javascript"> 
         var urlEliminar = "{{path('usuario_admin_eliminar')}}";
-        var Empresas = {{content['usuario']|json_encode()|raw}};
+        var Usuario = {{content['usuario']|json_encode()|raw}};
     </script>
 
     <script type="text/javascript" src="{{ asset('js/materialize.min.js') }}"></script>

@@ -1,12 +1,12 @@
 $(document).ready(function () {
     validateForm();
     $('.sidenav').sidenav();
-    ("#usuariomodal").modal();
+    $("#usuariomodal").modal();
     $('#usuarios-guardar').on("click", function () {
         //document.getElementById('empresa-form').reset();
         $('#usuarioform').submit();
     });
-    insertarLoginUsuario();
+    //insertarLoginUsuario();
 });
 
 $("#un_lock").on("click", function () {
@@ -39,6 +39,7 @@ function validateForm() {
         },
         submitHandler: function (form) {
             var postacceso = $('#frm-acceso').serialize();
+            //loader_processing();
             validarAcceso(postacceso);
         }
     });
@@ -66,7 +67,7 @@ function validateForm() {
         },
         submitHandler: function (form) {
             var post = $('#usuarioform').serialize();
-            insertarLoginUsuario(post);
+            //insertarLoginUsuario(post);
         }
     });
 }
@@ -90,6 +91,8 @@ function insertarLoginUsuario(post) {
         }
     });
 }
+
+//login
 function validarAcceso(postacceso){
     $.ajax({
         type: "post",
@@ -98,15 +101,19 @@ function validarAcceso(postacceso){
         data: postacceso,
         success: function(respuesta){
             if (respuesta['status']==1){
-                M.toast({html: 'Acceso Permitido', classes: 'rounded blue lighten-2'});
+                window.location.href='http://localhost:8000/adminEmpresas'
+                M.toast({ html: 'Acceso Permitido', classes: 'rounded', displayLength: 4000 });
+            }else if (respuesta['status']==2) {
                 window.location.href='http://localhost:8000/CatalogoEmpresas'
-            }
-            else{
-               M.toast({html: 'Acceso No Permitido', classes: 'rounded blue lighten-2'});
+                M.toast({ html: 'Acceso Permitido', classes: 'rounded', displayLength: 4000 });            
+            }else {
+                //hide_loader_processing();
+                M.toast({ html: 'Acceso Denegado', classes: 'rounded', displayLength: 4000 });
             }
         } 
     });
-  }
+}
+
 function reset() {
     $("#nombre").val('');
     $("#correo").val('');

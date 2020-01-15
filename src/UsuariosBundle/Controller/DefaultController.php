@@ -35,7 +35,53 @@ class DefaultController extends Controller
         );
         
          $result_Usuarios = $this->UsuariosModel->insertarUsuarios($data_Usuarios);
-         return $this->jsonResponse($result_Usuarios);
+         $post['IdUsuario']=$result_Usuarios["data"][0]['IdUsuario'];
+        
+        
+         if ($result_Usuarios['status']) {
+         
+            
+            $result['status']=true;
+            $result['data']=$post;
+
+        } else {
+            $result_Usuarios['status'] = FALSE;
+            $result_Usuarios['error'] = "Error";
+        }
+        return $this->jsonResponse($result);
+
+    }
+    public function actualizarUsuarioAction(Request $request){   
+        $post = $request->request->all();
+       
+        $data_Usuarios = array(
+            
+            "NombreUsuario" => "'" . $post["nombre"] . "'",
+            "CorreoUsuario" =>"'". $post["correo"]."'",
+            "PasswordUsuario" =>"'". $post["password"]."'",
+            "DomicilioUsuario" => "'".$post["domicilio"]."'",
+            "TipoUsuario" => "'".$post["rol"]."'",
+        );
+       
+        
+        $where=array("IdUsuario" => "'".$post["IdUsuario"]."'");
+      
+   
+         $result_Usuarios = $this->UsuariosModel->actualizarUsuarios($data_Usuarios,$where);
+        // $post['IdUsuario']=$result_Usuarios["data"][0]['IdUsuario'];
+        
+        
+         if ($result_Usuarios['status']) {
+         
+            
+            $result['status']=true;
+            $result['data']=$post;
+
+        } else {
+            $result_Usuarios['status'] = FALSE;
+            $result_Usuarios['error'] = "Error";
+        }
+        return $this->jsonResponse($result);
 
     }
 

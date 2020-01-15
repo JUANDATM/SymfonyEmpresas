@@ -7,13 +7,12 @@
              <div class="row">
            {% for empresa in content['empresas'] %}
             <div class="col s3">
-                <div class="card">
+                <div class="card small">
                   <div class="card-image waves-effect waves-block waves-light">
                     <img class="activator" src="data:{{empresa.FormatoImagen}};base64,{{ empresa.RutaImagen }}" width="300px" height="200px">
                   </div>
                   <div class="card-content">
                     <span class="card-title activator grey-text text-darken-4">{{empresa.NombreEmpresa}}<i class="material-icons right">add</i></span>
-                    <p><a href="#">{{empresa.DireccionEmpresa}}</a></p>
                   </div>
                   <div class="card-reveal">
                     <span class="card-title grey-text text-darken-4">{{empresa.NombreEmpresa}}<i class="material-icons right">close</i></span>
