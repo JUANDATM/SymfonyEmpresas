@@ -21,7 +21,7 @@ class DefaultController extends Controller
     {
         if ($request->getMethod() == 'POST') {
             //extraccion de parametros
-            $post = $request->request->all();    
+          $post = $request->request->all();    
             $data = array(
                 "CorreoUsuario"=> "'" . $post["usuario"] . "'",
                 "PasswordUsuario"=> "'" . $post["contra"] . "'"
@@ -34,6 +34,7 @@ class DefaultController extends Controller
             $aux = $result["data"][0]['TipoUsuario'];
             /*print_r($aux);
             die();*/
+
             if ($result['data']==null) {
                 $result['status'] = FALSE;
                 $result['message']="ERROR";
@@ -47,6 +48,7 @@ class DefaultController extends Controller
                     $result['message']="Usuario";
                 }
             }
+
             return $this->jsonResponse($result);
         }
         return $this->render('ControlAccesoBundle:Acceso:loginUsuario.html.twig');

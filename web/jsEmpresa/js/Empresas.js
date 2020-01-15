@@ -20,7 +20,7 @@ $('#empresa-nuevo').on("click", function() {
     $("#empresamodal").modal({ dismissible: false }).modal('open');
     insertarEmpresa();
 });
-$('.edit').on("click", function() {
+$(document).on("click", '.edit', function() {
     $tr = $(this).closest('tr');
     tr = $tr;
     var IdEmpresa = $(this).attr("id-edit");
@@ -29,17 +29,13 @@ $('.edit').on("click", function() {
     $("#empresamodal").modal({ dismissible: false }).modal('open');
     actualizarEmpresa(IdEmpresa);
     table.row($tr).node().draw();
-
-
 });
-
 //sirve para editar los servicio
 
-$('.delete').on("click", function() {
+$(document).on("click", '.delete', function() {
     var IdEmpresa = $(this).attr("id-record");
     $("#EliminarSiNo").modal({ dismissible: false }).modal('open');
     $("#Aceptar").attr("IdEmpresa", IdEmpresa);
-
 });
 
 $('#Aceptar').on("click", function() {
@@ -258,10 +254,10 @@ function setRow(data, base64, action) {
             data.descripcion,
             data.telefono,
             data.correo,
-            "<img src='" + base64 + "' width='200' height='100' ></img>",
-            "<a id='editar' name='editar'  id-edit='" + data.IdEmpresa + "' class='edit btn btn-warning'><i class='material-icons'>create</i></a>" +
-            "<a id='eliminar' name='eliminar' id-record='" + data.IdEmpresa + "' class='delete btn btn-danger' ><i class='material-icons'>delete_sweep</i></a>"
 
+            "<img src='" + base64 + "' width='200px' height='100px' ></img>",
+            "<a  id='editar' name='editar'  id-edit='" + data.IdEmpresa + "' class='edit btn btn-warning'><i class='material-icons'>create</i></a>" +
+            "<a  id='eliminar' name='eliminar' id-record='" + data.IdEmpresa + "' class='delete btn btn-danger' ><i class='material-icons'>delete_sweep</i></a>"
         ]).draw().node();
     }
 
@@ -275,8 +271,9 @@ function setRow(data, base64, action) {
             data.telefono,
             data.correo,
             "<img src='" + base64 + "' width='200px' height='100px' ></img>",
-            "<a id='editar' name='editar'  id-edit='" + data.IdEmpresa + "' class='edit btn btn-warning'><i class='material-icons'>create</i></a>" +
-            "<a id='eliminar' name='eliminar' id-record='" + data.IdEmpresa + "' class='delete btn btn-danger' ><i class='material-icons'>delete_sweep</i></a>"
+            "<a id='editar' name='editar'  id-edit='" + data.IdEmpresa + "'  class='edit btn btn-warning'  ><i class='material-icons'>create</i></a>" +
+            "<a id='eliminar' name='eliminar' id-record='" + data.IdEmpresa + "'  class='delete btn btn-danger'  ><i class='material-icons'>delete_sweep</i></a>"
+
         ]).draw().node();
         $(row).attr('id', data.IdEmpresa);
     }

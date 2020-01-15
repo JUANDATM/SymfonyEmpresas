@@ -2,6 +2,7 @@ $(document).ready(function () {
     validateForm();
     $('.sidenav').sidenav();
     $("#usuariomodal").modal();
+
     $('#usuarios-guardar').on("click", function () {
         //document.getElementById('empresa-form').reset();
         $('#usuarioform').submit();
@@ -9,7 +10,7 @@ $(document).ready(function () {
     //insertarLoginUsuario();
 });
 
-$("#un_lock").on("click", function () {
+$("#un_lock").on("click", function() {
     $('#frm-acceso').submit();
 });
 
@@ -34,7 +35,7 @@ function validateForm() {
         },
         errorElement: "div",
         errorClass: "invalid",
-        errorPlacement: function (error, element) {
+        errorPlacement: function(error, element) {
             error.insertAfter(element)
         },
         submitHandler: function (form) {
@@ -92,7 +93,6 @@ function insertarLoginUsuario(post) {
         }
     });
 }
-
 function validarAcceso(postacceso){
     $.ajax({
         type: "post",
@@ -113,6 +113,7 @@ function validarAcceso(postacceso){
         } 
     });
 }
+
 
 function reset() {
     $("#nombre").val('');
