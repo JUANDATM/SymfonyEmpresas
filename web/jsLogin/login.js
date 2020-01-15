@@ -72,6 +72,7 @@ function validateForm() {
     });
 }
 
+
 function insertarLoginUsuario(post) {
     $.ajax({
         type: "post",
