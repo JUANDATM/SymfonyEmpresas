@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin. Usuarios{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Usuarios</h1>
+    <button id="empresa-nuevo" class="btn btn-success"><i class="material-icons">add_circle_outline</i></button>
+    <br></br>
+    <table id="empresas-table" class="table table-striped table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>#</th>
+                <th style="width:30%">Nombre</th>
+                <th style="width:30%">Correo</th>
+                <th style="width:20%">Contraseña</th>
+                <th style="width:20%">Rol</th>
+                <th style="width:20%">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for usuario in usuario %}
+            <tr>
+                <td>{{ usuario.id }}</td>
+                <td>{{ usuario.nombre }}</td>
+                <td>{{ usuario.correo }}</td>
+                <td>{{ usuario.pwd }}</td>
+                <td>{{ usuario.rol }}</td>
+                <td>
+                    <a class="edit btn btn-warning" href="#"><i class="material-icons">create</i></a>
+                    <a class="delete btn btn-danger" href="#"><i class="material-icons">delete_sweep</i></a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {# <a href="{{ path('empresa_new') }}">Create new</a>   #}
+</div>
+<!--          MODAL              -->
+
+<div class="modal fade" id="empresa-modal" tabindex="-1" role="dialog" aria-labelledby="empresa-modal"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ver/Editar</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="empresa-form">
+                    <div class="row">
+                        <div class="col">
+                            <input id="nombre" type="text" class="form-control" placeholder="Nombre Empresa:" required>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input id="direccion" type="text" class="form-control" placeholder="Direccion Empresa:">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input id="Telefono" type="text" class="form-control" placeholder="Telefono:">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input id="descripcion" type="text" class="form-control" placeholder="Telefono:">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input id="arch" type="file" name="arch">
+                                <input type="hidden" id="imagen" name="imagen">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button id="productos-guardar" type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" href="{{ asset('js/jquery-3.1.1.js')}}"></script>
+    <script type="text/javascript" href="{{ asset('js/materialize.js')}}"></script>
+    <script type="text/javascript" href="{{ asset('js/jquery.validate.min.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('js/datatable.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('select').formSelect();
+        });
+    </script>
+{% endblock %}

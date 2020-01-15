@@ -44,6 +44,8 @@ $('#Aceptar').on("click", function() {
     var IdEmpresa = $(this).attr("IdEmpresa");
     table.row($tr).remove().draw();
     eliminarEmpresa(IdEmpresa);
+
+
 });
 
 $('#Cerrar').on("click", function() {
@@ -62,7 +64,6 @@ function pintarDatos(IdEmpresa) {
     $("#telefono").val(Empresas[IdEmpresa]["TelefonoEmpresa"]).next().addClass("active");
     $("#correo").val(Empresas[IdEmpresa]["CorreoEmpresa"]).next().addClass("active");
     $("#descripcion").val(Empresas[IdEmpresa]["DescripcionEmpresa"]).next().addClass("active");
-    $("#addfile").val('data:' + Empresas[IdEmpresa]["FormatoImagen"] + ';base64,' + Empresas[IdEmpresa]["RutaImagen"]).next().addClass("active");
     var divrow = $('<div/>', {
         'class': 'row img'
     }).appendTo('#empresa-form');
@@ -118,6 +119,8 @@ function reset() {
     $('.img').hide();
 
 };
+
+
 
 function eliminarEmpresa(IdEmpresa) {
     $.ajax({
@@ -251,11 +254,13 @@ function setRow(data, base64, action) {
             data.descripcion,
             data.telefono,
             data.correo,
+
             "<img src='" + base64 + "' width='200px' height='100px' ></img>",
             "<a  id='editar' name='editar'  id-edit='" + data.IdEmpresa + "' class='edit btn btn-warning'><i class='material-icons'>create</i></a>" +
             "<a  id='eliminar' name='eliminar' id-record='" + data.IdEmpresa + "' class='delete btn btn-danger' ><i class='material-icons'>delete_sweep</i></a>"
         ]).draw().node();
     }
+
     if (action === 'update') {
         table.row('#' + data.IdEmpresa).remove().draw();
         var row = table.row.add([

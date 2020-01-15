@@ -14,6 +14,7 @@ class LoginModel {
 
     public function getUsuarios($data){
         $result = $this->SQLModel->selectFromTable('Usuario','CorreoUsuario, PasswordUsuario', $data);
+
         return $result;
     }
 

@@ -45,7 +45,7 @@
           <br />
           <center>
             <div class='row'>
-              <button type='submit' id="un_lock" name='btn_login' class='col s12 btn btn-large waves-effect indigo'>Login</button>
+            <a id="un_lock" name="btn_login" class="col s12 btn btn-large waves-effect indigo">Login</a>
             </div>
           </center>
         </form>
@@ -67,8 +67,8 @@
                 <h5 class="modal-title" id="exampleModalLabel">Nuevo Usuario</h5>
             </div>
             <div class="modal-body">
-                <form id="usuarioform" method="post">
-                        <div class="row">
+                <form id="usuarioform" method="POST">
+                    <div class="row">
                             <div class="col s12">
                                 <input id="nombre" name="nombre" type="text" class="form-control" placeholder="Nombre Usuario:">
                             </div>
@@ -108,13 +108,15 @@
 {% block javascripts %}
 {{parent()}}
 <script type="text/javascript"> 
-    var urlValidacion = "{{path('control_acceso_homepage')}}";
+    var urlValidacion = "{{path('control_acceso_login')}}";
     var urlInsertar = "{{path('control_acceso_insertar')}}";
+    //var urlAdmin = "{{path('empresa_admin')}}";
+    //var urlUsr = "{{path('catalogo_empresas_catalogo')}}";
 </script>
 <script type="text/javascript" src="{{ asset('js/jquery-3.0.0.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.validate.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/materialize.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/dataTables.materialize.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/jquery.validate.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('jsLogin/login.js') }}"></script>
 {% endblock %}
