@@ -68,7 +68,7 @@ function validateForm() {
         },
         submitHandler: function (form) {
             var post = $('#usuarioform').serialize();
-            //insertarLoginUsuario(post);
+            insertarLoginUsuario(post);
         }
     });
 }
@@ -82,17 +82,18 @@ function insertarLoginUsuario(post) {
         data: post,
         success: function (respuesta) {
             if (respuesta['status']) {
-                $("#nombre").val($("#nombre").val());
+                //$("#nombre").val($("#nombre").val());
                 M.toast({ html: 'Registro exitoso', classes: 'rounded', displayLength: 4000 });
                 reset();
                 $("#usuariomodal").modal('close');
                 $("#nombre").focus();
-            } else {
-                M.toast({ html: 'Error al Registrar ', classes: 'rounded', displayLength: 4000 });
+            }else{
+                M.toast({ html: 'Error al Registrar correo existente ', classes: 'rounded', displayLength: 4000 });
             }
         }
     });
 }
+
 function validarAcceso(postacceso){
     $.ajax({
         type: "post",
