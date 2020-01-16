@@ -38,17 +38,15 @@ class DefaultController extends Controller
             if ($result['data']==null) {
                 $result['status'] = FALSE;
                 $result['message']="ERROR";
-            }else{ 
-                if ($aux=="admin") {
+            }
+            if ($aux=="admin") {
                     $result['status']= 1;
                     $result['message']="Administrador";
-                }
-                if($aux=="usuario"){
+            }
+            if($aux=="usuario"){
                     $result['status']= 2;
                     $result['message']="Usuario";
-                }
             }
-
             return $this->jsonResponse($result);
         }
         return $this->render('ControlAccesoBundle:Acceso:loginUsuario.html.twig');
@@ -56,6 +54,7 @@ class DefaultController extends Controller
 
     public function InsertarUsuarioAction(Request $request){   
         $post = $request->request->all();
+
         $data_Usuarios = array(
             "NombreUsuario" => "'" . $post["nombre"] . "'",
             "CorreoUsuario" =>"'". $post["correo"]."'",
@@ -63,8 +62,16 @@ class DefaultController extends Controller
             "DomicilioUsuario" => "'".$post["domicilio"]."'",
             "TipoUsuario" => "'".$post["rol"]."'",
         );
-
-        $result_Usuarios = $this->LoginModel->insertarLoginUsuarios($data_Usuarios);
+        /*if($data_Usuarios["CorreoUsuario"]!=$data_Usuarios["CorreoUsuario"]){
+            $result_Usuarios['status'] = TRUE;
+            $result_Usuarios['message']="BIEN";
+            
+        }
+        if($data_Usuarios["CorreoUsuario"]==$data_Usuarios["CorreoUsuario"]){
+            $result_Usuarios['status'] = FALSE;
+            $result_Usuarios['message']="ERROR";
+        }*/
+        $result_Usuarios = $this->LoginModel->insertarLoginUsuarios($data_Usuarios); 
         return $this->jsonResponse($result_Usuarios);
 
     }

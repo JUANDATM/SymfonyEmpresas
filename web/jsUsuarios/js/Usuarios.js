@@ -4,7 +4,7 @@ $(document).ready(function() {
     table = $('#usuarios-table').DataTable();
     validateForm();
     $('.sidenav').sidenav();
-    ("#usuariomodal").modal();
+    $("#usuariomodal").modal();
     $('#usuarios-guardar').on("click", function() {
         $('#usuarioform').submit();
     });
