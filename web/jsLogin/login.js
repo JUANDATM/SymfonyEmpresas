@@ -1,9 +1,9 @@
-$(document).ready(function () {
+$(document).ready(function() {
     validateForm();
     $('.sidenav').sidenav();
     $("#usuariomodal").modal();
 
-    $('#usuarios-guardar').on("click", function () {
+    $('#usuarios-guardar').on("click", function() {
         //document.getElementById('empresa-form').reset();
         $('#usuarioform').submit();
     });
@@ -14,11 +14,11 @@ $("#un_lock").on("click", function() {
     $('#frm-acceso').submit();
 });
 
-$('#usuario-nuevo').on("click", function () {
+$('#usuario-nuevo').on("click", function() {
     $("#usuariomodal").modal({ dismissible: false }).modal('open');
 });
 
-$('#cancelar').on("click", function () {
+$('#cancelar').on("click", function() {
     $("#usuariomodal").modal('close');
     reset();
 });
@@ -38,7 +38,7 @@ function validateForm() {
         errorPlacement: function(error, element) {
             error.insertAfter(element)
         },
-        submitHandler: function (form) {
+        submitHandler: function(form) {
             var postacceso = $('#frm-acceso').serialize();
             //loader_processing();
             validarAcceso(postacceso);
@@ -63,10 +63,10 @@ function validateForm() {
         },
         errorElement: "div",
         errorClass: "invalid",
-        errorPlacement: function (error, element) {
+        errorPlacement: function(error, element) {
             error.insertAfter(element)
         },
-        submitHandler: function (form) {
+        submitHandler: function(form) {
             var post = $('#usuarioform').serialize();
             //insertarLoginUsuario(post);
         }
@@ -80,7 +80,7 @@ function insertarLoginUsuario(post) {
         url: urlInsertar,
         dataType: 'json',
         data: post,
-        success: function (respuesta) {
+        success: function(respuesta) {
             if (respuesta['status']) {
                 $("#nombre").val($("#nombre").val());
                 M.toast({ html: 'Registro exitoso', classes: 'rounded', displayLength: 4000 });
@@ -93,24 +93,25 @@ function insertarLoginUsuario(post) {
         }
     });
 }
-function validarAcceso(postacceso){
+
+function validarAcceso(postacceso) {
     $.ajax({
         type: "post",
         url: urlValidacion,
         dataType: 'json',
         data: postacceso,
-        success: function(respuesta){
-            if (respuesta['status']==1){
-                window.location.href='http://localhost:8000/adminEmpresas'
+        success: function(respuesta) {
+            if (respuesta['status'] == 1) {
+                window.location.href = 'http://localhost:8000/adminEmpresas'
                 M.toast({ html: 'Acceso Permitido', classes: 'rounded', displayLength: 4000 });
-            }else if (respuesta['status']==2) {
-                window.location.href='http://localhost:8000/CatalogoEmpresas'
-                M.toast({ html: 'Acceso Permitido', classes: 'rounded', displayLength: 4000 });            
-            }else {
+            } else if (respuesta['status'] == 2) {
+                window.location.href = 'http://localhost:8000/CatalogoEmpresas'
+                M.toast({ html: 'Acceso Permitido', classes: 'rounded', displayLength: 4000 });
+            } else {
                 //hide_loader_processing();
                 M.toast({ html: 'Acceso Denegado', classes: 'rounded', displayLength: 4000 });
             }
-        } 
+        }
     });
 }
 
