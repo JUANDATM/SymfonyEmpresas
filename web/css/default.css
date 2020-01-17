@@ -48,12 +48,10 @@
     color: red;
     font-size: 10px;
 }
-body {
+
+.footer {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
-}
-main {
     flex: 1 0 auto;
 }
-
