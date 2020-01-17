@@ -1,20 +1,37 @@
 # To get started with security, check out the documentation:
 # https://symfony.com/doc/current/security.html
 security:
+    encoders:
+        ControlAccesoBundle\Profile:
+            algorithm: sha1
+            iterations: 1
+            encode_as_base64: false
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
-        in_memory:
-            memory: ~
+        main:
+            id: app.ixposuser_provider
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+        
 
         main:
             anonymous: ~
+            form_login:
+                check_path: /login_check
+                login_path: /login
+                default_target_path: /adminEmpresas
+            logout:
+                path:   /logout
+                target: /login
+                invalidate_session: false
             # activate different ways to authenticate
 
             # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
@@ -22,3 +39,7 @@ security:
 
             # https://symfony.com/doc/current/security/form_login_setup.html
             #form_login: ~
+
+    access_control:
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/adminEmpresas, roles:  ROLE_ADMIN}

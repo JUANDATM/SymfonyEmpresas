@@ -10,3 +10,8 @@ control_acceso_insertar:
     path:     /insertarLoginUsuario
     defaults: { _controller: ControlAccesoBundle:Default:InsertarUsuario }
 
+login_check:
+    path:   /login_check
+    
+logout:
+    path:   /logout    
