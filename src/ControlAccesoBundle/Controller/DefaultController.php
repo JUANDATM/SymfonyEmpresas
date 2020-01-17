@@ -7,6 +7,8 @@ use Utilerias\SQLBundle\Model\SQLModel;
 use ControlAccesoBundle\Model\LoginModel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use ControlAccesoBundle\Model\Profile;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class DefaultController extends Controller
@@ -17,11 +19,12 @@ class DefaultController extends Controller
         $this->LoginModel = new LoginModel();
     }
 
-    public function loginUsuarioAction(Request $request)
-    {
+    public function loginUsuarioAction(Request $request){
+        $session = $request->getSession();
+
         if ($request->getMethod() == 'POST') {
             //extraccion de parametros
-          $post = $request->request->all();    
+          $post = $request->request->all();   
             $data = array(
                 "CorreoUsuario"=> "'" . $post["usuario"] . "'",
                 "PasswordUsuario"=> "'" . $post["contra"] . "'"
@@ -31,9 +34,14 @@ class DefaultController extends Controller
             $result = $this->LoginModel->getUsuarios($data);
             /*print_r($result);
             die();*/
+            $user = $result["data"][0];
             $aux = $result["data"][0]['TipoUsuario'];
             /*print_r($aux);
             die();*/
+
+            //TipoUduario : ROLE_USER para viewer ..... ROLE_ADMIN
+
+            $login = false;
 
             if ($result['data']==null) {
                 $result['status'] = FALSE;
@@ -42,12 +50,32 @@ class DefaultController extends Controller
             if ($aux=="admin") {
                     $result['status']= 1;
                     $result['message']="Administrador";
+                    $login = true;
             }
             if($aux=="usuario"){
                     $result['status']= 2;
                     $result['message']="Usuario";
+                    $login = true;
             }
-            return $this->jsonResponse($result);
+
+        if($login){
+                /* Creamos el objeto Profile con los datos presentados por el formulario */
+                $roles = array('ROLE_VISITANTE');
+                $profile = new Profile($data['CorreoUsuario'], $data['PasswordUsuario'], '*;7/SjqjVjIsI*', $roles);
+                $profile->setData($data);
+                // Creamos el token
+                $token = new UsernamePasswordToken($profile, $profile->getPassword(), 'main', $profile->getRoles());
+
+                $this->container->get('security.token_storage')->setToken($token);
+                // Creamos e iniciamos la sesión
+                /*print_r($token);
+                die();*/
+                $session->set('_security_main', serialize($token));
+
+        }        
+        
+        
+        return $this->jsonResponse($result);
         }
         return $this->render('ControlAccesoBundle:Acceso:loginUsuario.html.twig');
     }
@@ -58,7 +86,7 @@ class DefaultController extends Controller
         $data_Usuarios = array(
             "NombreUsuario" => "'" . $post["nombre"] . "'",
             "CorreoUsuario" =>"'". $post["correo"]."'",
-            "PasswordUsuario" =>"'". $post["password"]."'",
+            "PasswordUsuario" =>"'".$post["password"] ."'",
             "DomicilioUsuario" => "'".$post["domicilio"]."'",
             "TipoUsuario" => "'".$post["rol"]."'",
         );
