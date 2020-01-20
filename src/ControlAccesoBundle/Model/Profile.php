@@ -11,8 +11,7 @@ class Profile implements UserInterface {
         private $salt;
         private $roles;
         private $data;
-        private $compras;
-        private $carrito;
+
      
         public function __construct($username, $password, $salt, array $roles) {
             $this->username = $username;
