@@ -33,7 +33,7 @@ class ProfileProvider implements UserProviderInterface {
         $session->getFlashBag()->add('TMP_pr', $request->get('_pr'));
         
         $Args = Array('CorreoUsuario' => "'" . $username . "'");
-        $userData = $this->LoginModel->getUsuarios($data);
+        $userData = $this->LoginModel->getUsuarios($Args);
         $visitor = array();
         $email = $request->get('_username');
         $pass = sha1($request->get('_password') . '*;7/SjqjVjIsI*');
@@ -52,7 +52,7 @@ class ProfileProvider implements UserProviderInterface {
                 $nombre = $_SESSION['_sf2_attributes']['MM_Nombre'];
 
                 foreach ($userData as $key => $value) {
-                    if ($value['CorreoUsuario'] == $email && $value['NombreUsuario'] == $nombre &&  $value['_id_Visitante'] == $_id_Visitante) {
+                    if ($value['CorreoUsuario'] == $email && $value['NombreUsuario'] == $nombre &&  $value['IdUsuario'] == $_id_Visitante) {
                         $visitor = $value;
                         break;
                     }
@@ -66,7 +66,7 @@ class ProfileProvider implements UserProviderInterface {
             $username = $visitor['CorreoUsuario'];
             $password = $visitor['PasswordUsuario'];
             $salt = '*;7/SjqjVjIsI*';
-            $roles = array('ROLE_USER');
+            $roles = array('ROLE_USER','ROLE_ADMIN');
             $user = new Profile($username, $password, $salt, $roles);
             $user->setData($visitor);
             return $user;
@@ -78,18 +78,10 @@ class ProfileProvider implements UserProviderInterface {
         if (!$user instanceof Profile) {
             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', get_class($user)));
         }
-        
         return $user;
     }
 
     public function supportsClass($class) {
         return $class === 'ControlAccesoBundle\Model\Profile';
     }
-
-    private function isEmail($email) {
-        if (!ereg("^([a-zA-Z0-9._]+)@([a-zA-Z0-9.-]+).([a-zA-Z]{2,4})$", $email))
-            return FALSE;
-        return TRUE;
-    }
-
 }
