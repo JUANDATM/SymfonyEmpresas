@@ -33,7 +33,9 @@ class ProfileProvider implements UserProviderInterface {
         $session->getFlashBag()->add('TMP_pr', $request->get('_pr'));
         
         $Args = Array('CorreoUsuario' => "'" . $username . "'");
-        $userData = $this->LoginModel->getUsuarios($data);
+    
+        $userData = $this->LoginModel->getUsuarios($Args);
+     
         $visitor = array();
         $email = $request->get('_username');
         $pass = sha1($request->get('_password') . '*;7/SjqjVjIsI*');
@@ -86,10 +88,5 @@ class ProfileProvider implements UserProviderInterface {
         return $class === 'ControlAccesoBundle\Model\Profile';
     }
 
-    private function isEmail($email) {
-        if (!ereg("^([a-zA-Z0-9._]+)@([a-zA-Z0-9.-]+).([a-zA-Z]{2,4})$", $email))
-            return FALSE;
-        return TRUE;
-    }
 
 }
