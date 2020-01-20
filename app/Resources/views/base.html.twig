@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html>
-    <head>
+    <header>
         <meta charset="UTF-8" />
         <title>{% block title %}Empresas{% endblock %}</title>
+        <link rel="stylesheet" href="{{ asset("css/default.css") }}">
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }} media="screen,projection"" />
         <link rel="stylesheet" href="{{ asset("css/materialize.css") }}">
         <link rel="stylesheet" href="{{ asset("css/materialize.min.css.0.100.2") }}">
-        <link rel="stylesheet" href="{{ asset("css/default.css") }}">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
         {% block stylesheets %}{% endblock %}
-    </head>
+    </header>
 
     <body>
     <nav>
@@ -18,8 +18,8 @@
             <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down">
                 <li><a href="{{ asset('CatalogoEmpresas')}}">Inicio</a></li>
-                <li><a href="{{ asset('adminUsuarios')}}">Admin Usuarios</a></li>
-                <li><a href="{{ asset('adminEmpresas')}}">Admin Empresas</a></li>
+                <li id="oc1"><a href="{{ asset('adminUsuarios')}}">Admin Usuarios</a></li>
+                <li id="oc2"><a href="{{ asset('adminEmpresas')}}">Admin Empresas</a></li>
                 <li><a href="{{ asset('login')}}">Sesion</a></li>
             </ul>
         </div>
@@ -34,9 +34,7 @@
                 <div class="footer-copyright">
                     <div class="container center">
                         <span class="copyright">
-                            Residentes Copyright &copy;
-                                <script>document.write(new Date().getFullYear());</script> <i class="far fa-heart" aria-hidden="true"></i><a
-                                href="https://colorlib.com" target="_blank"></a>
+                              © 2020 Copyright Recidentes
                         </span>
                     </div>
                 </div>

@@ -2,6 +2,8 @@ $(document).ready(function() {
     validateForm();
     $('.sidenav').sidenav();
     $("#usuariomodal").modal();
+    document.getElementById('oc1').style.display = 'none';
+    document.getElementById('oc2').style.display = 'none';
 
     $('#usuarios-guardar').on("click", function() {
         //document.getElementById('empresa-form').reset();

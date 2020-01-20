@@ -33,9 +33,7 @@ class ProfileProvider implements UserProviderInterface {
         $session->getFlashBag()->add('TMP_pr', $request->get('_pr'));
         
         $Args = Array('CorreoUsuario' => "'" . $username . "'");
-    
         $userData = $this->LoginModel->getUsuarios($Args);
-     
         $visitor = array();
         $email = $request->get('_username');
         $pass = sha1($request->get('_password') . '*;7/SjqjVjIsI*');
@@ -87,6 +85,4 @@ class ProfileProvider implements UserProviderInterface {
     public function supportsClass($class) {
         return $class === 'ControlAccesoBundle\Model\Profile';
     }
-
-
 }

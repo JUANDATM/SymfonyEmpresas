@@ -78,12 +78,12 @@ class DefaultController extends Controller
                 $result['status'] = FALSE;
                 $result['message']="ERROR";
             }
-            if ($aux=="admin") {
+            if ($aux=="ROLE_ADMIN") {
                     $result['status']= 1;
                     $result['message']="Administrador";
                     $login = true;
             }
-            if($aux=="usuario"){
+            if($aux=="ROLE_USER"){
                     $result['status']= 2;
                     $result['message']="Usuario";
                     $login = true;
