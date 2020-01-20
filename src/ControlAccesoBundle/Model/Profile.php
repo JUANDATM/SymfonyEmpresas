@@ -3,16 +3,18 @@
 namespace ControlAccesoBundle\Model;
 
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\EquatableInterface;
 
-class Profile implements UserInterface {
+
+
+class Profile implements UserInterface, EquatableInterface {
 
         private $username;
         private $password;
         private $salt;
         private $roles;
         private $data;
-
-     
+        
         public function __construct($username, $password, $salt, array $roles) {
             $this->username = $username;
             $this->password = $password;
