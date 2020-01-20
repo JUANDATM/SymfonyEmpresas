@@ -14,7 +14,7 @@ class Profile implements UserInterface, EquatableInterface {
         private $salt;
         private $roles;
         private $data;
-     
+        
         public function __construct($username, $password, $salt, array $roles) {
             $this->username = $username;
             $this->password = $password;
