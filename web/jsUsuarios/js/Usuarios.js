@@ -4,49 +4,30 @@ $(document).ready(function() {
     table = $('#usuarios-table').DataTable();
     validateForm();
     $('.sidenav').sidenav();
-    ("#usuariomodal").modal();
+    $("#usuariomodal").modal();
     $('#usuarios-guardar').on("click", function() {
-        //document.getElementById('empresa-form').reset();
         $('#usuarioform').submit();
     });
-
 });
-
-//actualizarrrrrrrrrrrrr 
-
 $(document).on("click", ".edit", function() {
-
     $tr = $(this).closest('tr');
     tr = $tr;
     var IdUsuario = $(this).attr("id-edit");
     pintarDatos(IdUsuario);
     $("#usuarios-guardar").attr("IdUsuario", IdUsuario);
     $("#usuariomodal").modal({ dismissible: false }).modal('open');
-    //actualizarUsuario(post);
     action = "update";
     table.row($tr).node().draw();
 });
-
 $('#usuario-nuevo').on("click", function() {
     $("#usuariomodal").modal({ dismissible: false }).modal('open');
     action = "insert";
 });
-
-
-//proceso de eliminar registro
-//$('.delete').on("click", function() {
-/*  asegurar() */
-//var IdUsuario = $(this).attr("id-record");
-/* eliminarUsuario(IdUsuario); */
-//$("#EliminarSiNo").modal({ dismissible: false }).modal('open');
-//  $("#Aceptar").attr("IdUsuario", IdUsuario);
-//});
 $(document).on("click", '.delete', function() {
     var IdUsuario = $(this).attr("id-record");
     $("#EliminarSiNo").modal({ dismissible: false }).modal('open');
     $("#Aceptar").attr("IdUsuario", IdUsuario);
 });
-
 $('#Aceptar').on("click", function() {
     $tr = $(this).closest('tr');
     tr = $tr;
@@ -54,26 +35,13 @@ $('#Aceptar').on("click", function() {
     table.row($tr).remove().draw();
     eliminarUsuario(IdUsuario);
 });
-
 $('#Cerrar').on("click", function() {
     $("#EliminarSiNo").modal('close');
 });
-//fin proceso de eliminar registro
 $('#cancelar').on("click", function() {
     $("#usuariomodal").modal('close');
     reset();
 });
-/* 
-function pintarDatos(IdUsuario) {
-    $("#IdUsuario").val(IdUsuario);
-    $("#IdUsuario").val(Usuario[IdUsuario]["IdUsuario"]).next().addClass("active");
-    $("#nombre").val(Usuario[IdUsuario]["NombreUsuario"]).next().addClass("active");
-    $("#correo").val(Usuario[IdUsuario]["CorreoUsuario"]).next().addClass("active");
-    $("#password").val(Usuario[IdUsuario]["PasswordUsuario"]).next().addClass("active");
-    $("#domicilio").val(Usuario[IdUsuario]["DomicilioUsuario"]).next().addClass("active");
-    $("#rol").val(Usuario[IdUsuario]["TipoUsuario"]).next().addClass("active");
-
-} */
 
 function pintarDatos(IdUsuario) {
     $("#IdUsuario").val(IdUsuario);
@@ -85,7 +53,6 @@ function pintarDatos(IdUsuario) {
     $("#usuarioform input[type='text'], textarea").removeClass('valid').next().addClass('active');
 }
 
-
 function validateForm() {
     $('#usuarioform').validate({
         rules: {
@@ -94,7 +61,6 @@ function validateForm() {
             password: { required: true, minlength: 7, maxlength: 50 },
             domicilio: { required: true, minlength: 7, maxlength: 250 },
             rol: { required: true, minlength: 1, maxlength: 10 },
-
         },
         messages: {
             nombre: { required: "Este campo es OBLIGATORIO", minlength: "El minimo de caracteres son 4", maxlength: "Maximo de caracteres sobrepasado" },
@@ -102,7 +68,6 @@ function validateForm() {
             password: { required: "No puedes dejar este campo vacío", minlength: "Debes ingresar al menos 7 caracteres", maxlength: "No puedes ingresar más de 50 caracteres" },
             domicilio: { required: "No puedes dejar este campo vacío", minlength: "Debes ingresar al menos 7 caracteres", maxlength: "No puedes ingresar más de 250 caracteres" },
             rol: { required: "No puedes dejar este campo vacío", minlength: "Debes ingresar al menos 1 caracteres", maxlength: "No puedes ingresar más de 10 caracteres" },
-
         },
         errorElement: "div",
         errorClass: "invalid",
@@ -113,7 +78,6 @@ function validateForm() {
             var post = $('#usuarioform').serialize();
             if (action === "insert") {
                 insertarUsuario(post);
-
             }
             if (action === "update") {
                 post + "&idUsuario=" + $("#usuarios-guardar").attr("IdUsuario");
@@ -121,12 +85,7 @@ function validateForm() {
             }
         }
     });
-
 }
-
-/*$tr = $(this).closet('tr');
-tr = $tr;
-var idusuario = $(this).attr("data-id");*/
 
 function eliminarUsuario(IdUsuario) {
     $.ajax({
@@ -136,8 +95,6 @@ function eliminarUsuario(IdUsuario) {
         data: { IdUsuario },
         success: function(respuesta) {
             if (respuesta['status']) {
-
-                //table.remove().draw();
                 M.toast({ html: 'Registro Eliminado con Exito', classes: 'rounded', displayLength: 4000 });
                 var action = "delete";
                 setRow(respuesta.data, action);
@@ -156,11 +113,7 @@ function insertarUsuario(post) {
         data: post,
 
         success: function(respuesta) {
-            //    hide_loader_wrapper();
             if (respuesta['status']) {
-                //    $("#nombre").val($("#nombre").val());
-                //   var data = $('#empresa-form').serializeArray();
-
                 Usuario[respuesta.data.IdUsuario] = respuesta.data;
                 M.toast({ html: 'Registro exitoso', classes: 'rounded', displayLength: 4000 });
                 // Usuario[respuesta.data.IdUsuario] = respuesta.data;
@@ -169,7 +122,6 @@ function insertarUsuario(post) {
                 setRow(data, action);
                 reset();
                 $("#usuariomodal").modal('close');
-                $("#nombre").focus();
             } else {
                 M.toast({ html: 'Error al Registrar ', classes: 'rounded', displayLength: 4000 });
             }
@@ -177,51 +129,21 @@ function insertarUsuario(post) {
     });
 }
 
-// function saveData() {
-//     $.ajax({
-//         type: "post", // podría ser get, post, put o delete.
-//         url: url_insert, // url del recurso
-//         dataType: 'json', // formato que regresa la respuesta
-//         data: $("#usuarioform").serialize(), // datos a pasar al servidor, en caso de necesitarlo
-//         success: function(result) {
-//             hide_loader_wrapper();
-//             $("#usuariomodal").modal("close");
-//             if (!result['status']) {
-//                 show_alert("danger", result['data']);
-//                 return;
-//             }
-//             Usuario[result.data.IdUsuario] = result.data;
-//             setRow(result.data, "insert");
-//             show_alert("success", general_text['guardoExito']);
-//         },
-//         error: function(request, status, error) {
-//             hide_loader_wrapper();
-//             show_modal_error(request.responseText);
-//         }
-//     });
-// }
-///////////////////actualizarrrrrrrrrr
 function actualizarUsuario(post) {
     $.ajax({
         type: "post",
         url: urlActualizar,
         dataType: 'json',
         data: post,
-        // data: { IdUsuario },
-        // data: $('#usuarioform').serializeArray(),
-        // data: { IdUsuario },
         success: function(respuesta) {
-            //var data = $('#usuarioform').serializeArray();
-            // var nose = data.respuesta;
             if (respuesta['status']) {
                 $("#nombre").val($("#nombre").val());
                 M.toast({ html: 'Se actualizo con exito', classes: 'rounded', displayLength: 4000 });
                 var data = respuesta;
                 var action = "update";
                 setRow(respuesta.data, action);
-                reset();
                 $("#usuariomodal").modal('close');
-                $("#nombre").focus();
+                reset();
             } else {
                 M.toast({ html: 'Error al actualizar ', classes: 'rounded', displayLength: 4000 });
             }
@@ -247,20 +169,12 @@ function setRow(data, action) {
             data.password,
             data.domicilio,
             data.rol,
-            "<a id='editar' name='editar'  id-edit='" + data.IdUsuario + "'  class='edit btn btn-warning'  ><i class='material-icons'>create</i></a>" +
+            "<a id='editar' name='editar'  id-edit='" + data.IdUsuario + "'  id-nombre='" + data.nombre + "'  id-correo='" + data.correo + "'  id-password='" + data.password + "' id-domicilio='" + data.domicilio + "' id-rol='" + data.rol + "'  class='edit btn btn-warning'  ><i class='material-icons'>create</i></a>" +
             "<a id='eliminar' name='eliminar' id-record='" + data.IdUsuario + "'  class='delete btn btn-danger'  ><i class='material-icons'>delete_sweep</i></a>"
-
         ]).draw().node();
         $(row).attr('id', data.IdUsuario);
     }
     if (action === 'update') {
-        /*  Usuario[data.IdUsuario] = data;
-         var row = table.row('#' + data.IdUsuario).node();
-         $(row).find('td:nth-child(1)').text(data.NombreUsuario);
-         $(row).find('td:nth-child(2)').text(data.CorreoUsuario);
-         $(row).find('td:nth-child(3)').text(data.PasswordUsuario);
-         $(row).find('td:nth-child(4)').text(data.DomicilioUsuario);
-         $(row).find('td:nth-child(5)').text(data.TipoUsuario); */
         table.row('#' + data.IdUsuario).remove().draw();
         var row = table.row.add([
             data.IdUsuario,
@@ -269,11 +183,8 @@ function setRow(data, action) {
             data.password,
             data.domicilio,
             data.rol,
-
-            "<a id='editar' name='editar'  id-edit='" + data.IdUsuario + "'  class='edit btn btn-warning'  ><i class='material-icons'>create</i></a>" +
+            "<a id='editar' name='editar'  id-edit='" + data.IdUsuario + "'  id-nombre='" + data.nombre + "'  id-correo='" + data.correo + "'  id-password='" + data.password + "' id-domicilio='" + data.domicilio + "' id-rol='" + data.rol + "'  class='edit btn btn-warning'  ><i class='material-icons'>create</i></a>" +
             "<a id='eliminar' name='eliminar' id-record='" + data.IdUsuario + "'  class='delete btn btn-danger'  ><i class='material-icons'>delete_sweep</i></a>"
-
-
         ]).draw().node();
         $(row).attr('id', data.IdUsuario);
     }

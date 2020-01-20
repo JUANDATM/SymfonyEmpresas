@@ -7,6 +7,8 @@ use Utilerias\SQLBundle\Model\SQLModel;
 use ControlAccesoBundle\Model\LoginModel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use ControlAccesoBundle\Model\Profile;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class DefaultController extends Controller
@@ -47,12 +49,12 @@ class DefaultController extends Controller
 } */
 /* FINAL SESIONES DE USUARIOS */
 
-    public function loginUsuarioAction(Request $request)
-    {
+    public function loginUsuarioAction(Request $request){
+        $session = $request->getSession();
+
         if ($request->getMethod() == 'POST') {
             //extraccion de parametros
-            $post = $request->request->all();  
-              
+          $post = $request->request->all();   
             $data = array(
                 "CorreoUsuario"=> "'" . $post["usuario"] . "'",
                 "PasswordUsuario"=> "'" . $post["contra"] . "'"
@@ -60,46 +62,75 @@ class DefaultController extends Controller
            
             
             $result = $this->LoginModel->getUsuarios($data);
-            /* print_r($result);
-            die(); */
+            /*print_r($result);
+            die();*/
+            $user = $result["data"][0];
             $aux = $result["data"][0]['TipoUsuario'];
             
             /*print_r($aux);
             die();*/
 
+            //TipoUduario : ROLE_USER para viewer ..... ROLE_ADMIN
+
+            $login = false;
+
             if ($result['data']==null) {
                 $result['status'] = FALSE;
                 $result['message']="ERROR";
-            }else{ 
-                if ($aux=="admin") {
+            }
+            if ($aux=="admin") {
                     $result['status']= 1;
                     $result['message']="Administrador";
-                }
-                if($aux=="usuario"){
+                    $login = true;
+            }
+            if($aux=="usuario"){
                     $result['status']= 2;
                     $result['message']="Usuario";
-                }
+                    $login = true;
             }
 
-            return $this->jsonResponse($result);
+        if($login){
+                /* Creamos el objeto Profile con los datos presentados por el formulario */
+                $roles = array('ROLE_VISITANTE');
+                $profile = new Profile($data['CorreoUsuario'], $data['PasswordUsuario'], '*;7/SjqjVjIsI*', $roles);
+                $profile->setData($data);
+                // Creamos el token
+                $token = new UsernamePasswordToken($profile, $profile->getPassword(), 'main', $profile->getRoles());
+
+                $this->container->get('security.token_storage')->setToken($token);
+                // Creamos e iniciamos la sesión
+                /*print_r($token);
+                die();*/
+                $session->set('_security_main', serialize($token));
+
+        }        
+        
+        
+        return $this->jsonResponse($result);
         }
         return $this->render('ControlAccesoBundle:Acceso:loginUsuario.html.twig');
     }
 
     public function InsertarUsuarioAction(Request $request){   
         $post = $request->request->all();
-       // $encriptar = md5($post['Contraseña']);
+
         $data_Usuarios = array(
             "NombreUsuario" => "'" . $post["nombre"] . "'",
             "CorreoUsuario" =>"'". $post["correo"]."'",
-            "PasswordUsuario" =>"'". md5($post["password"]) ."'",
+            "PasswordUsuario" =>"'".$post["password"] ."'",
             "DomicilioUsuario" => "'".$post["domicilio"]."'",
             "TipoUsuario" => "'".$post["rol"]."'",
         );
-        /* print_r($data_Usuarios);
-        die(); */
-
-        $result_Usuarios = $this->LoginModel->insertarLoginUsuarios($data_Usuarios);
+        /*if($data_Usuarios["CorreoUsuario"]!=$data_Usuarios["CorreoUsuario"]){
+            $result_Usuarios['status'] = TRUE;
+            $result_Usuarios['message']="BIEN";
+            
+        }
+        if($data_Usuarios["CorreoUsuario"]==$data_Usuarios["CorreoUsuario"]){
+            $result_Usuarios['status'] = FALSE;
+            $result_Usuarios['message']="ERROR";
+        }*/
+        $result_Usuarios = $this->LoginModel->insertarLoginUsuarios($data_Usuarios); 
         return $this->jsonResponse($result_Usuarios);
 
     }
