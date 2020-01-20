@@ -39,7 +39,7 @@ class DefaultController extends Controller
             /*print_r($aux);
             die();*/
 
-            //TipoUduario : ROLE_USER para viewer ..... ROLE_ADMIN
+            //TipoUsuario : ROLE_USER para viewer ..... ROLE_ADMIN
 
             $login = false;
 
@@ -60,7 +60,9 @@ class DefaultController extends Controller
 
         if($login){
                 /* Creamos el objeto Profile con los datos presentados por el formulario */
-                $roles = array('ROLE_VISITANTE');
+                $roles = array($aux);
+                /*print_r($roles);
+                die();*/
                 $profile = new Profile($data['CorreoUsuario'], $data['PasswordUsuario'], '*;7/SjqjVjIsI*', $roles);
                 $profile->setData($data);
                 // Creamos el token
