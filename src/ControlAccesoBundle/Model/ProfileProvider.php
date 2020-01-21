@@ -24,7 +24,7 @@ class ProfileProvider implements UserProviderInterface {
             $username = "_none_username";
             throw new UsernameNotFoundException(sprintf('Username "%s" does not exist.', $username));
         }
-        
+    
         $request = Request::createFromGlobals();
         $_id_Visitante = $request->get('_port');
         

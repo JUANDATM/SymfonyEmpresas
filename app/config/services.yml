@@ -4,5 +4,5 @@ parameters:
     #parameter_name: value
     
 services:
-    app.ixposuser_provider:
+    residentes_provider:
         class: ControlAccesoBundle\Model\ProfileProvider
