@@ -31,7 +31,7 @@ security:
                 default_target_path: /adminUsuarios
             logout:
                 path:   /logout
-                target: /login
+                target: /CatalogoEmpresas
                 invalidate_session: false
             # activate different ways to authenticate
 
@@ -43,5 +43,4 @@ security:
 
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/adminEmpresas, roles:  ROLE_ADMIN}
-        - { path: ^/adminUsuario, roles:  ROLE_ADMIN}
+        - { path: ^/adminEmpresas$|adminUsuario, roles:  ROLE_ADMIN}

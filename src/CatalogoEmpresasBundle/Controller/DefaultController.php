@@ -24,6 +24,15 @@ class DefaultController extends Controller
         $content['user'] = $user;
 
         return $this->render('CatalogoEmpresasBundle:CatalogoEmpresas:CatalogoEmpresas.html.twig', array('content' => $content));
+    }
+
+    public function CatalogoVistasAction(){   
+        $result = $this->CatalogoEmpresasModel->getEmpresaVista();
+        $vistas = $result['data'];
+
+        $content['vistas'] = $vistas;
+        
+        return $this->render('CatalogoEmpresasBundle:CatalogoEmpresas:CatalogoVistas.html.twig', array('content' => $content));
 
     }
 }
