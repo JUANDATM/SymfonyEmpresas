@@ -36,4 +36,9 @@ class CatalogoEmpresasModel {
         $result["data"] = $data;
         return $result;
     }
+    //insertando en la tabla empresa vistas de usuarios "EMPRESAVISTA"
+    public function EmpresaVista($data){
+        $result = $this->SQLModel->insertIntoTable('EmpresaVista',$data,'IdEmpresa','IdUsuario');
+        return $result;
+    }
 }

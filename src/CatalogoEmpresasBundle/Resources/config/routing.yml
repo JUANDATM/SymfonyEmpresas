@@ -5,4 +5,7 @@ catalogo_empresas_homepage:
 catalogo_empresas_catalogo:
     path:     /CatalogoEmpresas
     defaults: { _controller: CatalogoEmpresasBundle:Default:CatalogoEmpresas}
-    
+
+catalogo_empresa_vista:
+    path:     /InsertarEmpresaVista
+    defaults: { _controller: CatalogoEmpresasBundle:Default:InsertarEmpresaVista}

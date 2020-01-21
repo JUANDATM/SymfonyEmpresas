@@ -5,6 +5,7 @@
 {% block body %}
    <div class="container">
              <div class="row">
+           {% content['usuario'] %}
            {% for empresa in content['empresas'] %}
             <div class="col s3">
                 <div class="card small">
@@ -15,14 +16,12 @@
                     <span class="card-title activator grey-text text-darken-4">{{empresa.NombreEmpresa}}<i class="material-icons right">add</i></span>
                   </div>
                   <div class="card-reveal">
-                    <span class="card-title grey-text text-darken-4">{{empresa.NombreEmpresa}}<i class="material-icons right">close</i></span>
+                    <span class="card-title grey-text text-darken-4">{{empresa.NombreEmpresa}}<i class="material-icons right" id-edit="{{usuario.IdUsuario}}">close</i></span>
                     <p>Nombre : {{empresa.NombreEmpresa}}</p>
                     <p>Direccion :  {{empresa.DireccionEmpresa}}</p>
                     <p>Correo Electronico : {{empresa.CorreoEmpresa}}</p>
                     <p>Descipcion : {{empresa.DescripcionEmpresa}}</p>
-                    <p>Telefono : {{empresa.TelefonoEmpresa}}</p>
-
-                    
+                    <p>Telefono : {{empresa.TelefonoEmpresa}}</p>                    
                   </div>
                 </div>
             </div>
@@ -33,6 +32,10 @@
 {% endblock %}
 
 {% block javascripts %}
+ <script type="text/javascript"> 
+  var urlInsertEmpresaVista = "{{path('catalogo_empresa_vista')}}";
+  var Usuario = {{content['usuario']|json_encode()|raw}};
+    </script>
 <script type="text/javascript" src="{{ asset('js/jquery-3.0.0.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/materialize.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/jquery.dataTables.min.js') }}"></script>

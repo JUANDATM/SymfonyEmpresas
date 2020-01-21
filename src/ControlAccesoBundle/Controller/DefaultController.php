@@ -18,36 +18,6 @@ class DefaultController extends Controller
     public function __construct() {
         $this->LoginModel = new LoginModel();
     }
-/* SESIONES DE USUARIOS */
-/* public function LogearAction(Request $request) {
-    if ($request->getMethod() == 'POST') {
-        $post = $request->request->all();
-        $res = $this->DefaultModel->select($post);
-        if ($res['status']) {
-            session_destroy();
-            if (count($res['data']) > 0) {
-                session_start();
-                $idUsuario = $_SESSION['idUsuario'] = $res['data'][0]['idUsuario'];
-                $Correo = $_SESSION['Correo'] = $res['data'][0]['Correo'];
-                $TipoUsuario = $_SESSION['TipoUsuario'] = $res['data'][0]['TipoUsuario'];
-                $idTipoUsuario = $_SESSION['idTipoUsuario'] = $res['data'][0]['idTipoUsuario'];
-
-                return new JsonResponse(array('status' => TRUE,
-                    'data' => $res['data'][0]));
-                
-                
-            } else {
-                //false de usuario no encontrado
-                return new JsonResponse(array('status' => FALSE,
-                    'data' => 'no coincide'));
-            }
-        }
-
-        return new JsonResponse(array('status' => FALSE,
-            'data' => 'vacio'));
-    }
-} */
-/* FINAL SESIONES DE USUARIOS */
 
     public function loginUsuarioAction(Request $request){
         $session = $request->getSession();
@@ -87,6 +57,7 @@ class DefaultController extends Controller
                     $result['status']= 2;
                     $result['message']="Usuario";
                     $login = true;
+                   
             }
 
         if($login){
@@ -116,6 +87,7 @@ class DefaultController extends Controller
     public function InsertarUsuarioAction(Request $request){   
         $post = $request->request->all();
 
+
         $data_Usuarios = array(
             "NombreUsuario" => "'" . $post["nombre"] . "'",
             "CorreoUsuario" =>"'". $post["correo"]."'",
@@ -135,6 +107,24 @@ class DefaultController extends Controller
         $result_Usuarios = $this->LoginModel->insertarLoginUsuarios($data_Usuarios); 
         return $this->jsonResponse($result_Usuarios);
 
+    }
+    //funcion logout
+     public function logoutAction(Request $request) {
+        $session = $request->getSession();
+        $lang = $session->get('lang');
+        date_default_timezone_set('America/Mexico_City');
+        /* Actualizamos el Status del log de Control de Session a 0 = Inactiva */
+        $data_log['Status'] = 0;
+        $data_log['FechaHoraTermino'] = date("Y-m-d h:i:s");
+        $this->get('ixpo_log')->updateLoginLog($data_log);
+        /* Redirige sino lo manda al login en modo produccion */
+        $url = $this->generateUrl('login', array('lang' => $lang));
+        //clear the token, cancel session and redirect
+        $this->container->get('security.token_storage')->setToken(null);
+        $this->get('session')->invalidate();
+        $session->clear();
+        $session->migrate();
+        return $this->redirect($url);
     }
     protected function jsonResponse($data) {
         $response = new Response(json_encode($data));

@@ -2,8 +2,7 @@ $(document).ready(function() {
     validateForm();
     $('.sidenav').sidenav();
     $("#usuariomodal").modal();
-    document.getElementById('oc1').style.display = 'none';
-    document.getElementById('oc2').style.display = 'none';
+
 
     $('#usuarios-guardar').on("click", function() {
         //document.getElementById('empresa-form').reset();
@@ -108,6 +107,7 @@ function validarAcceso(postacceso) {
                 window.location.href = 'http://localhost:8000/adminEmpresas'
                 M.toast({ html: 'Acceso Permitido', classes: 'rounded', displayLength: 4000 });
             } else if (respuesta['status'] == 2) {
+
                 window.location.href = 'http://localhost:8000/CatalogoEmpresas'
                 M.toast({ html: 'Acceso Permitido', classes: 'rounded', displayLength: 4000 });
             } else {
@@ -117,6 +117,8 @@ function validarAcceso(postacceso) {
         }
     });
 }
+
+
 
 
 function reset() {
