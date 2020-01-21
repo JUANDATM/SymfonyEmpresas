@@ -18,10 +18,18 @@ class DefaultController extends Controller
         $result = $this->CatalogoEmpresasModel->getCatalogoEmpresas();
         $empresas = $result['data'];
 
-
         $content['empresas'] = $empresas;
-
         return $this->render('CatalogoEmpresasBundle:CatalogoEmpresas:CatalogoEmpresas.html.twig', array('content' => $content));
+    }
+
+    public function CatalogoVistasAction(){   
+        $result = $this->CatalogoEmpresasModel->getEmpresaVista();
+        $vistas = $result['data'];
+
+        $content['vistas'] = $vistas;
+        print_r($content['vistas']);
+        die();
+        return $this->render('CatalogoEmpresasBundle:CatalogoEmpresas:CatalogoVistas.html.twig', array('content' => $content));
 
     }
 }

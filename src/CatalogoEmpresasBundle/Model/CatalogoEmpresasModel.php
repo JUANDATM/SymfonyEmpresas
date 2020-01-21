@@ -23,7 +23,7 @@ class CatalogoEmpresasModel {
         $fields .= ' i."FormatoImagen",';
         $fields .= ' i."RutaImagen" ';
         $fields .= ' FROM "EMPRESAS"."Empresa" e ';
-        $fields .= ' INNER JOIN "EMPRESAS"."Imagenes" i on  ';
+        $fields .= ' INNER JOIN "EMPRESAS"."Imagenes" i on ';
         $fields .= ' e."IdEmpresa" = i."IdEmpresa" ';
         $result = $this->SQLModel->executeQuery($fields);
 
@@ -36,4 +36,28 @@ class CatalogoEmpresasModel {
         $result["data"] = $data;
         return $result;
     }
+    public function getEmpresaVista(){
+        $fields = ' SELECT ';
+        $fields .= ' ev."IdEmpresa",';
+        $fields .= ' ev."IdUsuario",';
+        $fields .= ' ev."Fecha",';
+        $fields .= ' e."NombreEmpresa",';
+        $fields .= ' u."CorreoUsuario" ';
+        $fields .= ' FROM "EMPRESAS"."EmpresaVista" ev ';
+        $fields .= ' INNER JOIN "EMPRESAS"."Imagenes" i on ';
+        $fields .= ' e."IdEmpresa" = i."IdEmpresa" ';
+        $result = $this->SQLModel->executeQuery($fields);
+
+        $result = $this->SQLModel->executeQuery($fields);
+
+        if (!($result['status'] && count($result['data']) > 0)) {
+            return $result;
+        }
+        foreach ($result['data'] as $value) {
+            $data[$value['IdEmpresa']] = $value;
+        }
+        $result["data"] = $data;
+        return $result;
+    }
+
 }

@@ -37,7 +37,7 @@ $(document).on("click", '.delete', function() {
     $("#Aceptar").attr("IdEmpresa", IdEmpresa);
 });
 
-$('#Aceptar').on("click", function() {
+$(document).on("click", '#Aceptar', function() {
     $tr = $(this).closest('tr');
     tr = $tr;
     var IdEmpresa = $(this).attr("IdEmpresa");
