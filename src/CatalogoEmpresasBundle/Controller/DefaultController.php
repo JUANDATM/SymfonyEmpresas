@@ -27,8 +27,7 @@ class DefaultController extends Controller
         $vistas = $result['data'];
 
         $content['vistas'] = $vistas;
-        print_r($content['vistas']);
-        die();
+        
         return $this->render('CatalogoEmpresasBundle:CatalogoEmpresas:CatalogoVistas.html.twig', array('content' => $content));
 
     }

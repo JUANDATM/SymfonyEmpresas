@@ -44,8 +44,10 @@ class CatalogoEmpresasModel {
         $fields .= ' e."NombreEmpresa",';
         $fields .= ' u."CorreoUsuario" ';
         $fields .= ' FROM "EMPRESAS"."EmpresaVista" ev ';
-        $fields .= ' INNER JOIN "EMPRESAS"."Imagenes" i on ';
-        $fields .= ' e."IdEmpresa" = i."IdEmpresa" ';
+        $fields .= ' INNER JOIN "EMPRESAS"."Empresa" e on ';
+        $fields .= ' e."IdEmpresa" = ev."IdEmpresa" ';
+        $fields .= ' INNER JOIN "EMPRESAS"."Usuario" u on ';
+        $fields .= ' u."IdUsuario" = ev."IdUsuario" ';
         $result = $this->SQLModel->executeQuery($fields);
 
         $result = $this->SQLModel->executeQuery($fields);

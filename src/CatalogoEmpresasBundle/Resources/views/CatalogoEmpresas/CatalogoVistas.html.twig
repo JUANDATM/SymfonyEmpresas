@@ -11,18 +11,15 @@
     <table id="vistas-table" class="table table-striped table-bordered">
         <thead class="thead-dark">
             <tr>
-                <th>#</th>
-                <th style="width:30%">IdEmpresa</th>
-                <th style="width:30%">IdUsuario</th>
-                <th style="width:30%">Nombre Empresa</th>
-                <th style="width:20%">Correo Usuario</th>
-                <th style="width:20%">Fecha</th>
+                <th style="width:30%">IdUsuario que Visita</th>
+                <th style="width:30%">Nombre Empresa Visita</th>
+                <th style="width:20%">Correo Usuario Visita</th>
+                <th style="width:20%">Fecha de la Visita</th>
             </tr>
         </thead>
         <tbody>
            {% for vista in content['vistas'] %}
             <tr>
-                <td>{{ vista.IdEmpresa }}</td>
                 <td>{{ vista.IdUsuario }}</td>
                 <td>{{ vista.NombreEmpresa }}</td>
                 <td>{{ vista.CorreoUsuario }}</td>
