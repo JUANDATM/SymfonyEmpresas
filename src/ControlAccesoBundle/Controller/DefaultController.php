@@ -14,7 +14,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class DefaultController extends Controller
 {
     protected $LoginModel;
-
+    
     public function __construct() {
         $this->LoginModel = new LoginModel();
     }
@@ -24,17 +24,15 @@ class DefaultController extends Controller
 
         if ($request->getMethod() == 'POST') {
             //extraccion de parametros
-          $post = $request->request->all();   
+            $post = $request->request->all();   
             $data = array(
                 "CorreoUsuario"=> "'" . $post["usuario"] . "'",
                 "PasswordUsuario"=> "'" . $post["contra"] . "'"
             );
-            /*print_r($data);
-            die();*/
+            
             $result = $this->LoginModel->getUsuarios($data);
             /*print_r($result);
             die();*/
-            $user = $result["data"][0];
             $aux = $result["data"][0]['TipoUsuario'];
             /*print_r($aux);
             die();*/
@@ -63,8 +61,8 @@ class DefaultController extends Controller
                 $roles = array($aux);
                 /*print_r($roles);
                 die();*/
-                $profile = new Profile($data['CorreoUsuario'], $data['PasswordUsuario'], '*;7/SjqjVjIsI*', $roles);
-                $profile->setData($data);
+                $profile = new Profile($result['data'][0]['CorreoUsuario'], $result['data'][0]['PasswordUsuario'], '*;7/SjqjVjIsI*', $roles);
+                $profile->setData($result['data'][0]);
                 // Creamos el token
                 $token = new UsernamePasswordToken($profile, $profile->getPassword(), 'main', $profile->getRoles());
 
@@ -105,6 +103,24 @@ class DefaultController extends Controller
         return $this->jsonResponse($result_Usuarios);
 
     }
+    public function logoutAction(Request $request) {
+        $session = $request->getSession();
+        $lang = $session->get('lang');
+        date_default_timezone_set('America/Mexico_City');
+        /* Actualizamos el Status del log de Control de Session a 0 = Inactiva */
+        $data_log['Status'] = 0;
+        $data_log['FechaHoraTermino'] = date("Y-m-d h:i:s");
+        $this->get('ixpo_log')->updateLoginLog($data_log);
+        /* Redirige sino lo manda al login en modo produccion */
+        $url = $this->generateUrl('login', array('lang' => $lang));
+        //clear the token, cancel session and redirect
+        $this->container->get('security.token_storage')->setToken(null);
+        $this->get('session')->invalidate();
+        $session->clear();
+        $session->migrate();
+        return $this->redirect($url);
+    }
+
     protected function jsonResponse($data) {
         $response = new Response(json_encode($data));
         $response->headers->set('Content-Type', 'application/json');

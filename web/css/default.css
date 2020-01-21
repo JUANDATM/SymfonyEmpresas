@@ -51,7 +51,7 @@
 
 .footer {
     display: flex;
-    min-height: 100vh;
+    min-height: 100;
     flex-direction: column;
     flex: 1 0 auto;
 }

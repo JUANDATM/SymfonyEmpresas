@@ -15,3 +15,4 @@ login_check:
     
 logout:
     path:   /logout    
+    defaults:  { _controller: ControlAccesoBundle:Default:logout }
