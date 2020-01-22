@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}ADMIN VISTAS{% endblock %}
+
 {% block stylesheets %}
 <link rel="stylesheet" href="{{ asset("css/jquery.dataTables.min.css") }}">
 {% endblock %}
@@ -33,11 +34,10 @@
 {% endblock %}
 
 {% block javascripts %}
-<script type="text/javascript"> 
-var Empresas = {{content['vistas']|json_encode()|raw}};
-</script>
+
 <script type="text/javascript" src="{{ asset('js/materialize.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/jquery.dataTables_.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/dataTables.materialize.js') }}"></script>
+<script type="text/javascript" src="{{ asset('jsEmpresa/js/Empresas.js') }}"></script>
 {% endblock %}
 

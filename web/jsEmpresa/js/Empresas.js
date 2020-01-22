@@ -16,6 +16,7 @@ $(document).ready(function() {
     //insertarEmpresa();
     //actualizarEmpresa();
 });
+
 $('#empresa-nuevo').on("click", function() {
     $("#empresamodal").modal({ dismissible: false }).modal('open');
     insertarEmpresa();
@@ -53,6 +54,35 @@ $('#cancelar').on("click", function() {
     $("#empresamodal").modal('close');
     reset();
 });
+
+$('#cancelar').on("click", function() {
+    $("#empresamodal").modal('close');
+    reset();
+});
+
+$(document).on("click", '.more', function() {
+    var IdEmpresa = $(this).attr("IdEmpresa");
+    $.ajax({
+        type: "post",
+        url: InserVista,
+        dataType: "json",
+        data: { IdEmpresa },
+        success: function(respuesta) {
+            if (respuesta["status"]) {
+                //table.remove().draw();
+                M.toast({
+                    html: "visita registrada",
+                    classes: "rounded ",
+                    displayLength: 4000
+                });
+            } else {
+
+            }
+        }
+    });
+});
+
+
 
 function pintarDatos(IdEmpresa) {
     $("#IdEmpresa").val(IdEmpresa);
