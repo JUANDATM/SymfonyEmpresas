@@ -1,68 +1,72 @@
 <!DOCTYPE html>
 <html>
-    <header>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Empresas{% endblock %}</title>
-        <link rel="stylesheet" href="{{ asset("css/default.css") }}">
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }} media="screen,projection"" />
-        <link rel="stylesheet" href="{{ asset("css/materialize.css") }}">
-        <link rel="stylesheet" href="{{ asset("css/materialize.min.css.0.100.2") }}">
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-        {% block stylesheets %}{% endblock %}
-    </header>
+<header>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Empresas{% endblock %}</title>
+    <link rel="stylesheet" href="{{ asset("css/default.css") }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }} media=" screen,projection"" />
+    <link rel="stylesheet" href="{{ asset("css/materialize.css") }}">
+    <link rel="stylesheet" href="{{ asset("css/materialize.min.css.0.100.2") }}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    {% block stylesheets %}{% endblock %}
+</header>
 
-    <body>
+<body>
     <nav>
         <div class="nav-wrapper grey darken-4">
             <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
             {#{{dump(content['user'])}}#}
             <ul class="right hide-on-med-and-down">
-            {% if  content['user']['TipoUsuario'] is defined and content['user']['TipoUsuario'] == "ROLE_ADMIN" %}
                 <li>
                     <a href="{{ asset('CatalogoEmpresas')}}">Inicio</a>
                 </li>
+                {% if  content['user']['TipoUsuario'] is defined and content['user']['TipoUsuario'] == "ROLE_ADMIN" %}
+                    <li>
+                        <a href="{{ asset('adminUsuarios')}}">Admin Usuarios</a>
+                    </li>
+                    <li>
+                        <a href="{{ asset('adminEmpresas')}}">Admin Empresas</a>
+                    </li>
+                    <li>
+                        <a href="{{ asset('adminVistas')}}">Visitas</a>
+                    </li>
+                {% endif %}
+                
+                {% if content['user'] is defined %}
                 <li>
-                    <a href="{{ asset('adminUsuarios')}}">Admin Usuarios</a>
-                </li>
+                          <a href="{{ path('logout') }}">Cerrar Sesion</a>
+                          </li>
+                {% else %}
                 <li>
-                    <a href="{{ asset('adminEmpresas')}}">Admin Empresas</a>
+                    <a href="{{ asset('login')}}">Iniciar Sesion</a>
                 </li>
-                <li>
-                    <a href="{{ path('logout') }}">Cerrar Sesion</a><li>
-                </li>
-            {% endif %}
-            {% if  content['user'] is defined and content['user']['TipoUsuario'] == "ROLE_USER" %}
-                <li>
-                    <a href="{{ asset('CatalogoEmpresas')}}">Inicio</a>
-                </li>
-                <li>
-                    <a href="{{ path('logout') }}">Cerrar Sesion</a><li>
-                </li>
-            {% endif %}
+                {% endif %}
+                
+                
             </ul>
         </div>
     </nav>
     {% block body %}
-     
+
     {% endblock %}
-    </body>
-    <footer class="page-footer grey darken-4">
-        <div class="container">
-            <div class="row">
-                <div class="footer-copyright">
-                    <div class="container center">
-                        <span class="copyright">
-                              © 2020 Copyright Residentes
-                        </span>
-                    </div>
+</body>
+<footer class="page-footer grey darken-4">
+    <div class="container">
+        <div class="row">
+            <div class="footer-copyright">
+                <div class="container center">
+                    <span class="copyright">
+                        © 2020 Copyright Residentes
+                    </span>
                 </div>
             </div>
         </div>
-    </footer>
-    {% block javascripts %}
-        <script type="text/javascript" src="{{ asset('js/jquery-3.1.1.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/jquery.validate.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/materialize.js') }}"></script>
-    {% endblock %}
+    </div>
+</footer>
+{% block javascripts %}
+<script type="text/javascript" src="{{ asset('js/jquery-3.1.1.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.validate.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/materialize.js') }}"></script>
+{% endblock %}
 </html>

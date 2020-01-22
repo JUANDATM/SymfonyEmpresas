@@ -31,6 +31,7 @@
 </div>
 
 {% endblock %}
+
 {% block javascripts %}
 <script type="text/javascript"> 
 var Empresas = {{content['vistas']|json_encode()|raw}};
@@ -39,3 +40,4 @@ var Empresas = {{content['vistas']|json_encode()|raw}};
 <script type="text/javascript" src="{{ asset('js/jquery.dataTables_.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/dataTables.materialize.js') }}"></script>
 {% endblock %}
+
