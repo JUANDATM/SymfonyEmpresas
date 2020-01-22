@@ -263,7 +263,6 @@ function setRow(data, base64, action) {
             data.IdEmpresa,
             data.nombre,
             data.direccion,
-            data.descripcion,
             data.telefono,
             data.correo,
             "<img src='" + base64 + "' width='200px' height='100px' ></img>",
