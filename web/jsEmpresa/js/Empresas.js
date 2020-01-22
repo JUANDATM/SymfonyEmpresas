@@ -70,19 +70,16 @@ $(document).on("click", '.more', function() {
         success: function(respuesta) {
             if (respuesta["status"]) {
                 //table.remove().draw();
-                M.toast({
-                    html: "visita registrada",
-                    classes: "rounded ",
-                    displayLength: 4000
-                });
+                M.toast({ html: 'Visita Registrada', classes: 'rounded', displayLength: 4000 });
+
             } else {
+                M.toast({ html: 'ERROR AL REGISTRAR VISITA', classes: 'rounded', displayLength: 4000 });
+
 
             }
         }
     });
 });
-
-
 
 function pintarDatos(IdEmpresa) {
     $("#IdEmpresa").val(IdEmpresa);
@@ -159,7 +156,7 @@ function eliminarEmpresa(IdEmpresa) {
                 var base64 = "";
                 setRow(respuesta.data, base64, action);
             } else {
-                M.toast({ html: 'Error al Eliminar ', classes: 'rounded', displayLength: 4000 });
+                M.toast({ html: 'Se actualizo con exito', classes: 'rounded', displayLength: 4000 });
             }
         }
     });
