@@ -8,6 +8,7 @@ $(document).ready(function() {
         //document.getElementById('empresa-form').reset();
         $('#usuarioform').submit();
     });
+
     //insertarLoginUsuario();
 });
 

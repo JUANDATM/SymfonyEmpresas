@@ -1,7 +1,6 @@
 <?php
 
 namespace ControlAccesoBundle\Controller;
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Utilerias\SQLBundle\Model\SQLModel;
 use ControlAccesoBundle\Model\LoginModel;
@@ -14,7 +13,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class DefaultController extends Controller
 {
     protected $LoginModel;
-
+    
     public function __construct() {
         $this->LoginModel = new LoginModel();
     }
@@ -24,19 +23,16 @@ class DefaultController extends Controller
 
         if ($request->getMethod() == 'POST') {
             //extraccion de parametros
-          $post = $request->request->all();   
+            $post = $request->request->all();   
             $data = array(
                 "CorreoUsuario"=> "'" . $post["usuario"] . "'",
                 "PasswordUsuario"=> "'" . $post["contra"] . "'"
             );
-           
-            
+        
             $result = $this->LoginModel->getUsuarios($data);
             /*print_r($result);
             die();*/
-            $user = $result["data"][0];
             $aux = $result["data"][0]['TipoUsuario'];
-            
             /*print_r($aux);
             die();*/
 
@@ -57,7 +53,6 @@ class DefaultController extends Controller
                     $result['status']= 2;
                     $result['message']="Usuario";
                     $login = true;
-                   
             }
 
         if($login){
@@ -65,8 +60,8 @@ class DefaultController extends Controller
                 $roles = array($aux);
                 /*print_r($roles);
                 die();*/
-                $profile = new Profile($data['CorreoUsuario'], $data['PasswordUsuario'], '*;7/SjqjVjIsI*', $roles);
-                $profile->setData($data);
+                $profile = new Profile($result['data'][0]['CorreoUsuario'], $result['data'][0]['PasswordUsuario'], '*;7/SjqjVjIsI*', $roles);
+                $profile->setData($result['data'][0]);
                 // Creamos el token
                 $token = new UsernamePasswordToken($profile, $profile->getPassword(), 'main', $profile->getRoles());
 
@@ -87,7 +82,6 @@ class DefaultController extends Controller
     public function InsertarUsuarioAction(Request $request){   
         $post = $request->request->all();
 
-
         $data_Usuarios = array(
             "NombreUsuario" => "'" . $post["nombre"] . "'",
             "CorreoUsuario" =>"'". $post["correo"]."'",
@@ -106,10 +100,8 @@ class DefaultController extends Controller
         }*/
         $result_Usuarios = $this->LoginModel->insertarLoginUsuarios($data_Usuarios); 
         return $this->jsonResponse($result_Usuarios);
-
-    }
-    //funcion logout
-     public function logoutAction(Request $request) {
+}
+    public function logoutAction(Request $request) {
         $session = $request->getSession();
         $lang = $session->get('lang');
         date_default_timezone_set('America/Mexico_City');
@@ -126,6 +118,7 @@ class DefaultController extends Controller
         $session->migrate();
         return $this->redirect($url);
     }
+
     protected function jsonResponse($data) {
         $response = new Response(json_encode($data));
         $response->headers->set('Content-Type', 'application/json');

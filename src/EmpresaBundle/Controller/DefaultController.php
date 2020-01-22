@@ -16,9 +16,13 @@ class DefaultController extends Controller
         $this->EmpresaModel = new EmpresaModel();
     }
     public function adminEmpresasAction(){   
+        $profile = $this->getUser();
+        $user = $profile->getData();
+
         $result = $this->EmpresaModel->getEmpresas();
         $empresas = $result['data'];
         $content['empresas'] = $empresas;
+        $content['user'] = $user;
         return $this->render('EmpresaBundle:Empresas:adminEmpresas.html.twig', array('content' => $content));
     }
     //prueba de actualizar 

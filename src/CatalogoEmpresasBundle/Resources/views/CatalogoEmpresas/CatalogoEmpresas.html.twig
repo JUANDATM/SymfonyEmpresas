@@ -5,7 +5,7 @@
 {% block body %}
    <div class="container">
              <div class="row">
-           {% content['usuario'] %}
+          
            {% for empresa in content['empresas'] %}
             <div class="col s3">
                 <div class="card small">
@@ -13,10 +13,14 @@
                     <img class="activator" src="data:{{empresa.FormatoImagen}};base64,{{ empresa.RutaImagen }}" width="300px" height="200px">
                   </div>
                   <div class="card-content">
-                    <span class="card-title activator grey-text text-darken-4">{{empresa.NombreEmpresa}}<i class="material-icons right">add</i></span>
+                    <span class="card-title activator grey-text text-darken-4">{{empresa.NombreEmpresa}}
+                    <a id="visita" name="visita" id-visita="{{empresa.IdEmpresa}}"  class="visita">
+                    <i class="material-icons right">add</i>
+                    </a>
+                    </span>
                   </div>
                   <div class="card-reveal">
-                    <span class="card-title grey-text text-darken-4">{{empresa.NombreEmpresa}}<i class="material-icons right" id-edit="{{usuario.IdUsuario}}">close</i></span>
+                    <span class="card-title grey-text text-darken-4">{{empresa.NombreEmpresa}}<i class="material-icons right">close</i></span>
                     <p>Nombre : {{empresa.NombreEmpresa}}</p>
                     <p>Direccion :  {{empresa.DireccionEmpresa}}</p>
                     <p>Correo Electronico : {{empresa.CorreoEmpresa}}</p>
@@ -31,15 +35,20 @@
 
 {% endblock %}
 
+
 {% block javascripts %}
- <script type="text/javascript"> 
-  var urlInsertEmpresaVista = "{{path('catalogo_empresa_vista')}}";
-  var Usuario = {{content['usuario']|json_encode()|raw}};
-    </script>
-<script type="text/javascript" src="{{ asset('js/jquery-3.0.0.min.js') }}"></script>
+{{parent()}}
+<script type="text/javascript"> 
+var urlInsertEmpresaVista = "{{path('catalogo_empresa_vista')}}";
+
+</script>
+<script type="text/javascript"> 
+</script>
+
+<script type="text/javascript" src="{{ asset('js/dropzone_up.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/materialize.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.dataTables_.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/dataTables.materialize.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/jquery.validate.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('jsEmpresa/js/Empresas.js') }}"></script>
+
 {% endblock %}

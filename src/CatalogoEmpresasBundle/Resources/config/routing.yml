@@ -9,3 +9,13 @@ catalogo_empresas_catalogo:
 catalogo_empresa_vista:
     path:     /InsertarEmpresaVista
     defaults: { _controller: CatalogoEmpresasBundle:Default:InsertarEmpresaVista}
+
+catalogo_vistas:
+    path:     /adminVistas
+    defaults: { _controller: CatalogoEmpresasBundle:Default:CatalogoVistas}
+
+usuarios_admin:
+    path:     /adminUsuarios
+    defaults: { _controller: UsuariosBundle:Default:AdminUsuarios }
+    
+    

@@ -16,9 +16,13 @@ class DefaultController extends Controller
     }
 
     public function adminUsuariosAction(){   
+        $profile = $this->getUser();
+        $user = $profile->getData();
+
         $result = $this->UsuariosModel->getUsuarios();
         $usuarios = $result['data'];
         $content['usuario'] = $usuarios;
+        $content['user'] = $user;
 
         return $this->render('UsuariosBundle:Usuarios:adminUsuarios.html.twig', array('content' => $content));
 
