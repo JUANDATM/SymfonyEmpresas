@@ -4,6 +4,7 @@ namespace CatalogoEmpresasBundle\Model;
 
 use Utilerias\SQLBundle\Model\SQLModel;
 
+
 class CatalogoEmpresasModel {
 
     protected $SQLModel;
@@ -57,8 +58,6 @@ class CatalogoEmpresasModel {
         $fields .= ' u."IdUsuario" = ev."IdUsuario" ';
         $result = $this->SQLModel->executeQuery($fields);
 
-        $result = $this->SQLModel->executeQuery($fields);
-
         if (!($result['status'] && count($result['data']) > 0)) {
             return $result;
         }
@@ -81,5 +80,10 @@ class CatalogoEmpresasModel {
         return $result;
     }
 
+
+    public function InsertarVista($data){
+        $result = $this->SQLModel->insertIntoTable('EmpresaVista',$data,'IdVisita');
+        return $result;
+    }
 
 }

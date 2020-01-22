@@ -43,4 +43,8 @@ security:
 
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/adminEmpresas$|adminUsuario, roles:  ROLE_ADMIN}
+        - { path: ^/CatalogoEmpresas, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/adminEmpresas, roles:  ROLE_ADMIN }
+        - { path: ^/adminUsuarios, roles:  ROLE_ADMIN }
+        - { path: ^/adminVistas, roles:  ROLE_ADMIN }
+
