@@ -27,7 +27,6 @@ class CatalogoEmpresasModel {
         $fields .= ' INNER JOIN "EMPRESAS"."Imagenes" i on ';
         $fields .= ' e."IdEmpresa" = i."IdEmpresa" ';
         $result = $this->SQLModel->executeQuery($fields);
-
         if (!($result['status'] && count($result['data']) > 0)) {
             return $result;
         }
@@ -60,7 +59,6 @@ class CatalogoEmpresasModel {
         $result["data"] = $data;
         return $result;
     }
-
     public function InsertarVista($data){
         $result = $this->SQLModel->insertIntoTable('EmpresaVista',$data,'IdVisita');
         return $result;

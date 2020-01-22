@@ -9,6 +9,7 @@ catalogo_empresas_catalogo:
 catalogo_vistas:
     path:     /adminVistas
     defaults: { _controller: CatalogoEmpresasBundle:Default:CatalogoVistas}
+    
 catalogo_vistas_InsertarVista:
     path:     /InsertarVista
     defaults: { _controller: CatalogoEmpresasBundle:Default:InsertarVista}
