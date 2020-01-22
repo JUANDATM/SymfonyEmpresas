@@ -38,6 +38,7 @@ class CatalogoEmpresasModel {
     }
     public function getEmpresaVista(){
         $fields = ' SELECT ';
+        $fields .= ' ev."IdVisita",';
         $fields .= ' ev."IdEmpresa",';
         $fields .= ' ev."IdUsuario",';
         $fields .= ' ev."Fecha",';
@@ -63,5 +64,18 @@ class CatalogoEmpresasModel {
         $result = $this->SQLModel->insertIntoTable('EmpresaVista',$data,'IdVisita');
         return $result;
     }
+    public function getVistas(){
+        $fields = ' SELECT ';
+        $fields .= ' e."NombreEmpresa",';
+        $fields .= ' "count"(v."IdEmpresa") as "vistas"';
+        $fields .= ' FROM "EMPRESAS"."EmpresaVista" v ';
+        $fields .= ' INNER JOIN "EMPRESAS"."Empresa" e on  ';
+        $fields .= ' e."IdEmpresa" = v."IdEmpresa" ';
+        $fields .= ' GROUP BY e."NombreEmpresa" ';
+        $result = $this->SQLModel->executeQuery($fields);
+        return $result;
+    }
+
+   
 
 }

@@ -8,25 +8,19 @@
 
 {% block body %}
 <div class="container">
-    <h1>CONTEO VISITAS</h1>
+    <h1>VISTAS</h1>
     <table id="vistas-table" class="table table-striped table-bordered">
         <thead class="thead-dark">
             <tr>
-                <th style="width:30%">Id Visita</th>
-                <th style="width:30%">IdUsuario que Visita</th>
                 <th style="width:30%">Nombre Empresa Visita</th>
-                <th style="width:20%">Correo Usuario Visita</th>
-                <th style="width:20%">Fecha de la Visita</th>
+                <th style="width:20%">Visitas</th>
             </tr>
         </thead>
         <tbody>
-           {% for vista in content['vistas'] %}
+           {% for conteo in content['conteo'] %}
             <tr>
-                <td>{{ vista.IdVisita }}</td>
-                <td>{{ vista.IdUsuario }}</td>
-                <td>{{ vista.NombreEmpresa }}</td>
-                <td>{{ vista.CorreoUsuario }}</td>
-                <td>{{ vista.Fecha }}</td>
+                <td>{{ conteo.NombreEmpresa }}</td>
+                <td>{{ conteo.vistas }}</td>
             </tr>
             {% endfor %}
         </tbody>
