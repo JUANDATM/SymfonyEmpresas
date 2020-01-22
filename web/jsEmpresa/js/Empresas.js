@@ -73,7 +73,7 @@ $(document).on("click", '.more', function() {
                 M.toast({ html: 'Visita Registrada', classes: 'rounded', displayLength: 4000 });
 
             } else {
-                M.toast({ html: 'ERROR AL REGISTRAR VISITA', classes: 'rounded', displayLength: 4000 });
+                M.toast({ html: 'ERROR AL REGISTRAR VISITA,ASEGURESE DE NO SER UN ADMINISTRADOR', classes: 'rounded', displayLength: 4000 });
             }
         }
     });
