@@ -11,6 +11,21 @@ $(document).ready(function() {
     $("#PreviewImagen").modal();
     $('#empresas-guardar').on("click", function() {
         //document.getElementById('empresa-form').reset();
+        if($('#nombre').val().trim()==="") {
+            M.toast({ html: 'Campo para el nombre vacio', classes: 'rounded', displayLength: 4000 });
+            $("#nombre").focus();
+            return false;
+        }
+        if($('#direccion').val().trim()==="") {
+            M.toast({ html: 'Campo para la direccion vacio', classes: 'rounded', displayLength: 4000 });
+            $("#direccion").focus();
+            return false;
+        }
+        if($('#descripcion').val().trim()==="") {
+            M.toast({ html: 'Campo para la descripcion vacio', classes: 'rounded', displayLength: 4000 });
+            $("#descripcion").focus();
+            return false;
+        }
         $('#empresa-form').submit();
     });
     //insertarEmpresa();
