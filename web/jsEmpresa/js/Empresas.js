@@ -130,7 +130,7 @@ function validateForm() {
         }
     });
 }
-// Limpia los campos al cerrar la modal
+
 function reset() {
     $("#nombre").val('');
     $("#direccion").val('');
@@ -271,7 +271,6 @@ function setRow(data, base64, action) {
             "<a  id='eliminar' name='eliminar' id-record='" + data.IdEmpresa + "'  class='delete btn btn-danger'><i class='material-icons'>delete_sweep</i></a>"
         ]).draw().node();
     }
-
     if (action === 'update') {
         table.row('#' + data.IdEmpresa).remove().draw();
         var row = table.row.add([
