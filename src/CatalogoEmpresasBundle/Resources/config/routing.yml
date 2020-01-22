@@ -13,17 +13,12 @@ catalogo_empresa_vista:
 catalogo_vistas:
     path:     /adminVistas
     defaults: { _controller: CatalogoEmpresasBundle:Default:CatalogoVistas}
-<<<<<<< HEAD
 
 usuarios_admin:
     path:     /adminUsuarios
     defaults: { _controller: UsuariosBundle:Default:AdminUsuarios }
-    
-    
-=======
+
 catalogo_vistas_InsertarVista:
     path:     /InsertarVista
     defaults: { _controller: CatalogoEmpresasBundle:Default:InsertarVista}
         
-    
->>>>>>> 116593c06251cedd921571a2d6e2ddf15cc819a9

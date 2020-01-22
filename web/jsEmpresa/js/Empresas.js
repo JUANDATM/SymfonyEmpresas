@@ -4,13 +4,7 @@ var myDropzone;
 var table = "null";
 var tr = null;
 $(document).ready(function() {
-    //insertar en empresa vista
-    $('#visita').on("click", function() {
-        alert("a la chingada");
 
-        //  $("#empresamodal").modal({ dismissible: false }).modal('open');
-        //   insertarEmpresa();
-    });
     table = $('#empresas-table').DataTable();
     validateForm();
     $('.sidenav').sidenav();
@@ -34,11 +28,7 @@ $('#empresa-nuevo').on("click", function() {
     var IdEmpresa = $(this).attr("id-right");
     actualizarEmpresa(IdEmpresa);
 }); */
-//fin insertar visita
-$(document).on("click", '.visita', function() {
-    var IdEmpresa = $(this).attr("id-visita");
-    insertarEmpresaVista(IdEmpresa);
-});
+
 //sirve para editar los servicio
 
 $(document).on("click", '.delete', function() {
@@ -154,31 +144,7 @@ function reset() {
     myDropzone.removeAllFiles(true);
     $('.img').hide();
 };
-//funcion insertar en empresa vista
-function insertarEmpresaVista(post) {
-    $.ajax({
-        type: "post",
-        url: urlInsertEmpresaVista,
-        dataType: 'json',
-        data: post,
 
-        success: function(respuesta) {
-            if (respuesta['status']) {
-                Usuario[respuesta.data.IdUsuario] = respuesta.data;
-                M.toast({ html: 'Registro exitoso', classes: 'rounded', displayLength: 4000 });
-                // Usuario[respuesta.data.IdUsuario] = respuesta.data;
-                var data = respuesta.data;
-                var action = "insert";
-                setRow(data, action);
-                reset();
-                $("#usuariomodal").modal('close');
-            } else {
-                M.toast({ html: 'Error al Registrar ', classes: 'rounded', displayLength: 4000 });
-            }
-        }
-    });
-}
-////////////fin funcion insertar empresa vista
 function eliminarEmpresa(IdEmpresa) {
     $.ajax({
         type: "delete",

@@ -13,15 +13,9 @@
                     <img class="activator" src="data:{{empresa.FormatoImagen}};base64,{{ empresa.RutaImagen }}" width="300px" height="200px">
                   </div>
                   <div class="card-content">
-<<<<<<< HEAD
-                    <span class="card-title activator grey-text text-darken-4">{{empresa.NombreEmpresa}}
-                    <a id="visita" name="visita" id-visita="{{empresa.IdEmpresa}}"  class="visita">
-                    <i class="material-icons right">add</i>
-                    </a>
-                    </span>
-=======
+
                     <span class="card-title activator grey-text text-darken-4">{{empresa.NombreEmpresa}}<i class="material-icons right more" IdEmpresa="{{ empresa.IdEmpresa }}">add</i></span>
->>>>>>> 116593c06251cedd921571a2d6e2ddf15cc819a9
+
                   </div>
                   <div class="card-reveal">
                     <span class="card-title grey-text text-darken-4">{{empresa.NombreEmpresa}}<i class="material-icons right">close</i></span>
@@ -43,20 +37,19 @@
 {% block javascripts %}
 {{parent()}}
 <script type="text/javascript"> 
-<<<<<<< HEAD
+
 var urlInsertEmpresaVista = "{{path('catalogo_empresa_vista')}}";
 
 </script>
 <script type="text/javascript"> 
 </script>
-=======
+
 var InserVista = "{{path('catalogo_vistas_InsertarVista')}}";
 var Empresas = {{content['empresas']|json_encode()|raw}};
 </script> 
 
 <script type="text/javascript" src="{{ asset('js/jquery-3.0.0.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/jquery.validate.min.js') }}"></script>
->>>>>>> 116593c06251cedd921571a2d6e2ddf15cc819a9
 
 <script type="text/javascript" src="{{ asset('js/dropzone_up.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/materialize.min.js') }}"></script>
