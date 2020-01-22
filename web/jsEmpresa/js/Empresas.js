@@ -74,8 +74,6 @@ $(document).on("click", '.more', function() {
 
             } else {
                 M.toast({ html: 'ERROR AL REGISTRAR VISITA', classes: 'rounded', displayLength: 4000 });
-
-
             }
         }
     });
