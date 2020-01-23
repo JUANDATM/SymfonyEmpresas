@@ -10,11 +10,8 @@ $(document).ready(function() {
     $("#empresamodal").modal();
     $("#PreviewImagen").modal();
     $('#empresas-guardar').on("click", function() {
-        //document.getElementById('empresa-form').reset();
         $('#empresa-form').submit();
     });
-    //insertarEmpresa();
-    //actualizarEmpresa();
 });
 
 $('#empresa-nuevo').on("click", function() {
@@ -30,7 +27,6 @@ $(document).on("click", '.edit', function() {
     $("#empresamodal").modal({ dismissible: false }).modal('open');
     actualizarEmpresa(IdEmpresa);
 });
-//sirve para editar los servicio
 
 $(document).on("click", '.delete', function() {
     var IdEmpresa = $(this).attr("id-record");
@@ -209,7 +205,6 @@ function actualizarEmpresa(IdEmpresa) {
 }
 
 function insertarEmpresa() {
-
     //Dropzone class
     pdf = $(".add-file").dropzone({
         url: urlInsertar,
