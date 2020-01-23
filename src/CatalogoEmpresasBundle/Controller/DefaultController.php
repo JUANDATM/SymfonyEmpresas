@@ -1,7 +1,6 @@
 <?php
 
 namespace CatalogoEmpresasBundle\Controller;
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use CatalogoEmpresasBundle\Model\CatalogoEmpresasModel;
 use Symfony\Component\HttpFoundation\Request;
@@ -91,3 +90,4 @@ class DefaultController extends Controller
         return $this->render('CatalogoEmpresasBundle:CatalogoEmpresas:CatalogoVistasConteo.html.twig', array('content' => $content));
     }
 }
+

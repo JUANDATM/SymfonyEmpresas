@@ -1,7 +1,6 @@
 <?php
 
 namespace ControlAccesoBundle\Controller;
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Utilerias\SQLBundle\Model\SQLModel;
 use ControlAccesoBundle\Model\LoginModel;
@@ -29,7 +28,7 @@ class DefaultController extends Controller
                 "CorreoUsuario"=> "'" . $post["usuario"] . "'",
                 "PasswordUsuario"=> "'" . $post["contra"] . "'"
             );
-            
+        
             $result = $this->LoginModel->getUsuarios($data);
             /*print_r($result);
             die();*/
@@ -101,8 +100,7 @@ class DefaultController extends Controller
         }*/
         $result_Usuarios = $this->LoginModel->insertarLoginUsuarios($data_Usuarios); 
         return $this->jsonResponse($result_Usuarios);
-
-    }
+}
     public function logoutAction(Request $request) {
         $session = $request->getSession();
         $lang = $session->get('lang');

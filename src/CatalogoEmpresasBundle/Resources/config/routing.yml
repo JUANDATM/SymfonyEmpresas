@@ -6,9 +6,18 @@ catalogo_empresas_catalogo:
     path:     /CatalogoEmpresas
     defaults: { _controller: CatalogoEmpresasBundle:Default:CatalogoEmpresas}
 
+catalogo_empresa_vista:
+    path:     /InsertarEmpresaVista
+    defaults: { _controller: CatalogoEmpresasBundle:Default:InsertarEmpresaVista}
+
 catalogo_vistas:
     path:     /adminVistas
     defaults: { _controller: CatalogoEmpresasBundle:Default:CatalogoVistas}
+
+
+usuarios_admin:
+    path:     /adminUsuarios
+    defaults: { _controller: UsuariosBundle:Default:AdminUsuarios }
     
 catalogo_vistas_InsertarVista:
     path:     /InsertarVista
@@ -18,4 +27,3 @@ catalogo_vistas_InsertarVistaConteo:
     path:     /AdminVistasConteo
     defaults: { _controller: CatalogoEmpresasBundle:Default:VistasConteo}
         
-    

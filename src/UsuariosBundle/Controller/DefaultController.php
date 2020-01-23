@@ -33,7 +33,7 @@ class DefaultController extends Controller
         $data_Usuarios = array(
             "NombreUsuario" => "'" . $post["nombre"] . "'",
             "CorreoUsuario" =>"'". $post["correo"]."'",
-            "PasswordUsuario" =>"'". $post["password"]."'",
+            "PasswordUsuario" =>"'". md5($post["password"]) ."'",
             "DomicilioUsuario" => "'".$post["domicilio"]."'",
             "TipoUsuario" => "'".$post["rol"]."'",
         );
@@ -62,7 +62,7 @@ class DefaultController extends Controller
             
             "NombreUsuario" => "'" . $post["nombre"] . "'",
             "CorreoUsuario" =>"'". $post["correo"]."'",
-            "PasswordUsuario" =>"'". $post["password"]."'",
+            "PasswordUsuario" =>"'". md5($post["password"]) ."'",
             "DomicilioUsuario" => "'".$post["domicilio"]."'",
             "TipoUsuario" => "'".$post["rol"]."'",
         );

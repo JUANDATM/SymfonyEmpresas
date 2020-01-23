@@ -3,6 +3,7 @@ $(document).ready(function() {
     $('.sidenav').sidenav();
     $("#usuariomodal").modal();
 
+
     $('#usuarios-guardar').on("click", function() {
         //document.getElementById('empresa-form').reset();
         $('#usuarioform').submit();
@@ -129,7 +130,7 @@ function insertarLoginUsuario(post) {
                 reset();
                 $("#usuariomodal").modal('close');
                 $("#nombre").focus();
-            }else{
+            } else {
                 M.toast({ html: 'Error al Registrar correo existente ', classes: 'rounded', displayLength: 4000 });
             }
         }
@@ -148,6 +149,7 @@ function validarAcceso(postacceso) {
                 window.location.href = 'http://localhost:8000/adminEmpresas'
                 M.toast({ html: 'Acceso Permitido', classes: 'rounded', displayLength: 4000 });
             } else if (respuesta['status'] == 2) {
+
                 window.location.href = 'http://localhost:8000/CatalogoEmpresas'
                 M.toast({ html: 'Acceso Permitido', classes: 'rounded', displayLength: 4000 });
             } else {
@@ -157,6 +159,8 @@ function validarAcceso(postacceso) {
         }
     });
 }
+
+
 
 
 function reset() {

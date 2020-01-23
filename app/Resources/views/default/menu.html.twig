@@ -1,0 +1,25 @@
+<nav class="navbar-menu no-print">
+    <div class="nav-wrapper">
+        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+            {% if full is defined %}
+                {% include '::menuItems.html.twig' with {'full': full} %}
+            {% else %}
+                {% include '::menuItems.html.twig' %}
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+<ul id="dropdown-salir" class="dropdown-content no-print">
+    <li><a style="color: black;" class="show-loader-top" href="{{ path('logout') }}">{{ content['general_text']['ae_salir'] }}</a></li>
+</ul>
+<ul class="side-nav no-print" id="nav-mobile">
+    {% if full is defined %}
+        {% include '::menuItems.html.twig' with {'full': full, 'mobile' : true} %}
+    {% else %}
+        {% include '::menuItems.html.twig' with {'mobile' : true} %}
+    {% endif %}
+</ul>
+<ul id="dropdown-salir-mobile" class="dropdown-content no-print">
+    <li><a style="color: black;" class="show-loader-top" href="{{ path('logout') }}">{{ content['general_text']['ae_salir'] }}</a></li>
+</ul>
