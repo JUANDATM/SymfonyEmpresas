@@ -10,10 +10,30 @@ $(document).ready(function() {
 
     //insertarLoginUsuario();
 });
- 
+
+
 $("#un_lock").on("click", function() {
     $('#frm-acceso').submit();
 });
+
+
+/*$('input').keyup(function(){
+    //Obtengo el valor contenido dentro del input 
+    var value = $(this).val();
+    
+    if(value == null || value == " " || value=="" ){
+        //Elimino todos los espacios en blanco que tenga la cadena delante y detrás 
+        var value_without_space = $.trim(value);
+
+        //Muestro una alerta al usuario 
+        M.toast({ html: 'ESPACIOS', classes: 'rounded', displayLength: 4000 });
+    
+        //Cambio el valor contenido por el valor sin espacios 
+        $(this).val(value_without_space);
+    }else{
+
+    }
+}); */
 
 $('#usuario-nuevo').on("click", function() {
     $("#usuariomodal").modal({ dismissible: false }).modal('open');
@@ -47,13 +67,34 @@ function validateForm() {
     });
     $('#usuarioform').validate({
         rules: {
-            nombre: { required: true, minlength: 4, maxlength: 220 },
+            nombre: {
+                required: {
+                    depends: function() {
+                        if ($("#nombre").val().trim().length == 0) {
+                            $("#nombre").val('');
+                        }
+                        return true;
+                    }
+                },
+                minlength: 1,
+                maxlength: 120
+            },
             correo: { required: true, email: true },
             password: { required: true, minlength: 7, maxlength: 50 },
-            domicilio: { required: true, minlength: 7, maxlength: 250 },
-            //rol: { required: true, minlength: 1, maxlength: 10 },
-
+            domicilio: {
+                required: {
+                    depends: function() {
+                        if ($("#domicilio").val().trim().length == 0) {
+                            $("#domicilio").val('');
+                        }
+                        return true;
+                    }
+                },
+                minlength: 4,
+                maxlength: 250
+            }
         },
+            //rol: { required: true, minlength: 1, maxlength: 10 },
         messages: {
             nombre: { required: "Este campo es OBLIGATORIO", minlength: "El minimo de caracteres son 4", maxlength: "Maximo de caracteres sobrepasado" },
             correo: { required: "No puedes dejar este campo vacío", email: "Se requiere correo valido", minlength: "Debes ingresar al menos 4 caracteres", maxlength: "No puedes ingresar más de 220 caracteres" },
