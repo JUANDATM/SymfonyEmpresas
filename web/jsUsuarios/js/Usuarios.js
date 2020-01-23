@@ -56,11 +56,44 @@ function pintarDatos(IdUsuario) {
 function validateForm() {
     $('#usuarioform').validate({
         rules: {
-            nombre: { required: true, minlength: 4, maxlength: 220 },
+            nombre: {
+                required: {
+                    depends: function() {
+                        if ($("#nombre").val().trim().length == 0) {
+                            $("#nombre").val('');
+                        }
+                        return true;
+                    }
+                },
+                minlength: 1,
+                maxlength: 250
+            },
             correo: { required: true, email: true },
             password: { required: true, minlength: 7, maxlength: 50 },
-            domicilio: { required: true, minlength: 7, maxlength: 250 },
-            rol: { required: true, minlength: 1, maxlength: 10 },
+            domicilio: {
+                required: {
+                    depends: function() {
+                        if ($("#domicilio").val().trim().length == 0) {
+                            $("#domicilio").val('');
+                        }
+                        return true;
+                    }
+                },
+                minlength: 7,
+                maxlength: 250
+            },
+            rol: {
+                required: {
+                    depends: function() {
+                        if ($("#rol").val().trim().length == 0) {
+                            $("#rol").val('');
+                        }
+                        return true;
+                    }
+                },
+                minlength: 1,
+                maxlength: 10
+            },
         },
         messages: {
             nombre: { required: "Este campo es OBLIGATORIO", minlength: "El minimo de caracteres son 4", maxlength: "Maximo de caracteres sobrepasado" },
