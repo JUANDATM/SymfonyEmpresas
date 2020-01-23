@@ -1,4 +1,3 @@
-Nito Roque, [23.01 .20 15: 46]
 // Inicializa el NavBar
 Dropzone.autoDiscover = false;
 var myDropzone;
@@ -17,7 +16,6 @@ $(document).ready(function() {
     //insertarEmpresa();
     //actualizarEmpresa();
 });
-
 $('#empresa-nuevo').on("click", function() {
     $("#empresamodal").modal({ dismissible: false }).modal('open');
     insertarEmpresa();
@@ -103,8 +101,6 @@ function pintarDatos(IdEmpresa) {
     $("#IdEmpresa").val(IdEmpresa);
 }
 
-Nito Roque, [23.01 .20 15: 46]
-
 function validateForm() {
     $('#empresa-form').validate({
         rules: {
@@ -132,8 +128,31 @@ function validateForm() {
                 minlength: 4,
                 maxlength: 250
             },
-            telefono: { required: true, number: true, minlength: 7, maxlength: 10 },
-            correo: { required: true, email: true },
+            telefono: {
+                required: {
+                    depends: function() {
+                        if ($("#telefono").val().trim().length == 0) {
+                            $("#telefono").val('');
+                        }
+                        return true;
+                    }
+                },
+                minlength: 4,
+                maxlength: 250
+            },
+            correo: {
+                required: {
+                    depends: function() {
+                        if ($("#correo").val().trim().length == 0) {
+                            $("#correo").val('');
+                        }
+                        return true;
+                    }
+                },
+                email: true,
+                minlength: 4,
+                maxlength: 250
+            },
             descripcion: {
                 required: {
                     depends: function() {
@@ -195,8 +214,6 @@ function eliminarEmpresa(IdEmpresa) {
         }
     });
 }
-
-Nito Roque, [23.01 .20 15: 46]
 
 function actualizarEmpresa(IdEmpresa) {
     //Dropzone class
@@ -293,8 +310,6 @@ function insertarEmpresa() {
         }
     });
 }
-
-Nito Roque, [23.01 .20 15: 46]
 
 function setRow(data, base64, action) {
     Empresas[data.IdEmpresa] = data;
