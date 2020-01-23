@@ -20,6 +20,21 @@ $(document).ready(function() {
     $("#PreviewImagen").modal();
     $('#empresas-guardar').on("click", function() {
         //document.getElementById('empresa-form').reset();
+        if($('#nombre').val().trim()==="") {
+            M.toast({ html: 'Campo para el nombre vacio', classes: 'rounded', displayLength: 4000 });
+            $("#nombre").focus();
+            return false;
+        }
+        if($('#direccion').val().trim()==="") {
+            M.toast({ html: 'Campo para la direccion vacio', classes: 'rounded', displayLength: 4000 });
+            $("#direccion").focus();
+            return false;
+        }
+        if($('#descripcion').val().trim()==="") {
+            M.toast({ html: 'Campo para la descripcion vacio', classes: 'rounded', displayLength: 4000 });
+            $("#descripcion").focus();
+            return false;
+        }
         $('#empresa-form').submit();
     });
     //insertarEmpresa();
@@ -80,7 +95,7 @@ $(document).on("click", '.more', function() {
                 M.toast({ html: 'Visita Registrada', classes: 'rounded', displayLength: 4000 });
 
             } else {
-                M.toast({ html: 'ERROR AL REGISTRAR VISITA', classes: 'rounded', displayLength: 4000 });
+                M.toast({ html: 'ERROR AL REGISTRAR VISITA,ASEGURESE DE NO SER UN ADMINISTRADOR', classes: 'rounded', displayLength: 4000 });
             }
         }
     });
@@ -270,7 +285,6 @@ function setRow(data, base64, action) {
             data.IdEmpresa,
             data.nombre,
             data.direccion,
-            data.descripcion,
             data.telefono,
             data.correo,
             "<img src='" + base64 + "' width='200px' height='100px' ></img>",

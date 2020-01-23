@@ -22,4 +22,8 @@ usuarios_admin:
 catalogo_vistas_InsertarVista:
     path:     /InsertarVista
     defaults: { _controller: CatalogoEmpresasBundle:Default:InsertarVista}
+
+catalogo_vistas_InsertarVistaConteo:
+    path:     /AdminVistasConteo
+    defaults: { _controller: CatalogoEmpresasBundle:Default:VistasConteo}
         

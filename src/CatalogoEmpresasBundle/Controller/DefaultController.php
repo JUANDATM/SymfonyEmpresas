@@ -74,11 +74,20 @@ class DefaultController extends Controller
             $result['message']="Visita Insertada";
         }else{
             $result['status'] = FALSE;
-            $result['message']="ERROR AL INSERTAR VISITA DEFAULTCONTROLLER";
+            $result['message']="ERROR AL INSERTAR VISITA ,Asegurese de no ser un administrador";
         }
         return $this->jsonResponse($result);
         }
     }
 
-    
+    public function VistasConteoAction(Request $request){
+        $profile = $this->getUser();
+        $user = $profile->getData();
+        $result = $this->CatalogoEmpresasModel->getVistas();
+        $conteo = $result['data'];
+        $content['conteo'] = $conteo;
+        $content['user'] = $user;
+        return $this->render('CatalogoEmpresasBundle:CatalogoEmpresas:CatalogoVistasConteo.html.twig', array('content' => $content));
+    }
 }
+

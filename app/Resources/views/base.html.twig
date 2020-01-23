@@ -30,11 +30,11 @@
 </header>
 
 <body>
-    <nav>
-        <div class="nav-wrapper cyan darken-1">
-            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-            {#{{dump(content['user'])}}#}
-            <ul class="right hide-on-med-and-down">
+    <div id="navbar" class="navbar-fixed scrollspy">
+  <nav  class="cyan">
+    <div class="nav-wrapper container">
+          <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+      <ul class="right hide-on-med-and-down">
                 <li>
                     <a href="{{ asset('CatalogoEmpresas')}}">Inicio</a>
                 </li>
@@ -47,6 +47,9 @@
                     </li>
                     <li>
                         <a href="{{ asset('adminVistas')}}">Visitas</a>
+                    </li>
+                    <li>
+                        <a href="{{ asset('AdminVistasConteo')}}">Visitas Conteo</a>
                     </li>
                 {% endif %}
                 
@@ -63,8 +66,9 @@
                 
                 
             </ul>
-        </div>
-    </nav>
+          </div>
+  </nav>
+  </div>
     {% block body %}
 
     {% endblock %}

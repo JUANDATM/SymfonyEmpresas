@@ -36,10 +36,11 @@
         </ul>
 
     </div>
+
    <div class="container">
              <div class="row">
            {% for empresa in content['empresas'] %}
-            <div class="col s3">
+            <div class="col s6 m4">
                 <div class="card small">
                   <div class="card-image waves-effect waves-block waves-light">
                     <img class="activator" src="data:{{empresa.FormatoImagen}};base64,{{ empresa.RutaImagen }}" width="300px" height="200px">
@@ -62,7 +63,6 @@
             {% endfor %}
            </div>
     </div>
-
 
     <br>
 

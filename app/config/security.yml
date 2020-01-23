@@ -47,4 +47,5 @@ security:
         - { path: ^/adminEmpresas, roles:  ROLE_ADMIN }
         - { path: ^/adminUsuarios, roles:  ROLE_ADMIN }
         - { path: ^/adminVistas, roles:  ROLE_ADMIN }
+        - { path: ^/AdminVistasConteo, roles:  ROLE_ADMIN }
 

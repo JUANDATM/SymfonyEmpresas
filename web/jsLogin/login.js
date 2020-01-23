@@ -6,15 +6,45 @@ $(document).ready(function() {
 
     $('#usuarios-guardar').on("click", function() {
         //document.getElementById('empresa-form').reset();
+        if($('#nombre').val().trim()==="") {
+            M.toast({ html: 'Campo para el nombre vacio', classes: 'rounded', displayLength: 4000 });
+            $("#nombre").focus();
+            return false;
+        }
+        if($('#domicilio').val().trim()==="") {
+            M.toast({ html: 'Campo para el domicilio vacio', classes: 'rounded', displayLength: 4000 });
+            $("#domicilio").focus();
+            return false;
+        }
         $('#usuarioform').submit();
     });
 
     //insertarLoginUsuario();
 });
- 
+
+
 $("#un_lock").on("click", function() {
     $('#frm-acceso').submit();
 });
+
+
+/*$('input').keyup(function(){
+    //Obtengo el valor contenido dentro del input 
+    var value = $(this).val();
+    
+    if(value == null || value == " " || value=="" ){
+        //Elimino todos los espacios en blanco que tenga la cadena delante y detrás 
+        var value_without_space = $.trim(value);
+
+        //Muestro una alerta al usuario 
+        M.toast({ html: 'ESPACIOS', classes: 'rounded', displayLength: 4000 });
+    
+        //Cambio el valor contenido por el valor sin espacios 
+        $(this).val(value_without_space);
+    }else{
+
+    }
+}); */
 
 $('#usuario-nuevo').on("click", function() {
     $("#usuariomodal").modal({ dismissible: false }).modal('open');
