@@ -324,3 +324,5 @@ function setRow(data, base64, action) {
         table.row('#' + data.IdEmpresa).remove().draw();
     }
 }
+
+///
