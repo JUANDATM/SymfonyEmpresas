@@ -3,6 +3,14 @@ Dropzone.autoDiscover = false;
 var myDropzone;
 var table = "null";
 var tr = null;
+(function($) {
+    $(function() {
+
+        $('.button-collapse').sideNav();
+
+    }); // end of document ready
+})(jQuery); // end of jQuery name space
+
 $(document).ready(function() {
 
     table = $('#empresas-table').DataTable();
@@ -69,19 +77,14 @@ $(document).on("click", '.more', function() {
         success: function(respuesta) {
             if (respuesta["status"]) {
                 //table.remove().draw();
-                M.toast({
-                    html: "visita registrada",
-                    classes: "rounded ",
-                    displayLength: 4000
-                });
-            } else {
+                M.toast({ html: 'Visita Registrada', classes: 'rounded', displayLength: 4000 });
 
+            } else {
+                M.toast({ html: 'ERROR AL REGISTRAR VISITA', classes: 'rounded', displayLength: 4000 });
             }
         }
     });
 });
-
-
 
 function pintarDatos(IdEmpresa) {
     $("#IdEmpresa").val(IdEmpresa);
@@ -134,7 +137,7 @@ function validateForm() {
         }
     });
 }
-// Limpia los campos al cerrar la modal
+
 function reset() {
     $("#nombre").val('');
     $("#direccion").val('');
@@ -158,7 +161,7 @@ function eliminarEmpresa(IdEmpresa) {
                 var base64 = "";
                 setRow(respuesta.data, base64, action);
             } else {
-                M.toast({ html: 'Error al Eliminar ', classes: 'rounded', displayLength: 4000 });
+                M.toast({ html: 'Se actualizo con exito', classes: 'rounded', displayLength: 4000 });
             }
         }
     });
@@ -275,7 +278,6 @@ function setRow(data, base64, action) {
             "<a  id='eliminar' name='eliminar' id-record='" + data.IdEmpresa + "'  class='delete btn btn-danger'><i class='material-icons'>delete_sweep</i></a>"
         ]).draw().node();
     }
-
     if (action === 'update') {
         table.row('#' + data.IdEmpresa).remove().draw();
         var row = table.row.add([

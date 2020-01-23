@@ -27,7 +27,6 @@ class CatalogoEmpresasModel {
         $fields .= ' INNER JOIN "EMPRESAS"."Imagenes" i on ';
         $fields .= ' e."IdEmpresa" = i."IdEmpresa" ';
         $result = $this->SQLModel->executeQuery($fields);
-
         if (!($result['status'] && count($result['data']) > 0)) {
             return $result;
         }
@@ -37,7 +36,6 @@ class CatalogoEmpresasModel {
         $result["data"] = $data;
         return $result;
     }
-
     public function getEmpresaVista(){
         $fields = ' SELECT ';
         $fields .= ' ev."IdEmpresa",';
@@ -61,20 +59,6 @@ class CatalogoEmpresasModel {
         $result["data"] = $data;
         return $result;
     }
-    //usuariossssss
-    public function getUsuarios($data){
-        $result = $this->SQLModel->selectFromTable('Usuario',$data);
-        if (!($result['status'] && count($result['data']) > 0)) {
-            return $result;
-        }
-        foreach ($result['data'] as $value) {
-            $data[$value['IdUsuario']] = $value;
-        }
-        $result["data"] = $data;
-        return $result;
-    }
-
-
     public function InsertarVista($data){
         $result = $this->SQLModel->insertIntoTable('EmpresaVista',$data,'IdVisita');
         return $result;

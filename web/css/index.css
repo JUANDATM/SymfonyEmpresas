@@ -147,7 +147,7 @@ figure.hover figcaption {
 }
 
 .parallax-container {
-    height: 500px;
+    height: 350px;
 }
 
 
@@ -192,7 +192,7 @@ textarea:focus.materialize-textarea+label {
     box-sizing: content-box;
     border: none;
     font: normal 40px/1 "Verdana", Helvetica, sans-serif;
-    color: white;
+    color: rgb(7, 122, 151);
     -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
 }

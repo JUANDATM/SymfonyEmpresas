@@ -14,10 +14,11 @@ catalogo_vistas:
     path:     /adminVistas
     defaults: { _controller: CatalogoEmpresasBundle:Default:CatalogoVistas}
 
+
 usuarios_admin:
     path:     /adminUsuarios
     defaults: { _controller: UsuariosBundle:Default:AdminUsuarios }
-
+    
 catalogo_vistas_InsertarVista:
     path:     /InsertarVista
     defaults: { _controller: CatalogoEmpresasBundle:Default:InsertarVista}

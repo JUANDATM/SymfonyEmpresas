@@ -1,15 +1,15 @@
 <?php
 
 namespace CatalogoEmpresasBundle\Controller;
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use CatalogoEmpresasBundle\Model\CatalogoEmpresasModel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use ControlAccesoBundle\Model\Profile;
+
 
 class DefaultController extends Controller
 {
+      
     protected $CatalogoEmpresasModel;
 
     public function __construct() {
@@ -26,12 +26,10 @@ class DefaultController extends Controller
         if($profile != ''){
             $user = $profile->getData();
             $content['user'] = $user;
-        }
-             
+        }   
         $result = $this->CatalogoEmpresasModel->getCatalogoEmpresas();
         $empresas = $result['data'];
         $content['empresas'] = $empresas;
-
         return $this->render('CatalogoEmpresasBundle:CatalogoEmpresas:CatalogoEmpresas.html.twig', array('content' => $content));
     }
 
@@ -44,7 +42,6 @@ class DefaultController extends Controller
         $content['vistas'] = $vistas;
         $content['user'] = $user;
         return $this->render('CatalogoEmpresasBundle:CatalogoEmpresas:CatalogoVistas.html.twig', array('content' => $content));
-
     }
 
     public function InsertarVistaAction(Request $request){
@@ -74,12 +71,14 @@ class DefaultController extends Controller
         if ($result['status']) {
             $result['data'] = $post;
             $result['status'] = TRUE;
-            $result['message']="Eliminado con exito";
+            $result['message']="Visita Insertada";
         }else{
             $result['status'] = FALSE;
-            $result['message']="ERRORRRR";
+            $result['message']="ERROR AL INSERTAR VISITA DEFAULTCONTROLLER";
         }
         return $this->jsonResponse($result);
         }
     }
+
+    
 }
