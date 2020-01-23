@@ -11,21 +11,6 @@ $(document).ready(function() {
     $("#PreviewImagen").modal();
     $('#empresas-guardar').on("click", function() {
         //document.getElementById('empresa-form').reset();
-        if($('#nombre').val().trim()==="") {
-            M.toast({ html: 'Campo para el nombre vacio', classes: 'rounded', displayLength: 4000 });
-            $("#nombre").focus();
-            return false;
-        }
-        if($('#direccion').val().trim()==="") {
-            M.toast({ html: 'Campo para la direccion vacio', classes: 'rounded', displayLength: 4000 });
-            $("#direccion").focus();
-            return false;
-        }
-        if($('#descripcion').val().trim()==="") {
-            M.toast({ html: 'Campo para la descripcion vacio', classes: 'rounded', displayLength: 4000 });
-            $("#descripcion").focus();
-            return false;
-        }
         $('#empresa-form').submit();
     });
     //insertarEmpresa();
@@ -120,11 +105,44 @@ function pintarDatos(IdEmpresa) {
 function validateForm() {
     $('#empresa-form').validate({
         rules: {
-            nombre: { required: true, minlength: 4, maxlength: 220 },
-            direccion: { required: true, minlength: 4, maxlength: 220 },
+            nombre: {
+                required: {
+                    depends: function() {
+                        if ($("#nombre").val().trim().length == 0) {
+                            $("#nombre").val('');
+                        }
+                        return true;
+                    }
+                },
+                minlength: 4,
+                maxlength: 250
+            },
+            direccion: {
+                required: {
+                    depends: function() {
+                        if ($("#direccion").val().trim().length == 0) {
+                            $("#direccion").val('');
+                        }
+                        return true;
+                    }
+                },
+                minlength: 4,
+                maxlength: 250
+            },
             telefono: { required: true, number: true, minlength: 7, maxlength: 10 },
             correo: { required: true, email: true },
-            descripcion: { required: true, minlength: 4, maxlength: 250 },
+            descripcion: {
+                required: {
+                    depends: function() {
+                        if ($("#descripcion").val().trim().length == 0) {
+                            $("#descripcion").val('');
+                        }
+                        return true;
+                    }
+                },
+                minlength: 4,
+                maxlength: 250
+            },
             addfile: { required: true },
         },
         messages: {
@@ -280,6 +298,7 @@ function setRow(data, base64, action) {
             data.direccion,
             data.telefono,
             data.correo,
+            data.descripcion,
             "<img src='" + base64 + "' width='200px' height='100px' ></img>",
             "<a  id='editar' name='editar'  id-edit='" + data.IdEmpresa + "' data-nom='" + data.nombre + "' data-dir='" + data.direccion + "' data-descrip='" + data.descripcion + "' data-tel='" + data.telefono + "' data-corr='" + data.corr + "' class='edit btn btn-warning'><i class='material-icons'>create</i></a>" +
             "<a  id='eliminar' name='eliminar' id-record='" + data.IdEmpresa + "'  class='delete btn btn-danger'><i class='material-icons'>delete_sweep</i></a>"
